@@ -1,0 +1,29 @@
+[project]
+name = "oneerp-accounting"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "fastapi>=0.115.0",
+    "httpx>=0.28.0",
+    "uvicorn[standard]>=0.34.0",
+    "oneerp-core",
+]
+
+[dependency-groups]
+dev = ["httpx>=0.28.0", "pytest>=9.0.2"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["oneerp_accounting_app"]
+
+# G1-4 mutation test 대상: audit_hooks 만 bounded scope 로 측정.
+# 주의: mutmut 3.5.0 은 mutants/ 하위에서 pytest 를 실행하는데, conftest.py 가
+# parents[2] 기반으로 service_root 를 계산하므로 호환되지 않는다(2026-04-22 확인).
+# 대안: tests/unit/test_audit_mutation.py + test_audit_hooks_mutation.py 가
+# 수동 mutation catalog 역할을 하며, artifacts/T1/G1-4/ 에 kill score 요약 JSON 기록.
+[tool.mutmut]
+paths_to_mutate = ["oneerp_accounting_app/audit_hooks.py"]
+tests_dir = ["tests/unit/test_audit_mutation.py"]

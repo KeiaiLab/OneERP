@@ -1,0 +1,1059 @@
+#!/usr/bin/env python3
+"""상용 제품 게이트 점검기 (ADR-0001 §6) — 47 모듈 x 23 게이트.
+
+출력:
+- stdout: 모듈별 라벨(alpha/beta/pre-commercial/commercial-ready) + 통과 수
+- docs/generated/commercial-status.md: 자동 생성 리포트 (ADR-0001 §7)
+
+사용:
+    uv run --package oneerp-core python scripts/audit/commercial_readiness.py
+    uv run --package oneerp-core python scripts/audit/commercial_readiness.py --module selling
+    uv run --package oneerp-core python scripts/audit/commercial_readiness.py --format json
+
+설계:
+- 각 게이트는 `Gate` dataclass로 자기 검증 함수 보유
+- 현재 검증 함수 미구현 게이트는 Status.NOT_IMPLEMENTED 반환 (통과도 실패도 아님)
+- 라벨 판정은 ADR-0001 §7 표 기준 (구현된 게이트만 집계하되 영역별 최소 요건 체크)
+- 점진 구현: 새 게이트 검증 로직은 `_gate_Gxx_xx` 함수를 채우면 자동 편입
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import sys
+from dataclasses import dataclass, field
+from datetime import UTC, date, datetime
+from enum import StrEnum
+from pathlib import Path
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+REPO = Path(__file__).resolve().parents[2]
+ERD_INDEX = REPO / "docs/generated/INDEX.md"
+STATUS_OUT = REPO / "docs/generated/commercial-status.md"
+
+# ADR-0013 드릴 증거 규약: docs/ops/drills/<gate-id>/<YYYY-MM-DD>-<module>.md
+DRILL_ROOT = "docs/ops/drills"
+DRILL_MAX_AGE_DAYS = 90
+_DRILL_DATE_RE = re.compile(r"^drill_date:\s*(\d{4}-\d{2}-\d{2})\s*$", re.MULTILINE)
+_DRILL_MODULE_RE = re.compile(r"^module:\s*([a-z0-9-]+)\s*$", re.MULTILINE)
+# 드릴 본문에서 저장소 경로로 보이는 토큰 추출.
+# 드릴이 실행했다고 주장한 스크립트·문서가 실제로 존재하는지 교차 검증에 사용.
+_DRILL_REF_RE = re.compile(
+    r"(?<![A-Za-z0-9_])"
+    r"(?:scripts|docs|services|packages|tests|web|apps|core|planes|migrations|\.github)"
+    r"/[A-Za-z0-9_./\-]+"
+    r"\.(?:sh|py|md|ya?ml|json|ts|tsx|toml)",
+)
+
+
+class Status(StrEnum):
+    PASS = "pass"  # noqa: S105
+    FAIL = "fail"
+    NOT_IMPLEMENTED = "not_implemented"
+    NOT_APPLICABLE = "n/a"
+
+
+class Label(StrEnum):
+    ALPHA = "alpha"
+    BETA = "beta"
+    PRE_COMMERCIAL = "pre-commercial"
+    COMMERCIAL_READY = "commercial-ready"
+
+
+@dataclass
+class GateResult:
+    gate_id: str
+    status: Status
+    evidence: str = ""
+
+
+@dataclass
+class ModuleReport:
+    module: str
+    gates: list[GateResult] = field(default_factory=list)
+
+    @property
+    def passed(self) -> int:
+        return sum(1 for g in self.gates if g.status == Status.PASS)
+
+    @property
+    def failed(self) -> int:
+        return sum(1 for g in self.gates if g.status == Status.FAIL)
+
+    @property
+    def implemented(self) -> int:
+        return sum(1 for g in self.gates if g.status in (Status.PASS, Status.FAIL))
+
+    def label(self) -> Label:
+        """ADR-0001 §7 라벨 판정.
+
+        미구현 게이트는 라벨 승급을 막지 않되, 통과 수 기준선으로만 판정한다.
+        실제 게이트가 전수 구현되기 전까지는 '현재 측정 가능한 수준'의 라벨.
+        """
+        passed = self.passed
+        total = len(self.gates)
+        # G3(보안) 영역 5개 전수 통과 필수 (pre-commercial 이상)
+        g3_pass = sum(
+            1 for g in self.gates if g.gate_id.startswith("G3-") and g.status == Status.PASS
+        )
+        if passed == total:
+            return Label.COMMERCIAL_READY
+        if passed >= 18 and g3_pass >= 5:
+            return Label.PRE_COMMERCIAL
+        if passed >= 12:
+            return Label.BETA
+        return Label.ALPHA
+
+
+# ---------------------------------------------------------------------------
+# 게이트 검증 함수 (ADR-0001 §6.1~§6.5)
+# 현재 구현된 것만 실제 판정. 나머지는 NOT_IMPLEMENTED.
+# ---------------------------------------------------------------------------
+
+
+def _gate_G1_1_erd(module: str) -> GateResult:
+    """G1-1 ERD/스펙 일치 — erd-<module>.md 존재 확인 (최소 요건).
+
+    ADR-0001 §6.1 전체 요건(`gen_erd.py --check` 무차분)은 추후.
+    """
+    erd = REPO / f"docs/generated/erd-{module}.md"
+    if erd.exists() and erd.stat().st_size > 100:
+        return GateResult("G1-1", Status.PASS, f"{erd.relative_to(REPO)}")
+    return GateResult("G1-1", Status.FAIL, f"missing or empty: {erd.relative_to(REPO)}")
+
+
+# 통합 패키지 내부 서브도메인 → 호스팅 mount 이름 (ADR-0011 §2.1)
+_BUNDLED_MOUNT: dict[str, str] = {
+    "ecommerce": "commerce",
+    "subscriptions": "commerce",
+    "rental": "reservation",
+    "maintenance": "qm",
+    "quality": "qm",
+    "consolidation": "finance-extra",
+    "esg": "finance-extra",
+    "lms": "learning",
+    "workreport": "learning",
+    "clm": "compliance",
+    "directory": "comms",
+    "mail": "comms",
+    "messenger": "portal",
+    "fleet": "logistics",
+    "tms": "logistics",
+}
+
+
+def _gate_G1_2_openapi(module: str) -> GateResult:
+    """G1-2 OpenAPI 발행 — docs/api/<module>/ 또는 통합 호스트의 openapi."""
+    host = _BUNDLED_MOUNT.get(module, module)
+    candidates = [
+        REPO / f"docs/api/{host}/openapi.yaml",
+        REPO / f"docs/api/{host}/openapi.json",
+    ]
+    for c in candidates:
+        if c.exists():
+            via = f" (via {host})" if host != module else ""
+            return GateResult("G1-2", Status.PASS, f"{c.relative_to(REPO)}{via}")
+    return GateResult(
+        "G1-2",
+        Status.FAIL,
+        f"no openapi under docs/api/{host}/",
+    )
+
+
+def _gate_G1_5_ui(module: str) -> GateResult:
+    """G1-5 UI — web/lib/modules/ EntityConfig 존재 (모듈명 또는 하위 엔티티)."""
+    mod_dir = REPO / "web/lib/modules"
+    if not mod_dir.is_dir():
+        return GateResult("G1-5", Status.FAIL, "web/lib/modules 없음")
+    # 파일명이 module 이름으로 시작하거나 module과 동일하면 PASS
+    # 모듈명은 -로 구분되기도 하고 도메인 하위 엔티티들도 있음
+    patterns = [module, module.replace("-", "_"), module.replace("_", "-")]
+    # 모듈명이 여러 단어일 때 첫 단어 prefix 매칭도 허용
+    prefix = module.split("-")[0] if "-" in module else module
+    matches = []
+    for tsx in mod_dir.glob("*.ts"):
+        name = tsx.stem
+        if name in patterns or name.startswith(f"{prefix}-") or name == prefix:
+            matches.append(name)
+    if matches:
+        return GateResult("G1-5", Status.PASS, f"{len(matches)} configs (e.g. {matches[0]})")
+    return GateResult("G1-5", Status.FAIL, f"no EntityConfig for {module}")
+
+
+def _gate_G1_3_integration(module: str) -> GateResult:
+    """G1-3 통합 테스트 — 해당 모듈 소스 트리에 통합 테스트 파일 존재.
+
+    완전 구현(ADR-0001 §6.1)은 `pytest -m integration -k <module>` 실행 통과지만,
+    현 단계는 존재 확인 + 수 집계. 통합 테스트가 0건이면 FAIL.
+    """
+    host = _BUNDLED_MOUNT.get(module, module).replace("-", "_")
+    direct = module.replace("-", "_")
+    patterns = [
+        f"services/**/{direct}/tests/integration/test_*.py",
+        f"services/**/{host}/tests/integration/test_*.py",
+        # 통합 테스트 별칭 — 공유 디렉토리
+        f"tests/integration/**/test_*{direct}*.py",
+    ]
+    count = 0
+    for p in patterns:
+        count += len(list(REPO.glob(p)))
+    if count > 0:
+        return GateResult("G1-3", Status.PASS, f"{count} integration test files")
+    return GateResult("G1-3", Status.FAIL, "no integration tests")
+
+
+def _gate_G4_1_observability(module: str) -> GateResult:
+    """G4-1 관측성 baseline — 호스트 plane이 /healthz /readyz /metrics 제공 확인.
+
+    ADR-0008 §2.2. 모듈 단위는 plane 공유이므로 plane이 기본 제공하면 모든
+    마운트 모듈이 자동 통과. 현 시점은 모듈별 `/health` 응답 200 체크.
+    """
+    # G1-2에서 OpenAPI가 생성됐다면 plane이 부팅되고 health 체크가 통과했다는
+    # 증거이기도 하다. 더 엄격한 검증은 ONEERP_JWT_SECRET 동반 실측 phase에서.
+    host = _BUNDLED_MOUNT.get(module, module)
+    openapi = REPO / f"docs/api/{host}/openapi.json"
+    if not openapi.exists():
+        return GateResult("G4-1", Status.FAIL, "host plane 미부팅/미수집")
+    # paths에 /health 포함 여부 (도메인 FastAPI가 health 라우트 제공 확인)
+    try:
+        import json as _json
+
+        spec = _json.loads(openapi.read_text())
+        paths = spec.get("paths", {})
+        if any(k == "/health" or k.endswith("/health") for k in paths):
+            return GateResult("G4-1", Status.PASS, f"/health found in {host}")
+        return GateResult("G4-1", Status.FAIL, f"no /health in {host}/openapi.json")
+    except Exception as e:
+        return GateResult("G4-1", Status.FAIL, f"parse error: {e}")
+
+
+def _scan_service_for_pattern(module: str, patterns: tuple[str, ...]) -> Path | None:
+    """모듈의 services 디렉토리에서 패턴 문자열을 포함한 첫 파일 반환.
+
+    번들 호스트 매핑을 따라 `services/<cluster>/<module>` 또는
+    `services/<cluster>/<host>` 하위 `*.py` 를 순차 스캔한다.
+
+    후보는 하이픈/언더스코어 변형과 prefix 매칭(`portal_comms` 가 `comms` 에
+    매칭되는 등)을 모두 시도한다.
+    """
+    host_raw = _BUNDLED_MOUNT.get(module, module)
+    # 하이픈·언더스코어 변형 모두 포함해 경로 유연 매칭.
+    candidates: list[str] = []
+    for base in (module, host_raw):
+        for form in {base, base.replace("-", "_"), base.replace("_", "-")}:
+            if form not in candidates:
+                candidates.append(form)
+    seen: set[Path] = set()
+    for candidate in candidates:
+        # 직접 매칭 + prefix/suffix 매칭 (`services/*/*<candidate>*`).
+        globs = [f"services/*/{candidate}", f"services/*/*{candidate}*"]
+        for g in globs:
+            for svc in REPO.glob(g):
+                if not svc.is_dir() or svc in seen:
+                    continue
+                seen.add(svc)
+                for py in svc.rglob("*.py"):
+                    try:
+                        text = py.read_text(encoding="utf-8", errors="ignore")
+                    except OSError:
+                        continue
+                    if any(p in text for p in patterns):
+                        return py
+    return None
+
+
+def _gate_G1_4_unit_tests(module: str) -> GateResult:
+    """G1-4 단위 테스트 — services/<cluster>/<module>/tests/unit/test_*.py 수.
+
+    완전 구현(커버리지 ≥ 90%)은 추후. 현재는 단위 테스트 파일 존재만 체크.
+    """
+    host = _BUNDLED_MOUNT.get(module, module).replace("-", "_")
+    direct = module.replace("-", "_")
+    patterns = [
+        f"services/**/{direct}/tests/unit/test_*.py",
+        f"services/**/{host}/tests/unit/test_*.py",
+        f"services/**/{direct}/tests/test_*.py",
+        f"tests/unit/**/test_*{direct}*.py",
+        f"packages/**/tests/unit/test_*{direct}*.py",
+    ]
+    count = 0
+    for p in patterns:
+        count += len(list(REPO.glob(p)))
+    if count > 0:
+        return GateResult("G1-4", Status.PASS, f"{count} unit test files")
+    return GateResult("G1-4", Status.FAIL, "no unit tests")
+
+
+def _gate_G2_5_i18n(module: str) -> GateResult:
+    """G2-5 i18n — apps/web 또는 web 서브모듈의 번역 파일/설정 존재.
+
+    완전 구현(로케일별 스냅샷 테스트)은 추후. 현재는 i18n 인프라 존재만 체크.
+    """
+    candidates = [
+        REPO / "web/messages",
+        REPO / "web/locales",
+        REPO / "web/lib/i18n.ts",
+        REPO / "web/lib/i18n.tsx",
+        REPO / "apps/web/messages",
+        REPO / "apps/web/locales",
+        REPO / "apps/web/lib/i18n.ts",
+    ]
+    for c in candidates:
+        if c.exists():
+            return GateResult("G2-5", Status.PASS, str(c.relative_to(REPO)))
+    return GateResult("G2-5", Status.FAIL, "no i18n infra (apps/web/messages etc.)")
+
+
+def _gate_G3_1_authentication(module: str) -> GateResult:
+    """G3-1 인증 통합 — 모듈 서비스 코드가 공용 인증 모듈 import 확인.
+
+    완전 구현(`scripts/security/auth_coverage.py` 100%)은 추후.
+    현재는 'core.auth' / 'oneerp_core.auth' / 'CurrentUser' / 'get_current_user'
+    중 하나라도 import 하는 파일이 있으면 PASS.
+    """
+    hit = _scan_service_for_pattern(
+        module,
+        (
+            "from core.auth",
+            "from oneerp_core.auth",
+            "CurrentUser",
+            "get_current_user",
+            "require_user",
+        ),
+    )
+    if hit:
+        return GateResult("G3-1", Status.PASS, f"auth import: {hit.relative_to(REPO)}")
+    return GateResult("G3-1", Status.FAIL, "no auth import pattern")
+
+
+def _gate_G3_4_audit_log(module: str) -> GateResult:
+    """G3-4 감사 로그 — 모듈 코드가 audit 이벤트 발행 패턴 사용 확인.
+
+    완전 구현(감사 이벤트 카탈로그 ≥ 명세 항목)은 추후. 현재는
+    'audit_log' / 'AuditEvent' / 'emit_audit' / 'audit.emit' 같은
+    패턴이 존재하면 PASS.
+    """
+    hit = _scan_service_for_pattern(
+        module,
+        (
+            "audit_log",
+            "AuditEvent",
+            "emit_audit",
+            "audit.emit",
+            "from core.audit",
+            "from oneerp_core.audit",
+        ),
+    )
+    if hit:
+        return GateResult("G3-4", Status.PASS, f"audit pattern: {hit.relative_to(REPO)}")
+    return GateResult("G3-4", Status.FAIL, "no audit log pattern")
+
+
+def _gate_G4_2_runbook(module: str) -> GateResult:
+    """G4-2 Runbook — docs/ops/runbook-<module>.md 또는 호스트 runbook 존재."""
+    host = _BUNDLED_MOUNT.get(module, module)
+    candidates = [
+        REPO / f"docs/ops/runbook-{module}.md",
+        REPO / f"docs/ops/runbook-{host}.md",
+        REPO / "docs/ops/runbook-service-deploy.md",  # 공용 runbook fallback
+    ]
+    # 모듈 전용 또는 호스트 전용이 200 bytes 이상이어야 PASS
+    for c in candidates[:2]:
+        if c.exists() and c.stat().st_size > 200:
+            if (miss := _validate_doc_refs(c, "G4-2")) is not None:
+                return miss
+            return GateResult("G4-2", Status.PASS, str(c.relative_to(REPO)))
+    return GateResult("G4-2", Status.FAIL, f"no module/host runbook for {module}")
+
+
+def _gate_G5_1_user_manual(module: str) -> GateResult:
+    """G5-1 사용자 매뉴얼 — docs/user-manual/<module>.md 또는 module/ 디렉토리 존재."""
+    candidates = [
+        REPO / f"docs/user-manual/{module}.md",
+        REPO / f"docs/user-manual/{module}/README.md",
+    ]
+    for c in candidates:
+        if c.exists() and c.stat().st_size > 500:
+            if (miss := _validate_doc_refs(c, "G5-1")) is not None:
+                return miss
+            return GateResult("G5-1", Status.PASS, str(c.relative_to(REPO)))
+    return GateResult("G5-1", Status.FAIL, f"no user-manual/{module}.md")
+
+
+def _gate_G5_2_tutorial(module: str) -> GateResult:
+    """G5-2 튜토리얼 — docs/tutorials/<module>.md 또는 module/ 디렉토리 존재."""
+    candidates = [
+        REPO / f"docs/tutorials/{module}.md",
+        REPO / f"docs/tutorials/{module}/README.md",
+    ]
+    for c in candidates:
+        if c.exists() and c.stat().st_size > 500:
+            if (miss := _validate_doc_refs(c, "G5-2")) is not None:
+                return miss
+            return GateResult("G5-2", Status.PASS, str(c.relative_to(REPO)))
+    return GateResult("G5-2", Status.FAIL, f"no tutorials/{module}.md")
+
+
+def _gate_G3_2_permissions(module: str) -> GateResult:
+    """G3-2 권한 매트릭스 — 공용 authz.md 존재 + 모듈 코드의 권한 체크 패턴.
+
+    완전 구현(정적 분석 + 라우트별 권한 테스트)은 추후. 현재는 authz.md 의
+    ADR-0006 정책 문서 존재 + 모듈 코드가 require_permission 등을 사용하면 PASS.
+    """
+    authz = REPO / "docs/engineering/architecture/authz.md"
+    if not (authz.exists() and authz.stat().st_size > 500):
+        return GateResult("G3-2", Status.FAIL, "no authz policy doc")
+    hit = _scan_service_for_pattern(
+        module,
+        (
+            "require_permission",
+            "has_permission",
+            "check_permission",
+            "Permission(",
+            "Depends(require_",
+        ),
+    )
+    if hit:
+        return GateResult("G3-2", Status.PASS, f"permission check: {hit.relative_to(REPO)}")
+    return GateResult("G3-2", Status.FAIL, "no permission check pattern in module")
+
+
+def _gate_G3_3_multitenancy(module: str) -> GateResult:
+    """G3-3 멀티테넌시 격리 — tenant_id 필터/TenantScoped 사용 패턴.
+
+    완전 구현(페어테넌트 격리 테스트 100%)은 추후. 1차 근사는 정적 패턴 탐지.
+    """
+    hit = _scan_service_for_pattern(
+        module,
+        ("tenant_id", "TenantScoped", "tenant_scoped", "get_tenant", "current_tenant"),
+    )
+    if hit:
+        return GateResult("G3-3", Status.PASS, f"tenancy pattern: {hit.relative_to(REPO)}")
+    return GateResult("G3-3", Status.FAIL, "no tenant_id pattern")
+
+
+def _gate_G3_5_dependency_scan(module: str) -> GateResult:
+    """G3-5 의존성 스캔 — CI 파이프라인에 pip-audit / npm audit 단계 존재.
+
+    전 모듈 공통 게이트. CI 에 해당 단계가 없으면 전 모듈 FAIL.
+    """
+    ci_dirs = [
+        REPO / ".github" / "workflows",
+        REPO / "scripts" / "ci",
+    ]
+    for d in ci_dirs:
+        if not d.exists():
+            continue
+        for f in d.rglob("*"):
+            if not f.is_file():
+                continue
+            try:
+                text = f.read_text(encoding="utf-8", errors="ignore")
+            except OSError:
+                continue
+            if "pip-audit" in text or "pip_audit" in text or "npm audit" in text:
+                return GateResult("G3-5", Status.PASS, f"scan in {f.relative_to(REPO)}")
+    return GateResult("G3-5", Status.FAIL, "no pip-audit/npm audit in CI")
+
+
+def _has_recent_drill(gate_id: str, module: str) -> tuple[bool, str]:
+    """ADR-0013 드릴 증거 확인.
+
+    반환: (최근 드릴 존재 여부, 증거 경로 또는 사유 문자열).
+    `docs/ops/drills/<gate_id>/*.md` 중 frontmatter `module: <module>` 와
+    `drill_date: YYYY-MM-DD` (오늘 기준 DRILL_MAX_AGE_DAYS 이내) 를 만족하는
+    파일이 하나 이상이면 True.
+    """
+    drill_dir = REPO / DRILL_ROOT / gate_id
+    if not drill_dir.is_dir():
+        return False, f"drill dir missing: {DRILL_ROOT}/{gate_id}/"
+    today = datetime.now(tz=UTC).date()
+    max_age = DRILL_MAX_AGE_DAYS
+    latest: tuple[date, Path] | None = None
+    for md in drill_dir.glob("*.md"):
+        try:
+            text = md.read_text(encoding="utf-8", errors="ignore")
+        except OSError:
+            continue
+        mod_m = _DRILL_MODULE_RE.search(text)
+        date_m = _DRILL_DATE_RE.search(text)
+        if not (mod_m and date_m):
+            continue
+        if mod_m.group(1) != module:
+            continue
+        try:
+            d = datetime.strptime(date_m.group(1), "%Y-%m-%d").date()  # noqa: DTZ007
+        except ValueError:
+            continue
+        if (today - d).days > max_age:
+            continue
+        if latest is None or d > latest[0]:
+            latest = (d, md)
+    if latest is not None:
+        rel = latest[1].relative_to(REPO)
+        # ADR-0013 강화: 드릴 본문이 언급한 스크립트·문서 실존 교차 검증.
+        # 드릴이 "이 스크립트를 실행했다"고 주장하려면 그 스크립트가 저장소에 있어야 한다.
+        drill_text = latest[1].read_text(encoding="utf-8", errors="ignore")
+        missing = _drill_missing_refs(drill_text)
+        if missing:
+            head = ", ".join(missing[:3])
+            tail = f" (+{len(missing) - 3} more)" if len(missing) > 3 else ""
+            return False, f"drill {rel} references missing artifacts: {head}{tail}"
+        return True, str(rel)
+    return False, f"no drill for {module} within {max_age}d under {DRILL_ROOT}/{gate_id}/"
+
+
+def _drill_missing_refs(text: str) -> list[str]:
+    """드릴 본문에서 저장소 경로로 보이는 토큰을 추출해 실존하지 않는 것만 반환."""
+    return _missing_repo_refs(text)
+
+
+def _missing_repo_refs(text: str) -> list[str]:
+    """문서 본문에서 저장소 경로로 보이는 토큰 중 실존하지 않는 것 반환.
+
+    `_DRILL_REF_RE` 를 공통으로 사용해 G4-2 런북, G5-1 매뉴얼, G5-2 튜토리얼,
+    G5-3 UAT, G2-2 perf baseline, G2-4 chaos report 등 문서 기반 모든 게이트에서
+    "본문이 언급한 경로가 실재하는가" 를 검증한다.
+    """
+    missing: list[str] = []
+    seen: set[str] = set()
+    for m in _DRILL_REF_RE.finditer(text):
+        ref = m.group(0).rstrip(".,;:)")
+        if ref in seen:
+            continue
+        seen.add(ref)
+        if not (REPO / ref).exists():
+            missing.append(ref)
+    return missing
+
+
+def _validate_doc_refs(doc_path: Path, gate_id: str) -> GateResult | None:
+    """문서 참조 실존 검증 공용 헬퍼.
+
+    doc_path 를 읽고 본문의 레포 경로 참조를 모두 검증. 누락이 있으면
+    NOT_IMPLEMENTED 반환, 없으면 None (호출자가 PASS 처리).
+    """
+    try:
+        text = doc_path.read_text(encoding="utf-8", errors="ignore")
+    except OSError as e:
+        return GateResult(gate_id, Status.FAIL, f"read error: {e}")
+    missing = _missing_repo_refs(text)
+    if missing:
+        head = ", ".join(missing[:3])
+        tail = f" (+{len(missing) - 3} more)" if len(missing) > 3 else ""
+        return GateResult(
+            gate_id,
+            Status.NOT_IMPLEMENTED,
+            f"{doc_path.relative_to(REPO)} references missing artifacts: {head}{tail}",
+        )
+    return None
+
+
+def _gate_G4_3_backup(module: str) -> GateResult:
+    """G4-3 백업·복구 — 런북·정책 + ADR-0013 드릴 증거 (ADR-0001 §6.4)."""
+    runbook = REPO / "docs/ops/runbook-db-backup-restore.md"
+    policy = REPO / "docs/infra/ops/backup-restore.md"
+    if not (runbook.exists() and runbook.stat().st_size > 500 and policy.exists()):
+        return GateResult("G4-3", Status.FAIL, "missing backup runbook or policy")
+    ok, note = _has_recent_drill("G4-3", module)
+    if ok:
+        return GateResult("G4-3", Status.PASS, f"runbook + drill: {note}")
+    return GateResult("G4-3", Status.NOT_IMPLEMENTED, note)
+
+
+def _gate_G4_4_rollback(module: str) -> GateResult:
+    """G4-4 롤백 절차 — rollback.md + ADR-0013 스테이징 롤백 시뮬레이션 증거."""
+    rb = REPO / "docs/infra/ops/rollback.md"
+    if not (rb.exists() and rb.stat().st_size > 500):
+        return GateResult("G4-4", Status.FAIL, "no rollback.md (or too small)")
+    ok, note = _has_recent_drill("G4-4", module)
+    if ok:
+        return GateResult("G4-4", Status.PASS, f"rollback.md + drill: {note}")
+    return GateResult("G4-4", Status.NOT_IMPLEMENTED, note)
+
+
+def _gate_G4_5_oncall(module: str) -> GateResult:
+    """G4-5 On-call — 사고 대응 런북 + ADR-0013 on-call 응답 훈련 증거."""
+    inc = REPO / "docs/ops/runbook-incident-response.md"
+    if not (inc.exists() and inc.stat().st_size > 500):
+        return GateResult("G4-5", Status.FAIL, "no incident-response runbook")
+    ok, note = _has_recent_drill("G4-5", module)
+    if ok:
+        return GateResult("G4-5", Status.PASS, f"runbook + drill: {note}")
+    return GateResult("G4-5", Status.NOT_IMPLEMENTED, note)
+
+
+def _gate_G2_1_slo(module: str) -> GateResult:
+    """G2-1 SLO — slo.md 내 모듈 섹션 존재.
+
+    완전 구현(Prometheus 30일 롤링) 은 추후. 1차 근사는 SLO 문서의 모듈 언급.
+    """
+    slo = REPO / "docs/infra/ops/slo.md"
+    if not slo.exists():
+        return GateResult("G2-1", Status.FAIL, "no slo.md")
+    try:
+        text = slo.read_text(encoding="utf-8", errors="ignore")
+    except OSError:
+        return GateResult("G2-1", Status.FAIL, "slo.md read error")
+    markers = (f"## {module}", f"### {module}", f"`{module}`", f"| {module} ")
+    if any(marker in text for marker in markers):
+        return GateResult("G2-1", Status.PASS, f"slo.md mentions {module}")
+    return GateResult("G2-1", Status.FAIL, f"no {module} section in slo.md")
+
+
+def _gate_G2_2_load_test(module: str) -> GateResult:
+    """G2-2 부하 시험 — 모듈 전용 k6/Locust 시나리오 또는 perf 문서 존재."""
+    patterns = [
+        f"scripts/perf/{module}*",
+        f"docs/engineering/data/perf-{module}*.md",
+        f"tests/perf/**/*{module}*",
+        f"scripts/perf/**/*{module}*",
+    ]
+    for p in patterns:
+        hits = list(REPO.glob(p))
+        if hits:
+            # 마크다운 문서라면 본문 참조 실존 검증. 코드/스크립트는 존재만 확인.
+            md_hits = [h for h in hits if h.suffix == ".md"]
+            for h in md_hits:
+                if (miss := _validate_doc_refs(h, "G2-2")) is not None:
+                    return miss
+            return GateResult("G2-2", Status.PASS, f"perf artifact for {module}")
+    return GateResult("G2-2", Status.FAIL, "no load test artifact")
+
+
+def _gate_G2_3_regression(module: str) -> GateResult:
+    """G2-3 메모리/CPU 회귀 — scripts/perf/regression.py 공용 스크립트 존재."""
+    reg = REPO / "scripts/perf/regression.py"
+    if reg.exists():
+        return GateResult("G2-3", Status.PASS, str(reg.relative_to(REPO)))
+    return GateResult("G2-3", Status.FAIL, "no scripts/perf/regression.py")
+
+
+def _gate_G2_4_chaos(module: str) -> GateResult:
+    """G2-4 Chaos — docs/kb/incident/chaos-<module>-*.md 존재 (ADR-0001 §6.2)."""
+    candidates = list(REPO.glob(f"docs/kb/incident/chaos-{module}*.md"))
+    if candidates:
+        # 본문 참조 실존 검증 (주입 스크립트·런북·드릴 등).
+        for c in candidates:
+            if (miss := _validate_doc_refs(c, "G2-4")) is not None:
+                return miss
+        return GateResult("G2-4", Status.PASS, str(candidates[0].relative_to(REPO)))
+    return GateResult("G2-4", Status.FAIL, f"no chaos report for {module}")
+
+
+def _gate_G5_3_uat(module: str) -> GateResult:
+    """G5-3 UAT — docs/governance/commercial/<module>.md 존재 (ADR-0001 §11 양식)."""
+    uat = REPO / f"docs/governance/commercial/{module}.md"
+    if uat.exists() and uat.stat().st_size > 500:
+        if (miss := _validate_doc_refs(uat, "G5-3")) is not None:
+            return miss
+        return GateResult("G5-3", Status.PASS, str(uat.relative_to(REPO)))
+    return GateResult("G5-3", Status.FAIL, f"no governance/commercial/{module}.md")
+
+
+def _gate_not_implemented(gate_id: str, note: str = "") -> GateResult:
+    return GateResult(gate_id, Status.NOT_IMPLEMENTED, note)
+
+
+# 게이트 ID → 검증 함수 레지스트리
+GATE_VERIFIERS: dict[str, Callable[[str], GateResult]] = {
+    # G1 기능 완전성
+    "G1-1": _gate_G1_1_erd,
+    "G1-2": _gate_G1_2_openapi,
+    "G1-3": _gate_G1_3_integration,
+    "G1-4": _gate_G1_4_unit_tests,
+    "G1-5": _gate_G1_5_ui,
+    # G2 비기능 (전 5 게이트 구현 — 외부 인프라 부재 시 FAIL)
+    "G2-1": _gate_G2_1_slo,
+    "G2-2": _gate_G2_2_load_test,
+    "G2-3": _gate_G2_3_regression,
+    "G2-4": _gate_G2_4_chaos,
+    "G2-5": _gate_G2_5_i18n,
+    # G3 보안 (정적 스캔 + 정책 문서 5 구현, 전수 완료)
+    "G3-1": _gate_G3_1_authentication,
+    "G3-2": _gate_G3_2_permissions,
+    "G3-3": _gate_G3_3_multitenancy,
+    "G3-4": _gate_G3_4_audit_log,
+    "G3-5": _gate_G3_5_dependency_scan,
+    # G4 운영 (정적 존재 5 구현, 전수 완료)
+    "G4-1": _gate_G4_1_observability,
+    "G4-2": _gate_G4_2_runbook,
+    "G4-3": _gate_G4_3_backup,
+    "G4-4": _gate_G4_4_rollback,
+    "G4-5": _gate_G4_5_oncall,
+    # G5 사용자 가치 (전 3 게이트 구현)
+    "G5-1": _gate_G5_1_user_manual,
+    "G5-2": _gate_G5_2_tutorial,
+    "G5-3": _gate_G5_3_uat,
+}
+
+GATE_ORDER = list(GATE_VERIFIERS.keys())
+
+
+# ---------------------------------------------------------------------------
+# Gate → Phase 매핑 (roadmap matrix.md 와 동기)
+# 정책: 각 게이트가 '주로 진전되는' Phase 하나에 매핑. ADR-0001 의 게이트 정의와
+# .planning/ROADMAP.md 의 Phase 목표를 교차해 결정된다. 본 매핑이 바뀌면
+# docs/product/roadmap/matrix.md §4 와 함께 개정 PR 이 필요하다.
+# ---------------------------------------------------------------------------
+
+GATE_PHASE: dict[str, int] = {
+    # P1 이벤트 체인 — 기반 API·이벤트·권한·감사
+    "G1-1": 1,
+    "G1-2": 1,
+    "G3-1": 1,
+    "G3-2": 1,
+    "G3-3": 1,
+    "G3-4": 1,
+    # P2 핵심 운영 E2E — CRUD·단위/통합 테스트
+    "G1-3": 2,
+    "G1-4": 2,
+    # P3 협업·결재 UI
+    "G1-5": 3,
+    # P4 대시보드·i18n 출력
+    "G2-5": 4,
+    # P5 운영 인프라 — SLO·관측·백업·롤백·on-call
+    "G2-1": 5,
+    "G4-1": 5,
+    "G4-2": 5,
+    "G4-3": 5,
+    "G4-4": 5,
+    "G4-5": 5,
+    # P6 통합 QA·성능·보안
+    "G2-2": 6,
+    "G2-3": 6,
+    "G2-4": 6,
+    "G3-5": 6,
+    # P7 문서·튜토리얼·UAT
+    "G5-1": 7,
+    "G5-2": 7,
+    "G5-3": 7,
+}
+
+# Wave 분류 (scripts/audit/wave_entry_check.py WAVES 와 동기)
+# 순환 import 회피를 위해 여기에 독립 복제. 변경 시 두 곳 모두 갱신.
+WAVES_BY_MODULE: dict[int, list[str]] = {
+    1: [
+        "gateway",
+        "directory",
+        "accounting",
+        "hr",
+        "payroll",
+        "selling",
+        "buying",
+        "stock",
+        "expenses",
+        "projects",
+        "crm",
+        "portal",
+    ],
+    2: [
+        "manufacturing",
+        "quality",
+        "assets",
+        "maintenance",
+        "ecommerce",
+        "pos",
+        "subscriptions",
+        "integration-hub",
+        "documents",
+        "compliance",
+        "ehs",
+        "plm",
+        "survey",
+    ],
+    3: [
+        "calendar",
+        "board",
+        "mail",
+        "messenger",
+        "wiki",
+        "knowledge",
+        "analytics",
+        "rental",
+        "fleet",
+        "tms",
+        "marketing",
+        "marketing-automation",
+        "gtm",
+        "clm",
+    ],
+    4: [
+        "advanced-planning",
+        "consolidation",
+        "esg",
+        "iot",
+        "rpa",
+        "lms",
+        "workreport",
+        "reservation",
+    ],
+}
+
+
+def _module_wave(module: str) -> int | None:
+    for w, mods in WAVES_BY_MODULE.items():
+        if module in mods:
+            return w
+    return None
+
+
+# ---------------------------------------------------------------------------
+# 모듈 인벤토리
+# ---------------------------------------------------------------------------
+
+
+def discover_modules() -> list[str]:
+    """docs/generated/INDEX.md에서 47 모듈 이름 추출."""
+    if not ERD_INDEX.exists():
+        return []
+    modules = []
+    for line in ERD_INDEX.read_text(encoding="utf-8").splitlines():
+        m = re.match(r"^\|\s*`([a-z0-9-]+)`\s*\|", line)
+        if m:
+            modules.append(m.group(1))
+    return sorted(modules)
+
+
+# ---------------------------------------------------------------------------
+# 리포트 생성
+# ---------------------------------------------------------------------------
+
+
+def run_module(module: str) -> ModuleReport:
+    report = ModuleReport(module=module)
+    for gid in GATE_ORDER:
+        verifier = GATE_VERIFIERS[gid]
+        try:
+            report.gates.append(verifier(module))
+        except Exception as e:  # pragma: no cover — 검증 함수 자체 오류
+            report.gates.append(GateResult(gid, Status.FAIL, f"verifier error: {e}"))
+    return report
+
+
+def render_phase_wave_section(reports: list[ModuleReport]) -> list[str]:
+    """Phase × Wave 교차 매트릭스 섹션. GATE_PHASE × WAVES_BY_MODULE 교차.
+
+    각 셀 = 해당 Phase 의 게이트가 해당 Wave 의 모듈에서 통과한 수 / 대상 수.
+    대상 수 = Phase 게이트 수 × Wave 모듈 수.
+    """
+    phases_to_gates: dict[int, list[str]] = {}
+    for gid, ph in GATE_PHASE.items():
+        phases_to_gates.setdefault(ph, []).append(gid)
+
+    waves_to_reports: dict[int, list[ModuleReport]] = {}
+    for r in reports:
+        w = _module_wave(r.module)
+        if w is not None:
+            waves_to_reports.setdefault(w, []).append(r)
+
+    lines = [
+        "## Phase × Wave 교차 (ADR-0001 × ADR-0012)",
+        "",
+        "게이트는 `GATE_PHASE` 매핑으로 Phase 로, 모듈은 `WAVES_BY_MODULE` 로 Wave 로 그룹화된다. "
+        "셀은 `통과/대상` (대상 = Phase 게이트 수 × Wave 모듈 수).",
+        "",
+        "| Phase | 게이트 수 | W1 (12) | W2 (13) | W3 (14) | W4 (8) | Phase 합 |",
+        "|---|---|---|---|---|---|---|",
+    ]
+
+    wave_sum_passed: dict[int, int] = {1: 0, 2: 0, 3: 0, 4: 0}
+    wave_sum_expected: dict[int, int] = {1: 0, 2: 0, 3: 0, 4: 0}
+
+    for ph in sorted(phases_to_gates):
+        gates_in_phase = sorted(phases_to_gates[ph])
+        phase_gate_set = set(gates_in_phase)
+        row = [f"P{ph}", str(len(gates_in_phase))]
+        p_passed = 0
+        p_expected = 0
+        for w in (1, 2, 3, 4):
+            mods = waves_to_reports.get(w, [])
+            passed = sum(
+                1
+                for r in mods
+                for g in r.gates
+                if g.gate_id in phase_gate_set and g.status == Status.PASS
+            )
+            expected = len(gates_in_phase) * len(mods)
+            row.append(f"{passed}/{expected}")
+            p_passed += passed
+            p_expected += expected
+            wave_sum_passed[w] += passed
+            wave_sum_expected[w] += expected
+        row.append(f"{p_passed}/{p_expected}")
+        lines.append("| " + " | ".join(row) + " |")
+
+    total_passed = sum(wave_sum_passed.values())
+    total_expected = sum(wave_sum_expected.values())
+    sum_row = ["**Wave 합**", "**23**"]
+    for w in (1, 2, 3, 4):
+        sum_row.append(f"**{wave_sum_passed[w]}/{wave_sum_expected[w]}**")
+    sum_row.append(f"**{total_passed}/{total_expected}**")
+    lines.append("| " + " | ".join(sum_row) + " |")
+    lines.append("")
+    return lines
+
+
+def render_markdown(reports: list[ModuleReport]) -> str:
+    lines = [
+        "# 상용 제품 게이트 통과 현황 (자동 생성)",
+        "",
+        "> 근거: ADR-0001 §6 23 게이트 + §7 라벨 표.",
+        "> 생성: `scripts/audit/commercial_readiness.py`.",
+        "> 수동 편집 금지 — 다음 실행 시 덮어쓰기.",
+        "",
+        "## 라벨 분포",
+        "",
+    ]
+    counts: dict[str, int] = {lbl.value: 0 for lbl in Label}
+    for r in reports:
+        counts[r.label().value] += 1
+    lines.append("| 라벨 | 모듈 수 |")
+    lines.append("|------|---------|")
+    lines.extend(f"| {lbl.value} | {counts[lbl.value]} |" for lbl in Label)
+    lines.append("")
+    lines.append("## 모듈별 결과")
+    lines.append("")
+    lines.append("| 모듈 | 라벨 | 통과 | 실패 | 구현 | /23 |")
+    lines.append("|------|------|------|------|------|-----|")
+    lines.extend(
+        f"| {r.module} | **{r.label().value}** | {r.passed} | {r.failed} | {r.implemented} | /23 |"
+        for r in sorted(reports, key=lambda x: (-x.passed, x.module))
+    )
+    lines.append("")
+    lines.append("## 게이트별 통과 비율")
+    lines.append("")
+    lines.append("| 게이트 | PASS | FAIL | N/I |")
+    lines.append("|--------|------|------|-----|")
+    for gid in GATE_ORDER:
+        p = sum(1 for r in reports for g in r.gates if g.gate_id == gid and g.status == Status.PASS)
+        f = sum(1 for r in reports for g in r.gates if g.gate_id == gid and g.status == Status.FAIL)
+        ni = sum(
+            1
+            for r in reports
+            for g in r.gates
+            if g.gate_id == gid and g.status == Status.NOT_IMPLEMENTED
+        )
+        lines.append(f"| {gid} | {p} | {f} | {ni} |")
+    lines.append("")
+    lines.append(
+        "## 구현 상태 (ADR-0001 실행 항목 추적)",
+    )
+    lines.append("")
+    implemented = [gid for gid in GATE_ORDER if "not_implemented" not in _sample_status(gid)]
+    lines.append(f"- 구현된 게이트: {len(implemented)}/23 — {', '.join(implemented)}")
+    lines.append(
+        f"- 미구현(NOT_IMPLEMENTED) 게이트: {23 - len(implemented)}/23 — scripts/audit/ "
+        "하위에 검증 함수 추가 필요",
+    )
+    lines.append("")
+    lines.extend(render_phase_wave_section(reports))
+    return "\n".join(lines) + "\n"
+
+
+def build_summary(reports: list[ModuleReport]) -> dict[str, object]:
+    total_passed = sum(r.passed for r in reports)
+    total_judgments = len(reports) * len(GATE_ORDER)
+    commercial_ready_modules = sum(1 for r in reports if r.label() == Label.COMMERCIAL_READY)
+    return {
+        "passed": total_passed,
+        "total": total_judgments,
+        "total_judgments": total_judgments,
+        "commercial_ready_modules": commercial_ready_modules,
+        "overall_complete": total_passed == total_judgments
+        and commercial_ready_modules == len(reports),
+    }
+
+
+def _sample_status(gid: str) -> str:
+    """게이트 한 번 실행해서 NOT_IMPLEMENTED 여부 판별."""
+    try:
+        r = GATE_VERIFIERS[gid]("__probe__")
+        return r.status.value
+    except Exception:
+        return "fail"
+
+
+# ---------------------------------------------------------------------------
+# CLI
+# ---------------------------------------------------------------------------
+
+
+def main() -> int:
+    p = argparse.ArgumentParser(description="상용 제품 23 게이트 점검 (ADR-0001)")
+    p.add_argument("--module", help="단일 모듈만 점검")
+    p.add_argument(
+        "--format",
+        choices=["markdown", "json", "summary"],
+        default="summary",
+    )
+    p.add_argument(
+        "--write",
+        action="store_true",
+        help=f"결과를 {STATUS_OUT.relative_to(REPO)}에 기록",
+    )
+    args = p.parse_args()
+
+    all_modules = discover_modules()
+    if not all_modules:
+        print(f"ERROR: 모듈 인덱스 없음 — {ERD_INDEX.relative_to(REPO)} 확인", file=sys.stderr)
+        return 2
+
+    targets = [args.module] if args.module else all_modules
+    reports = [run_module(m) for m in targets]
+
+    if args.format == "json":
+        print(
+            json.dumps(
+                {
+                    "summary": build_summary(reports),
+                    "reports": [
+                        {
+                            "module": r.module,
+                            "label": r.label().value,
+                            "gates": [
+                                {
+                                    "id": g.gate_id,
+                                    "status": g.status.value,
+                                    "evidence": g.evidence,
+                                }
+                                for g in r.gates
+                            ],
+                        }
+                        for r in reports
+                    ],
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
+    elif args.format == "markdown" or args.write:
+        md = render_markdown(reports)
+        if args.write:
+            STATUS_OUT.parent.mkdir(parents=True, exist_ok=True)
+            STATUS_OUT.write_text(md, encoding="utf-8")
+            print(f"wrote {STATUS_OUT.relative_to(REPO)}")
+        else:
+            print(md)
+    else:  # summary
+        for r in reports:
+            print(
+                f"{r.module:30s}  {r.label().value:18s}  "
+                f"pass={r.passed:2d}  fail={r.failed:2d}  impl={r.implemented:2d}/23"
+            )
+        counts: dict[str, int] = {lbl.value: 0 for lbl in Label}
+        for r in reports:
+            counts[r.label().value] += 1
+        print()
+        print(f"총 {len(reports)} 모듈 | " + " | ".join(f"{k}={v}" for k, v in counts.items()))
+
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

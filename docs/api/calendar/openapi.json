@@ -1,0 +1,3187 @@
+{
+  "components": {
+    "schemas": {
+      "Calendar": {
+        "description": "캘린더 문서 — 일정 컨테이너.\n\nnaming prefix: CAL\nBR-CAL-001: 캘린더는 고유한 이름을 가져야 한다.\nBR-CAL-002: 캘린더는 소유자가 반드시 지정되어야 한다.",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "color": {
+            "default": "#1a73e8",
+            "description": "표시 색상",
+            "title": "Color",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "description": "설명",
+            "title": "Description",
+            "type": "string"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "name": {
+            "default": "",
+            "description": "캘린더 이름",
+            "title": "Name",
+            "type": "string"
+          },
+          "owner_id": {
+            "default": "",
+            "description": "소유자 ID",
+            "title": "Owner Id",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CalendarStatus",
+            "default": "active",
+            "description": "캘린더 상태"
+          },
+          "team_id": {
+            "default": "",
+            "description": "팀 ID (팀 캘린더)",
+            "title": "Team Id",
+            "type": "string"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "timezone": {
+            "default": "Asia/Seoul",
+            "description": "기본 시간대",
+            "title": "Timezone",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          },
+          "visibility": {
+            "$ref": "#/components/schemas/CalendarVisibility",
+            "default": "private",
+            "description": "가시성"
+          }
+        },
+        "title": "Calendar",
+        "type": "object"
+      },
+      "CalendarCreate": {
+        "description": "캘린더 생성 요청 스키마.",
+        "properties": {
+          "color": {
+            "default": "#1a73e8",
+            "title": "Color",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "owner_id": {
+            "title": "Owner Id",
+            "type": "string"
+          },
+          "team_id": {
+            "default": "",
+            "title": "Team Id",
+            "type": "string"
+          },
+          "timezone": {
+            "default": "Asia/Seoul",
+            "title": "Timezone",
+            "type": "string"
+          },
+          "visibility": {
+            "$ref": "#/components/schemas/CalendarVisibility",
+            "default": "private"
+          }
+        },
+        "required": [
+          "name",
+          "owner_id"
+        ],
+        "title": "CalendarCreate",
+        "type": "object"
+      },
+      "CalendarEventCreate": {
+        "description": "캘린더 이벤트 생성 요청 스키마.",
+        "properties": {
+          "all_day": {
+            "default": false,
+            "title": "All Day",
+            "type": "boolean"
+          },
+          "calendar_id": {
+            "title": "Calendar Id",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "end_dt": {
+            "format": "date-time",
+            "title": "End Dt",
+            "type": "string"
+          },
+          "event_type": {
+            "$ref": "#/components/schemas/EventType",
+            "default": "meeting"
+          },
+          "location": {
+            "default": "",
+            "title": "Location",
+            "type": "string"
+          },
+          "organizer_id": {
+            "default": "",
+            "title": "Organizer Id",
+            "type": "string"
+          },
+          "recurrence_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recurrence Count"
+          },
+          "recurrence_end_date": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recurrence End Date"
+          },
+          "recurrence_frequency": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RecurrenceFrequency"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "recurrence_interval": {
+            "default": 1,
+            "title": "Recurrence Interval",
+            "type": "integer"
+          },
+          "ref_docname": {
+            "default": "",
+            "title": "Ref Docname",
+            "type": "string"
+          },
+          "ref_doctype": {
+            "default": "",
+            "title": "Ref Doctype",
+            "type": "string"
+          },
+          "start_dt": {
+            "format": "date-time",
+            "title": "Start Dt",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "calendar_id",
+          "title",
+          "start_dt",
+          "end_dt"
+        ],
+        "title": "CalendarEventCreate",
+        "type": "object"
+      },
+      "CalendarEventUpdate": {
+        "description": "캘린더 이벤트 수정 요청 스키마.",
+        "properties": {
+          "all_day": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "All Day"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "end_dt": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Dt"
+          },
+          "event_type": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EventType"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "recurrence_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recurrence Count"
+          },
+          "recurrence_end_date": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recurrence End Date"
+          },
+          "recurrence_frequency": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RecurrenceFrequency"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "recurrence_interval": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recurrence Interval"
+          },
+          "start_dt": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start Dt"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EventStatus"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          }
+        },
+        "title": "CalendarEventUpdate",
+        "type": "object"
+      },
+      "CalendarStatus": {
+        "description": "캘린더 상태.",
+        "enum": [
+          "active",
+          "archived"
+        ],
+        "title": "CalendarStatus",
+        "type": "string"
+      },
+      "CalendarUpdate": {
+        "description": "캘린더 수정 요청 스키마.",
+        "properties": {
+          "color": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Color"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CalendarStatus"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "team_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Team Id"
+          },
+          "timezone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Timezone"
+          },
+          "visibility": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CalendarVisibility"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "title": "CalendarUpdate",
+        "type": "object"
+      },
+      "CalendarVisibility": {
+        "description": "캘린더 가시성.",
+        "enum": [
+          "private",
+          "public",
+          "team"
+        ],
+        "title": "CalendarVisibility",
+        "type": "string"
+      },
+      "DocStatus": {
+        "description": "문서 상태 — ERPNext 호환.",
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "title": "DocStatus",
+        "type": "integer"
+      },
+      "EventStatus": {
+        "description": "이벤트 상태.",
+        "enum": [
+          "draft",
+          "confirmed",
+          "cancelled"
+        ],
+        "title": "EventStatus",
+        "type": "string"
+      },
+      "EventType": {
+        "description": "이벤트 유형.",
+        "enum": [
+          "meeting",
+          "task",
+          "reminder",
+          "out_of_office",
+          "holiday",
+          "custom"
+        ],
+        "title": "EventType",
+        "type": "string"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "Invitee": {
+        "description": "초대자 문서.\n\nnaming prefix: CINV\nBR-CAL-020: 초대자는 이벤트에 소속되어야 한다.\nBR-CAL-022: 응답 상태: pending → accepted/declined/tentative.",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "email": {
+            "default": "",
+            "description": "이메일",
+            "title": "Email",
+            "type": "string"
+          },
+          "event_id": {
+            "default": "",
+            "description": "이벤트 ID",
+            "title": "Event Id",
+            "type": "string"
+          },
+          "is_required": {
+            "default": true,
+            "description": "필수 참석 여부",
+            "title": "Is Required",
+            "type": "boolean"
+          },
+          "response_comment": {
+            "default": "",
+            "description": "응답 코멘트",
+            "title": "Response Comment",
+            "type": "string"
+          },
+          "response_status": {
+            "$ref": "#/components/schemas/InviteeResponseStatus",
+            "default": "pending",
+            "description": "응답 상태"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          },
+          "user_id": {
+            "default": "",
+            "description": "사용자 ID",
+            "title": "User Id",
+            "type": "string"
+          },
+          "user_name": {
+            "default": "",
+            "description": "사용자 이름",
+            "title": "User Name",
+            "type": "string"
+          }
+        },
+        "title": "Invitee",
+        "type": "object"
+      },
+      "InviteeCreate": {
+        "description": "초대자 생성 요청 스키마.",
+        "properties": {
+          "email": {
+            "default": "",
+            "title": "Email",
+            "type": "string"
+          },
+          "event_id": {
+            "title": "Event Id",
+            "type": "string"
+          },
+          "is_required": {
+            "default": true,
+            "title": "Is Required",
+            "type": "boolean"
+          },
+          "user_id": {
+            "title": "User Id",
+            "type": "string"
+          },
+          "user_name": {
+            "default": "",
+            "title": "User Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "event_id",
+          "user_id"
+        ],
+        "title": "InviteeCreate",
+        "type": "object"
+      },
+      "InviteeResponseStatus": {
+        "description": "초대 응답 상태.",
+        "enum": [
+          "pending",
+          "accepted",
+          "declined",
+          "tentative"
+        ],
+        "title": "InviteeResponseStatus",
+        "type": "string"
+      },
+      "InviteeUpdate": {
+        "description": "초대자 수정 요청 스키마.",
+        "properties": {
+          "response_comment": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Response Comment"
+          },
+          "response_status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/InviteeResponseStatus"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "title": "InviteeUpdate",
+        "type": "object"
+      },
+      "PaginatedResponse_Calendar_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/Calendar"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[Calendar]",
+        "type": "object"
+      },
+      "PaginatedResponse_Invitee_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/Invitee"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[Invitee]",
+        "type": "object"
+      },
+      "PaginatedResponse_Reminder_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/Reminder"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[Reminder]",
+        "type": "object"
+      },
+      "PaginatedResponse_Resource_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/Resource"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[Resource]",
+        "type": "object"
+      },
+      "RecurrenceFrequency": {
+        "description": "반복 주기.",
+        "enum": [
+          "daily",
+          "weekly",
+          "monthly",
+          "yearly"
+        ],
+        "title": "RecurrenceFrequency",
+        "type": "string"
+      },
+      "Reminder": {
+        "description": "리마인더 문서.\n\nnaming prefix: CREM\nBR-CAL-030: 리마인더는 이벤트에 소속되어야 한다.\nBR-CAL-031: 알림 시간은 이벤트 시작 전이어야 한다.",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "event_id": {
+            "default": "",
+            "description": "이벤트 ID",
+            "title": "Event Id",
+            "type": "string"
+          },
+          "is_sent": {
+            "default": false,
+            "description": "발송 완료 여부",
+            "title": "Is Sent",
+            "type": "boolean"
+          },
+          "method": {
+            "$ref": "#/components/schemas/ReminderMethod",
+            "default": "push",
+            "description": "알림 방식"
+          },
+          "minutes_before": {
+            "default": 15,
+            "description": "이벤트 시작 N분 전 알림",
+            "title": "Minutes Before",
+            "type": "integer"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          }
+        },
+        "title": "Reminder",
+        "type": "object"
+      },
+      "ReminderCreate": {
+        "description": "리마인더 생성 요청 스키마.",
+        "properties": {
+          "event_id": {
+            "title": "Event Id",
+            "type": "string"
+          },
+          "method": {
+            "$ref": "#/components/schemas/ReminderMethod",
+            "default": "push"
+          },
+          "minutes_before": {
+            "default": 15,
+            "title": "Minutes Before",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "event_id"
+        ],
+        "title": "ReminderCreate",
+        "type": "object"
+      },
+      "ReminderMethod": {
+        "description": "알림 방식.",
+        "enum": [
+          "email",
+          "push",
+          "sms"
+        ],
+        "title": "ReminderMethod",
+        "type": "string"
+      },
+      "ReminderUpdate": {
+        "description": "리마인더 수정 요청 스키마.",
+        "properties": {
+          "is_sent": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Is Sent"
+          },
+          "method": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReminderMethod"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "minutes_before": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Minutes Before"
+          }
+        },
+        "title": "ReminderUpdate",
+        "type": "object"
+      },
+      "Resource": {
+        "description": "예약 가능 자원 문서.\n\nnaming prefix: CRES\nBR-CAL-040: 자원은 고유한 이름을 가져야 한다.",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "capacity": {
+            "default": 0,
+            "description": "최대 수용량",
+            "title": "Capacity",
+            "type": "integer"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "description": "설명",
+            "title": "Description",
+            "type": "string"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "location": {
+            "default": "",
+            "description": "위치",
+            "title": "Location",
+            "type": "string"
+          },
+          "name": {
+            "default": "",
+            "description": "자원 이름",
+            "title": "Name",
+            "type": "string"
+          },
+          "resource_type": {
+            "$ref": "#/components/schemas/ResourceType",
+            "default": "meeting_room",
+            "description": "자원 유형"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ResourceStatus",
+            "default": "available",
+            "description": "상태"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          }
+        },
+        "title": "Resource",
+        "type": "object"
+      },
+      "ResourceBookingCreate": {
+        "description": "자원 예약 생성 요청 스키마.",
+        "properties": {
+          "booked_by": {
+            "default": "",
+            "title": "Booked By",
+            "type": "string"
+          },
+          "end_dt": {
+            "format": "date-time",
+            "title": "End Dt",
+            "type": "string"
+          },
+          "event_id": {
+            "title": "Event Id",
+            "type": "string"
+          },
+          "resource_id": {
+            "title": "Resource Id",
+            "type": "string"
+          },
+          "start_dt": {
+            "format": "date-time",
+            "title": "Start Dt",
+            "type": "string"
+          }
+        },
+        "required": [
+          "event_id",
+          "resource_id",
+          "start_dt",
+          "end_dt"
+        ],
+        "title": "ResourceBookingCreate",
+        "type": "object"
+      },
+      "ResourceCreate": {
+        "description": "자원 생성 요청 스키마.",
+        "properties": {
+          "capacity": {
+            "default": 0,
+            "title": "Capacity",
+            "type": "integer"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "location": {
+            "default": "",
+            "title": "Location",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "resource_type": {
+            "$ref": "#/components/schemas/ResourceType",
+            "default": "meeting_room"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "ResourceCreate",
+        "type": "object"
+      },
+      "ResourceStatus": {
+        "description": "자원 상태.",
+        "enum": [
+          "available",
+          "maintenance",
+          "retired"
+        ],
+        "title": "ResourceStatus",
+        "type": "string"
+      },
+      "ResourceType": {
+        "description": "자원 유형.",
+        "enum": [
+          "meeting_room",
+          "equipment",
+          "vehicle",
+          "other"
+        ],
+        "title": "ResourceType",
+        "type": "string"
+      },
+      "ResourceUpdate": {
+        "description": "자원 수정 요청 스키마.",
+        "properties": {
+          "capacity": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Capacity"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "resource_type": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ResourceType"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ResourceStatus"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "title": "ResourceUpdate",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "contact": {
+      "name": "OneERP 개발팀"
+    },
+    "description": "OneERP Calendar 서비스 REST API",
+    "license": {
+      "name": "Proprietary"
+    },
+    "title": "OneERP Calendar API",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/v1/calendar-events": {
+      "get": {
+        "description": "캘린더 이벤트 목록을 조회한다.",
+        "operationId": "이벤트_목록_api_v1_calendar_events_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "calendar_id",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "Calendar Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response 이벤트 목록 Api V1 Calendar Events Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "이벤트 목록",
+        "tags": [
+          "캘린더 이벤트"
+        ]
+      },
+      "post": {
+        "description": "캘린더 이벤트를 생성한다.\n\nBR-CAL-010: 캘린더 존재 확인.\nBR-CAL-011: 날짜 유효성 검증.",
+        "operationId": "이벤트_생성_api_v1_calendar_events_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalendarEventCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response 이벤트 생성 Api V1 Calendar Events Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "이벤트 생성",
+        "tags": [
+          "캘린더 이벤트"
+        ]
+      }
+    },
+    "/api/v1/calendar-events/{doc_id}": {
+      "get": {
+        "description": "이벤트 상세 정보를 조회한다.",
+        "operationId": "이벤트_조회_api_v1_calendar_events__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response 이벤트 조회 Api V1 Calendar Events  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "이벤트 조회",
+        "tags": [
+          "캘린더 이벤트"
+        ]
+      },
+      "patch": {
+        "description": "이벤트를 수정한다.",
+        "operationId": "이벤트_수정_api_v1_calendar_events__doc_id__patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalendarEventUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response 이벤트 수정 Api V1 Calendar Events  Doc Id  Patch",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "이벤트 수정",
+        "tags": [
+          "캘린더 이벤트"
+        ]
+      }
+    },
+    "/api/v1/calendar-events/{doc_id}/cancel": {
+      "post": {
+        "description": "BR-CAL-014: 이벤트를 취소한다.",
+        "operationId": "이벤트_취소_api_v1_calendar_events__doc_id__cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response 이벤트 취소 Api V1 Calendar Events  Doc Id  Cancel Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "이벤트 취소",
+        "tags": [
+          "캘린더 이벤트"
+        ]
+      }
+    },
+    "/api/v1/calendar-events/{doc_id}/confirm": {
+      "post": {
+        "description": "BR-CAL-014: 이벤트를 확정한다.",
+        "operationId": "이벤트_확정_api_v1_calendar_events__doc_id__confirm_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response 이벤트 확정 Api V1 Calendar Events  Doc Id  Confirm Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "이벤트 확정",
+        "tags": [
+          "캘린더 이벤트"
+        ]
+      }
+    },
+    "/api/v1/calendar-events/{doc_id}/conflicts": {
+      "get": {
+        "description": "BR-CAL-015: 이벤트의 시간 충돌을 검사한다.",
+        "operationId": "충돌_검사_api_v1_calendar_events__doc_id__conflicts_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response 충돌 검사 Api V1 Calendar Events  Doc Id  Conflicts Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "충돌 검사",
+        "tags": [
+          "캘린더 이벤트"
+        ]
+      }
+    },
+    "/api/v1/calendar-events/{doc_id}/generate-recurrence": {
+      "post": {
+        "description": "BR-CAL-013: 반복 이벤트 인스턴스를 생성한다.",
+        "operationId": "반복_이벤트_생성_api_v1_calendar_events__doc_id__generate_recurrence_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response 반복 이벤트 생성 Api V1 Calendar Events  Doc Id  Generate Recurrence Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "반복 이벤트 생성",
+        "tags": [
+          "캘린더 이벤트"
+        ]
+      }
+    },
+    "/api/v1/calendar-events/{doc_id}/invitees": {
+      "post": {
+        "description": "BR-CAL-021: 이벤트에 초대자를 추가한다.",
+        "operationId": "초대자_추가_api_v1_calendar_events__doc_id__invitees_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "user_id",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "User Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "user_name",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "User Name",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "email",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "Email",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response 초대자 추가 Api V1 Calendar Events  Doc Id  Invitees Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "초대자 추가",
+        "tags": [
+          "캘린더 이벤트"
+        ]
+      }
+    },
+    "/api/v1/calendar-events/{doc_id}/respond": {
+      "post": {
+        "description": "BR-CAL-022: 초대에 응답한다.",
+        "operationId": "초대_응답_api_v1_calendar_events__doc_id__respond_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "response_status",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "Response Status",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "response_comment",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "Response Comment",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response 초대 응답 Api V1 Calendar Events  Doc Id  Respond Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "초대 응답",
+        "tags": [
+          "캘린더 이벤트"
+        ]
+      }
+    },
+    "/api/v1/calendars": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "calendar_목록_api_v1_calendars_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_Calendar_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Calendar 목록",
+        "tags": [
+          "캘린더"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "calendar_생성_api_v1_calendars_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalendarCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Calendar 생성 Api V1 Calendars Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Calendar 생성",
+        "tags": [
+          "캘린더"
+        ]
+      }
+    },
+    "/api/v1/calendars/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "calendar_삭제_api_v1_calendars__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Calendar 삭제",
+        "tags": [
+          "캘린더"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "calendar_조회_api_v1_calendars__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Calendar 조회 Api V1 Calendars  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Calendar 조회",
+        "tags": [
+          "캘린더"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "calendar_수정_api_v1_calendars__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalendarUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Calendar 수정 Api V1 Calendars  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Calendar 수정",
+        "tags": [
+          "캘린더"
+        ]
+      }
+    },
+    "/api/v1/holidays/business-days": {
+      "get": {
+        "description": "BR-CAL-063: 두 날짜 사이의 근무일 수를 계산한다.",
+        "operationId": "근무일_계산_api_v1_holidays_business_days_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "start_date",
+            "required": true,
+            "schema": {
+              "title": "Start Date",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "end_date",
+            "required": true,
+            "schema": {
+              "title": "End Date",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response 근무일 계산 Api V1 Holidays Business Days Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "근무일 계산",
+        "tags": [
+          "공휴일"
+        ]
+      }
+    },
+    "/api/v1/holidays/check": {
+      "get": {
+        "description": "특정 날짜가 공휴일인지 확인한다.",
+        "operationId": "공휴일_확인_api_v1_holidays_check_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "check_date",
+            "required": true,
+            "schema": {
+              "title": "Check Date",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response 공휴일 확인 Api V1 Holidays Check Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "공휴일 확인",
+        "tags": [
+          "공휴일"
+        ]
+      }
+    },
+    "/api/v1/holidays/range": {
+      "get": {
+        "description": "기간 내 공휴일 목록을 반환한다.",
+        "operationId": "기간별_공휴일_조회_api_v1_holidays_range_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "start_date",
+            "required": true,
+            "schema": {
+              "title": "Start Date",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "end_date",
+            "required": true,
+            "schema": {
+              "title": "End Date",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response 기간별 공휴일 조회 Api V1 Holidays Range Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "기간별 공휴일 조회",
+        "tags": [
+          "공휴일"
+        ]
+      }
+    },
+    "/api/v1/invitees": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "invitee_목록_api_v1_invitees_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_Invitee_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Invitee 목록",
+        "tags": [
+          "초대자"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "invitee_생성_api_v1_invitees_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InviteeCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Invitee 생성 Api V1 Invitees Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Invitee 생성",
+        "tags": [
+          "초대자"
+        ]
+      }
+    },
+    "/api/v1/invitees/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "invitee_삭제_api_v1_invitees__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Invitee 삭제",
+        "tags": [
+          "초대자"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "invitee_조회_api_v1_invitees__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Invitee 조회 Api V1 Invitees  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Invitee 조회",
+        "tags": [
+          "초대자"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "invitee_수정_api_v1_invitees__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InviteeUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Invitee 수정 Api V1 Invitees  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Invitee 수정",
+        "tags": [
+          "초대자"
+        ]
+      }
+    },
+    "/api/v1/reminders": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "reminder_목록_api_v1_reminders_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_Reminder_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Reminder 목록",
+        "tags": [
+          "리마인더"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "reminder_생성_api_v1_reminders_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReminderCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Reminder 생성 Api V1 Reminders Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Reminder 생성",
+        "tags": [
+          "리마인더"
+        ]
+      }
+    },
+    "/api/v1/reminders/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "reminder_삭제_api_v1_reminders__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Reminder 삭제",
+        "tags": [
+          "리마인더"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "reminder_조회_api_v1_reminders__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Reminder 조회 Api V1 Reminders  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Reminder 조회",
+        "tags": [
+          "리마인더"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "reminder_수정_api_v1_reminders__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReminderUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Reminder 수정 Api V1 Reminders  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Reminder 수정",
+        "tags": [
+          "리마인더"
+        ]
+      }
+    },
+    "/api/v1/resource-bookings": {
+      "get": {
+        "description": "자원 예약 목록을 조회한다.",
+        "operationId": "자원예약_목록_api_v1_resource_bookings_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "resource_id",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "Resource Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response 자원예약 목록 Api V1 Resource Bookings Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "자원예약 목록",
+        "tags": [
+          "자원 예약"
+        ]
+      },
+      "post": {
+        "description": "BR-CAL-050: 자원을 예약한다.",
+        "operationId": "자원예약_생성_api_v1_resource_bookings_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResourceBookingCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response 자원예약 생성 Api V1 Resource Bookings Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "자원예약 생성",
+        "tags": [
+          "자원 예약"
+        ]
+      }
+    },
+    "/api/v1/resource-bookings/availability": {
+      "get": {
+        "description": "자원의 가용 시간대를 조회한다.",
+        "operationId": "자원_가용성_조회_api_v1_resource_bookings_availability_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "resource_id",
+            "required": true,
+            "schema": {
+              "title": "Resource Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "start_dt",
+            "required": true,
+            "schema": {
+              "title": "Start Dt",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "end_dt",
+            "required": true,
+            "schema": {
+              "title": "End Dt",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response 자원 가용성 조회 Api V1 Resource Bookings Availability Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "자원 가용성 조회",
+        "tags": [
+          "자원 예약"
+        ]
+      }
+    },
+    "/api/v1/resource-bookings/{booking_id}/cancel": {
+      "post": {
+        "description": "자원 예약을 취소한다.",
+        "operationId": "자원예약_취소_api_v1_resource_bookings__booking_id__cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "booking_id",
+            "required": true,
+            "schema": {
+              "title": "Booking Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response 자원예약 취소 Api V1 Resource Bookings  Booking Id  Cancel Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "자원예약 취소",
+        "tags": [
+          "자원 예약"
+        ]
+      }
+    },
+    "/api/v1/resources": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "resource_목록_api_v1_resources_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_Resource_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Resource 목록",
+        "tags": [
+          "자원"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "resource_생성_api_v1_resources_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResourceCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Resource 생성 Api V1 Resources Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Resource 생성",
+        "tags": [
+          "자원"
+        ]
+      }
+    },
+    "/api/v1/resources/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "resource_삭제_api_v1_resources__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Resource 삭제",
+        "tags": [
+          "자원"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "resource_조회_api_v1_resources__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Resource 조회 Api V1 Resources  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Resource 조회",
+        "tags": [
+          "자원"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "resource_수정_api_v1_resources__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResourceUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Resource 수정 Api V1 Resources  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Resource 수정",
+        "tags": [
+          "자원"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "description": "서비스 상태를 확인한다 (하위 호환).",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Health Health Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/health/live": {
+      "get": {
+        "description": "Liveness probe — 프로세스 생존 확인.",
+        "operationId": "liveness_health_live_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Liveness Health Live Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Liveness",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "description": "Readiness probe — DB/NATS/Valkey 연결 포함 서비스 준비 상태 확인.",
+        "operationId": "readiness_health_ready_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Readiness",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/health/startup": {
+      "get": {
+        "description": "Startup probe — 서비스 초기화 완료 확인 (readiness와 동일).",
+        "operationId": "startup_health_startup_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Startup",
+        "tags": [
+          "health"
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/calendar"
+    },
+    {
+      "description": "현재 서버",
+      "url": "/"
+    }
+  ],
+  "tags": [
+    {
+      "description": "캘린더 API",
+      "name": "캘린더"
+    },
+    {
+      "description": "자원 API",
+      "name": "자원"
+    },
+    {
+      "description": "초대자 API",
+      "name": "초대자"
+    },
+    {
+      "description": "리마인더 API",
+      "name": "리마인더"
+    }
+  ]
+}

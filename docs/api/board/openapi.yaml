@@ -1,0 +1,5132 @@
+components:
+  schemas:
+    Attachment:
+      description: '첨부파일 문서.
+
+
+        BR-BRD-007: 파일 크기는 board.max_attachment_size_mb 이하,
+
+        게시글당 파일 수는 board.max_attachments_per_post 이하.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        checksum:
+          default: ''
+          title: Checksum
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        deleted_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deleted At
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        download_count:
+          default: 0
+          title: Download Count
+          type: integer
+        file_extension:
+          default: ''
+          title: File Extension
+          type: string
+        file_key:
+          default: ''
+          title: File Key
+          type: string
+        file_name:
+          default: ''
+          title: File Name
+          type: string
+        file_size:
+          default: 0
+          title: File Size
+          type: integer
+        mime_type:
+          default: ''
+          title: Mime Type
+          type: string
+        post_id:
+          default: ''
+          title: Post Id
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        thumbnail_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Thumbnail Key
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        uploaded_by:
+          default: ''
+          title: Uploaded By
+          type: string
+      title: Attachment
+      type: object
+    AttachmentCreate:
+      description: 첨부파일 생성 요청 스키마.
+      properties:
+        checksum:
+          title: Checksum
+          type: string
+        file_extension:
+          title: File Extension
+          type: string
+        file_key:
+          title: File Key
+          type: string
+        file_name:
+          title: File Name
+          type: string
+        file_size:
+          title: File Size
+          type: integer
+        mime_type:
+          title: Mime Type
+          type: string
+        post_id:
+          title: Post Id
+          type: string
+        thumbnail_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Thumbnail Key
+        uploaded_by:
+          default: ''
+          title: Uploaded By
+          type: string
+      required:
+      - post_id
+      - file_name
+      - file_key
+      - file_size
+      - mime_type
+      - file_extension
+      - checksum
+      title: AttachmentCreate
+      type: object
+    AttachmentUpdate:
+      description: 첨부파일 수정 요청 스키마.
+      properties:
+        thumbnail_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Thumbnail Key
+      title: AttachmentUpdate
+      type: object
+    AuditLog:
+      description: '감사 로그 문서.
+
+
+        게시판 모듈의 모든 주요 행위(CRUD, 좋아요, 북마크, 신고)를 기록한다.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        action:
+          default: ''
+          title: Action
+          type: string
+        actor_id:
+          default: ''
+          title: Actor Id
+          type: string
+        actor_ip:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Actor Ip
+        changes:
+          additionalProperties: true
+          title: Changes
+          type: object
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        entity_id:
+          default: ''
+          title: Entity Id
+          type: string
+        entity_type:
+          default: ''
+          title: Entity Type
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: AuditLog
+      type: object
+    AuditLogCreate:
+      description: 감사 로그 생성 요청 스키마.
+      properties:
+        action:
+          title: Action
+          type: string
+        actor_id:
+          title: Actor Id
+          type: string
+        actor_ip:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Actor Ip
+        changes:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Changes
+        entity_id:
+          title: Entity Id
+          type: string
+        entity_type:
+          title: Entity Type
+          type: string
+      required:
+      - entity_type
+      - entity_id
+      - action
+      - actor_id
+      title: AuditLogCreate
+      type: object
+    AuditLogUpdate:
+      description: 감사 로그 수정 요청 스키마 (사용하지 않음).
+      properties: {}
+      title: AuditLogUpdate
+      type: object
+    AutoPostRule:
+      description: '자동 공지 게시 규칙 문서.
+
+
+        BR-BRD-015: 매칭되는 이벤트 수신 시 title_template/content_template을
+
+        이벤트 데이터로 렌더링하여 자동 게시글 생성.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        content_template:
+          default: ''
+          title: Content Template
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        is_active:
+          default: true
+          title: Is Active
+          type: boolean
+        is_must_read:
+          default: false
+          title: Is Must Read
+          type: boolean
+        must_read_target:
+          anyOf:
+          - $ref: '#/components/schemas/MustReadTarget'
+          - type: 'null'
+        rule_name:
+          default: ''
+          title: Rule Name
+          type: string
+        source_document_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Document Type
+        source_event:
+          default: ''
+          title: Source Event
+          type: string
+        target_board_id:
+          default: ''
+          title: Target Board Id
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        title_template:
+          default: ''
+          title: Title Template
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: AutoPostRule
+      type: object
+    AutoPostRuleCreate:
+      description: 자동 공지 규칙 생성 요청 스키마.
+      properties:
+        content_template:
+          title: Content Template
+          type: string
+        is_active:
+          default: true
+          title: Is Active
+          type: boolean
+        is_must_read:
+          default: false
+          title: Is Must Read
+          type: boolean
+        must_read_target:
+          anyOf:
+          - $ref: '#/components/schemas/MustReadTarget'
+          - type: 'null'
+        rule_name:
+          title: Rule Name
+          type: string
+        source_document_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Document Type
+        source_event:
+          title: Source Event
+          type: string
+        target_board_id:
+          title: Target Board Id
+          type: string
+        title_template:
+          title: Title Template
+          type: string
+      required:
+      - rule_name
+      - source_event
+      - target_board_id
+      - title_template
+      - content_template
+      title: AutoPostRuleCreate
+      type: object
+    AutoPostRuleUpdate:
+      description: 자동 공지 규칙 수정 요청 스키마.
+      properties:
+        content_template:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Content Template
+        is_active:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Active
+        is_must_read:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Must Read
+        must_read_target:
+          anyOf:
+          - $ref: '#/components/schemas/MustReadTarget'
+          - type: 'null'
+        rule_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Rule Name
+        source_document_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Document Type
+        source_event:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Event
+        target_board_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Target Board Id
+        title_template:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Title Template
+      title: AutoPostRuleUpdate
+      type: object
+    Board:
+      description: '게시판 문서.
+
+
+        BR-BRD-001: 동일 테넌트 내 게시판명 중복 불가.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        allow_anonymous:
+          default: false
+          title: Allow Anonymous
+          type: boolean
+        allow_attachments:
+          default: true
+          title: Allow Attachments
+          type: boolean
+        allow_comments:
+          default: true
+          title: Allow Comments
+          type: boolean
+        auto_archive_days:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Auto Archive Days
+        board_name:
+          default: ''
+          title: Board Name
+          type: string
+        board_type:
+          $ref: '#/components/schemas/BoardType'
+          default: general
+        categories:
+          items:
+            type: string
+          title: Categories
+          type: array
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        deleted_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deleted At
+        description:
+          default: ''
+          title: Description
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        is_active:
+          default: true
+          title: Is Active
+          type: boolean
+        max_attachment_size_mb:
+          default: 50
+          title: Max Attachment Size Mb
+          type: integer
+        max_attachments_per_post:
+          default: 10
+          title: Max Attachments Per Post
+          type: integer
+        notification_settings:
+          $ref: '#/components/schemas/NotificationConfig'
+        scope:
+          $ref: '#/components/schemas/BoardScope'
+          default: company
+        scope_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Scope Id
+        sort_order:
+          default: 0
+          title: Sort Order
+          type: integer
+        template_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Template Id
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: Board
+      type: object
+    BoardCreate:
+      description: 게시판 생성 요청 스키마.
+      properties:
+        allow_anonymous:
+          default: false
+          title: Allow Anonymous
+          type: boolean
+        allow_attachments:
+          default: true
+          title: Allow Attachments
+          type: boolean
+        allow_comments:
+          default: true
+          title: Allow Comments
+          type: boolean
+        auto_archive_days:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Auto Archive Days
+        board_name:
+          title: Board Name
+          type: string
+        board_type:
+          $ref: '#/components/schemas/BoardType'
+          default: general
+        categories:
+          items:
+            type: string
+          title: Categories
+          type: array
+        description:
+          default: ''
+          title: Description
+          type: string
+        is_active:
+          default: true
+          title: Is Active
+          type: boolean
+        max_attachment_size_mb:
+          default: 50
+          title: Max Attachment Size Mb
+          type: integer
+        max_attachments_per_post:
+          default: 10
+          title: Max Attachments Per Post
+          type: integer
+        notification_settings:
+          anyOf:
+          - $ref: '#/components/schemas/NotificationConfig'
+          - type: 'null'
+        scope:
+          $ref: '#/components/schemas/BoardScope'
+          default: company
+        scope_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Scope Id
+        sort_order:
+          default: 0
+          title: Sort Order
+          type: integer
+        template_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Template Id
+      required:
+      - board_name
+      title: BoardCreate
+      type: object
+    BoardPermission:
+      description: '게시판 권한 문서.
+
+
+        권한 계층: read(1) < write(2) < manage(3).
+
+        사용자의 최대 권한 수준을 반환한다.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        board_id:
+          default: ''
+          title: Board Id
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        granted_by:
+          default: ''
+          title: Granted By
+          type: string
+        grantee_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Grantee Id
+        grantee_type:
+          $ref: '#/components/schemas/GranteeType'
+          default: all
+        is_active:
+          default: true
+          title: Is Active
+          type: boolean
+        permission:
+          $ref: '#/components/schemas/PermissionLevel'
+          default: read
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: BoardPermission
+      type: object
+    BoardPermissionCreate:
+      description: 게시판 권한 생성 요청 스키마.
+      properties:
+        board_id:
+          title: Board Id
+          type: string
+        granted_by:
+          default: ''
+          title: Granted By
+          type: string
+        grantee_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Grantee Id
+        grantee_type:
+          $ref: '#/components/schemas/GranteeType'
+        is_active:
+          default: true
+          title: Is Active
+          type: boolean
+        permission:
+          $ref: '#/components/schemas/PermissionLevel'
+      required:
+      - board_id
+      - grantee_type
+      - permission
+      title: BoardPermissionCreate
+      type: object
+    BoardPermissionUpdate:
+      description: 게시판 권한 수정 요청 스키마.
+      properties:
+        is_active:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Active
+        permission:
+          anyOf:
+          - $ref: '#/components/schemas/PermissionLevel'
+          - type: 'null'
+      title: BoardPermissionUpdate
+      type: object
+    BoardScope:
+      description: 게시판 범위.
+      enum:
+      - company
+      - department
+      - group
+      - project
+      title: BoardScope
+      type: string
+    BoardType:
+      description: 게시판 유형.
+      enum:
+      - notice
+      - general
+      - qna
+      - suggestion
+      - gallery
+      - anonymous
+      title: BoardType
+      type: string
+    BoardUpdate:
+      description: 게시판 수정 요청 스키마.
+      properties:
+        allow_anonymous:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Allow Anonymous
+        allow_attachments:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Allow Attachments
+        allow_comments:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Allow Comments
+        auto_archive_days:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Auto Archive Days
+        board_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Board Name
+        board_type:
+          anyOf:
+          - $ref: '#/components/schemas/BoardType'
+          - type: 'null'
+        categories:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Categories
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        is_active:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Active
+        max_attachment_size_mb:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Max Attachment Size Mb
+        max_attachments_per_post:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Max Attachments Per Post
+        notification_settings:
+          anyOf:
+          - $ref: '#/components/schemas/NotificationConfig'
+          - type: 'null'
+        scope:
+          anyOf:
+          - $ref: '#/components/schemas/BoardScope'
+          - type: 'null'
+        scope_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Scope Id
+        sort_order:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Sort Order
+        template_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Template Id
+      title: BoardUpdate
+      type: object
+    BookmarkResponse:
+      description: 북마크 토글 응답.
+      properties:
+        bookmark_count:
+          title: Bookmark Count
+          type: integer
+        bookmarked:
+          title: Bookmarked
+          type: boolean
+        post_id:
+          title: Post Id
+          type: string
+      required:
+      - post_id
+      - bookmarked
+      - bookmark_count
+      title: BookmarkResponse
+      type: object
+    Comment:
+      description: '댓글 문서.
+
+
+        BR-BRD-008: 대댓글 최대 깊이는 3(depth=0~3).
+
+        depth=3인 댓글에는 대댓글 불가.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        author_id:
+          default: ''
+          title: Author Id
+          type: string
+        author_name:
+          default: ''
+          title: Author Name
+          type: string
+        content:
+          default: ''
+          title: Content
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        deleted_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deleted At
+        depth:
+          default: 0
+          title: Depth
+          type: integer
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        is_anonymous:
+          default: false
+          title: Is Anonymous
+          type: boolean
+        is_deleted:
+          default: false
+          title: Is Deleted
+          type: boolean
+        like_count:
+          default: 0
+          title: Like Count
+          type: integer
+        mentions:
+          items:
+            type: string
+          title: Mentions
+          type: array
+        parent_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Parent Id
+        post_id:
+          default: ''
+          title: Post Id
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: Comment
+      type: object
+    CommentCreate:
+      description: 댓글 생성 요청 스키마.
+      properties:
+        content:
+          title: Content
+          type: string
+        is_anonymous:
+          default: false
+          title: Is Anonymous
+          type: boolean
+        mentions:
+          items:
+            type: string
+          title: Mentions
+          type: array
+        parent_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Parent Id
+      required:
+      - content
+      title: CommentCreate
+      type: object
+    CommentUpdate:
+      description: 댓글 수정 요청 스키마.
+      properties:
+        content:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Content
+      title: CommentUpdate
+      type: object
+    DocStatus:
+      description: 문서 상태 — ERPNext 호환.
+      enum:
+      - 0
+      - 1
+      - 2
+      title: DocStatus
+      type: integer
+    GranteeType:
+      description: 권한 대상 유형.
+      enum:
+      - user
+      - department
+      - group
+      - role
+      - all
+      title: GranteeType
+      type: string
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    LikeResponse:
+      description: 좋아요 토글 응답.
+      properties:
+        like_count:
+          title: Like Count
+          type: integer
+        liked:
+          title: Liked
+          type: boolean
+        post_id:
+          title: Post Id
+          type: string
+      required:
+      - post_id
+      - liked
+      - like_count
+      title: LikeResponse
+      type: object
+    MustReadTarget:
+      description: 필독 대상 설정 — 임베디드 객체.
+      properties:
+        exclude_ids:
+          items:
+            type: string
+          title: Exclude Ids
+          type: array
+        target_ids:
+          items:
+            type: string
+          title: Target Ids
+          type: array
+        target_type:
+          default: all
+          title: Target Type
+          type: string
+      title: MustReadTarget
+      type: object
+    NotificationConfig:
+      description: 알림 설정 — 임베디드 객체.
+      properties:
+        notify_channels:
+          items:
+            type: string
+          title: Notify Channels
+          type: array
+        notify_on_comment:
+          default: true
+          title: Notify On Comment
+          type: boolean
+        notify_on_new_post:
+          default: true
+          title: Notify On New Post
+          type: boolean
+      title: NotificationConfig
+      type: object
+    PaginatedResponse_Attachment_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Attachment'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[Attachment]
+      type: object
+    PaginatedResponse_AuditLog_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/AuditLog'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[AuditLog]
+      type: object
+    PaginatedResponse_AutoPostRule_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/AutoPostRule'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[AutoPostRule]
+      type: object
+    PaginatedResponse_BoardPermission_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/BoardPermission'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[BoardPermission]
+      type: object
+    PaginatedResponse_Board_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Board'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[Board]
+      type: object
+    PaginatedResponse_Comment_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Comment'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[Comment]
+      type: object
+    PaginatedResponse_PopupNotice_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/PopupNotice'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[PopupNotice]
+      type: object
+    PaginatedResponse_PostBookmark_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/PostBookmark'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[PostBookmark]
+      type: object
+    PaginatedResponse_PostLike_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/PostLike'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[PostLike]
+      type: object
+    PaginatedResponse_PostReport_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/PostReport'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[PostReport]
+      type: object
+    PaginatedResponse_Post_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Post'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[Post]
+      type: object
+    PaginatedResponse_ReadConfirmation_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ReadConfirmation'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[ReadConfirmation]
+      type: object
+    PermissionLevel:
+      description: 권한 수준.
+      enum:
+      - read
+      - write
+      - manage
+      title: PermissionLevel
+      type: string
+    PopupNotice:
+      description: '팝업 공지 문서.
+
+
+        BR-BRD-005: 시스템 관리자 또는 board:manage 권한 보유자만 생성 가능.
+
+        BR-BRD-012: end_at > start_at, 최대 기간 90일.
+
+        BR-BRD-018: 테넌트당 동시 활성 팝업 최대 5개.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        confirmed_count:
+          default: 0
+          title: Confirmed Count
+          type: integer
+        content:
+          default: ''
+          title: Content
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        display_order:
+          default: 0
+          title: Display Order
+          type: integer
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        end_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: End At
+        is_active:
+          default: true
+          title: Is Active
+          type: boolean
+        post_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Post Id
+        priority:
+          $ref: '#/components/schemas/PopupPriority'
+          default: normal
+        require_confirm:
+          default: false
+          title: Require Confirm
+          type: boolean
+        show_frequency:
+          $ref: '#/components/schemas/ShowFrequency'
+          default: once
+        show_on_login:
+          default: true
+          title: Show On Login
+          type: boolean
+        start_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Start At
+        target:
+          $ref: '#/components/schemas/PopupTarget'
+        tenant_id:
+          title: Tenant Id
+          type: string
+        title:
+          default: ''
+          title: Title
+          type: string
+        total_target_count:
+          default: 0
+          title: Total Target Count
+          type: integer
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: PopupNotice
+      type: object
+    PopupNoticeCreate:
+      description: 팝업 공지 생성 요청 스키마.
+      properties:
+        content:
+          title: Content
+          type: string
+        display_order:
+          default: 0
+          title: Display Order
+          type: integer
+        end_at:
+          format: date-time
+          title: End At
+          type: string
+        is_active:
+          default: true
+          title: Is Active
+          type: boolean
+        post_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Post Id
+        priority:
+          $ref: '#/components/schemas/PopupPriority'
+          default: normal
+        require_confirm:
+          default: false
+          title: Require Confirm
+          type: boolean
+        show_frequency:
+          $ref: '#/components/schemas/ShowFrequency'
+          default: once
+        show_on_login:
+          default: true
+          title: Show On Login
+          type: boolean
+        start_at:
+          format: date-time
+          title: Start At
+          type: string
+        target:
+          $ref: '#/components/schemas/PopupTarget'
+        title:
+          title: Title
+          type: string
+      required:
+      - title
+      - content
+      - target
+      - start_at
+      - end_at
+      title: PopupNoticeCreate
+      type: object
+    PopupNoticeUpdate:
+      description: 팝업 공지 수정 요청 스키마.
+      properties:
+        content:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Content
+        display_order:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Display Order
+        end_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: End At
+        is_active:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Active
+        priority:
+          anyOf:
+          - $ref: '#/components/schemas/PopupPriority'
+          - type: 'null'
+        require_confirm:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Require Confirm
+        show_frequency:
+          anyOf:
+          - $ref: '#/components/schemas/ShowFrequency'
+          - type: 'null'
+        show_on_login:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Show On Login
+        start_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Start At
+        target:
+          anyOf:
+          - $ref: '#/components/schemas/PopupTarget'
+          - type: 'null'
+        title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Title
+      title: PopupNoticeUpdate
+      type: object
+    PopupPriority:
+      description: 팝업 우선순위.
+      enum:
+      - low
+      - normal
+      - high
+      - urgent
+      title: PopupPriority
+      type: string
+    PopupTarget:
+      description: 팝업 대상 — 임베디드 객체.
+      properties:
+        exclude_ids:
+          items:
+            type: string
+          title: Exclude Ids
+          type: array
+        target_ids:
+          items:
+            type: string
+          title: Target Ids
+          type: array
+        target_type:
+          default: all
+          title: Target Type
+          type: string
+      title: PopupTarget
+      type: object
+    Post:
+      description: '게시글 문서.
+
+
+        BR-BRD-002: 게시글 작성 시 게시판 write 이상 권한 필요.
+
+        BR-BRD-006: 예약 발행 시각은 현재보다 5분 이상 이후.
+
+        BR-BRD-009: 익명 글은 allow_anonymous=true 게시판만 가능.
+
+        BR-BRD-016: category는 게시판 categories 목록에 포함 필수.
+
+        BR-BRD-017: 게시판당 상단 고정 최대 10개.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        author_id:
+          default: ''
+          title: Author Id
+          type: string
+        author_name:
+          default: ''
+          title: Author Name
+          type: string
+        board_id:
+          default: ''
+          title: Board Id
+          type: string
+        bookmark_count:
+          default: 0
+          title: Bookmark Count
+          type: integer
+        category:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Category
+        comment_count:
+          default: 0
+          title: Comment Count
+          type: integer
+        content:
+          default: ''
+          title: Content
+          type: string
+        content_plain:
+          default: ''
+          title: Content Plain
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        deleted_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deleted At
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        is_anonymous:
+          default: false
+          title: Is Anonymous
+          type: boolean
+        is_must_read:
+          default: false
+          title: Is Must Read
+          type: boolean
+        is_notice:
+          default: false
+          title: Is Notice
+          type: boolean
+        is_pinned:
+          default: false
+          title: Is Pinned
+          type: boolean
+        like_count:
+          default: 0
+          title: Like Count
+          type: integer
+        must_read_deadline:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Must Read Deadline
+        must_read_target:
+          anyOf:
+          - $ref: '#/components/schemas/MustReadTarget'
+          - type: 'null'
+        pin_order:
+          default: 0
+          title: Pin Order
+          type: integer
+        published_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Published At
+        revision_count:
+          default: 0
+          title: Revision Count
+          type: integer
+        revision_history:
+          items:
+            $ref: '#/components/schemas/RevisionEntry'
+          title: Revision History
+          type: array
+        scheduled_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Scheduled At
+        source_ref:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Ref
+        source_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Type
+        status:
+          $ref: '#/components/schemas/PostStatus'
+          default: draft
+        tags:
+          items:
+            type: string
+          title: Tags
+          type: array
+        tenant_id:
+          title: Tenant Id
+          type: string
+        title:
+          default: ''
+          title: Title
+          type: string
+        translations:
+          additionalProperties:
+            $ref: '#/components/schemas/TranslationEntry'
+          title: Translations
+          type: object
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        view_count:
+          default: 0
+          title: View Count
+          type: integer
+      title: Post
+      type: object
+    PostBookmark:
+      description: '게시글 북마크 문서.
+
+
+        BR-BRD-014: 동일 사용자-게시글 조합은 유니크.
+
+        토글 방식: 존재하면 삭제, 없으면 생성.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        post_id:
+          default: ''
+          title: Post Id
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        user_id:
+          default: ''
+          title: User Id
+          type: string
+      title: PostBookmark
+      type: object
+    PostBookmarkCreate:
+      description: 북마크 생성 요청 스키마.
+      properties:
+        post_id:
+          title: Post Id
+          type: string
+        user_id:
+          title: User Id
+          type: string
+      required:
+      - post_id
+      - user_id
+      title: PostBookmarkCreate
+      type: object
+    PostBookmarkUpdate:
+      description: 북마크 수정 요청 스키마 (사용하지 않음).
+      properties: {}
+      title: PostBookmarkUpdate
+      type: object
+    PostCreate:
+      description: 게시글 생성 요청 스키마.
+      properties:
+        author_id:
+          default: ''
+          title: Author Id
+          type: string
+        author_name:
+          default: ''
+          title: Author Name
+          type: string
+        category:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Category
+        content:
+          title: Content
+          type: string
+        content_plain:
+          default: ''
+          title: Content Plain
+          type: string
+        is_anonymous:
+          default: false
+          title: Is Anonymous
+          type: boolean
+        is_must_read:
+          default: false
+          title: Is Must Read
+          type: boolean
+        is_notice:
+          default: false
+          title: Is Notice
+          type: boolean
+        is_pinned:
+          default: false
+          title: Is Pinned
+          type: boolean
+        must_read_deadline:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Must Read Deadline
+        must_read_target:
+          anyOf:
+          - $ref: '#/components/schemas/MustReadTarget'
+          - type: 'null'
+        pin_order:
+          default: 0
+          title: Pin Order
+          type: integer
+        scheduled_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Scheduled At
+        source_ref:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Ref
+        source_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Type
+        status:
+          $ref: '#/components/schemas/PostStatus'
+          default: draft
+        tags:
+          items:
+            type: string
+          title: Tags
+          type: array
+        title:
+          title: Title
+          type: string
+      required:
+      - title
+      - content
+      title: PostCreate
+      type: object
+    PostLike:
+      description: '게시글 좋아요 문서.
+
+
+        BR-BRD-014: 동일 사용자-게시글 조합은 유니크.
+
+        토글 방식: 존재하면 삭제, 없으면 생성.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        post_id:
+          default: ''
+          title: Post Id
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        user_id:
+          default: ''
+          title: User Id
+          type: string
+      title: PostLike
+      type: object
+    PostLikeCreate:
+      description: 좋아요 생성 요청 스키마.
+      properties:
+        post_id:
+          title: Post Id
+          type: string
+        user_id:
+          title: User Id
+          type: string
+      required:
+      - post_id
+      - user_id
+      title: PostLikeCreate
+      type: object
+    PostLikeUpdate:
+      description: 좋아요 수정 요청 스키마 (사용하지 않음).
+      properties: {}
+      title: PostLikeUpdate
+      type: object
+    PostReport:
+      description: '게시글 신고 문서.
+
+
+        BR-BRD-019: 동일 사용자가 동일 게시글에 pending 상태 신고 중복 불가.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        action_note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Action Note
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        description:
+          default: ''
+          title: Description
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        post_id:
+          default: ''
+          title: Post Id
+          type: string
+        reason:
+          $ref: '#/components/schemas/ReportReason'
+          default: other
+        reporter_id:
+          default: ''
+          title: Reporter Id
+          type: string
+        reviewed_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Reviewed At
+        reviewed_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reviewed By
+        status:
+          $ref: '#/components/schemas/ReportStatus'
+          default: pending
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: PostReport
+      type: object
+    PostReportCreate:
+      description: 게시글 신고 생성 요청 스키마.
+      properties:
+        description:
+          default: ''
+          title: Description
+          type: string
+        post_id:
+          title: Post Id
+          type: string
+        reason:
+          $ref: '#/components/schemas/ReportReason'
+        reporter_id:
+          default: ''
+          title: Reporter Id
+          type: string
+      required:
+      - post_id
+      - reason
+      title: PostReportCreate
+      type: object
+    PostReportUpdate:
+      description: 게시글 신고 수정 요청 스키마.
+      properties:
+        action_note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Action Note
+        reviewed_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Reviewed At
+        reviewed_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reviewed By
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/ReportStatus'
+          - type: 'null'
+      title: PostReportUpdate
+      type: object
+    PostStatus:
+      description: 게시글 상태.
+      enum:
+      - draft
+      - published
+      - scheduled
+      - archived
+      - deleted
+      title: PostStatus
+      type: string
+    PostUpdate:
+      description: 게시글 수정 요청 스키마.
+      properties:
+        category:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Category
+        content:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Content
+        content_plain:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Content Plain
+        is_must_read:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Must Read
+        is_notice:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Notice
+        is_pinned:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Pinned
+        must_read_deadline:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Must Read Deadline
+        must_read_target:
+          anyOf:
+          - $ref: '#/components/schemas/MustReadTarget'
+          - type: 'null'
+        pin_order:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Pin Order
+        scheduled_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Scheduled At
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/PostStatus'
+          - type: 'null'
+        tags:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Tags
+        title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Title
+      title: PostUpdate
+      type: object
+    ReadConfirmResponse:
+      description: 필독 확인 응답.
+      properties:
+        post_id:
+          title: Post Id
+          type: string
+        read_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Read At
+        status:
+          title: Status
+          type: string
+        user_id:
+          title: User Id
+          type: string
+      required:
+      - post_id
+      - user_id
+      - status
+      title: ReadConfirmResponse
+      type: object
+    ReadConfirmStatsResponse:
+      description: 필독 통계 응답.
+      properties:
+        post_id:
+          title: Post Id
+          type: string
+        rate:
+          title: Rate
+          type: number
+        read:
+          title: Read
+          type: integer
+        total:
+          title: Total
+          type: integer
+        unread:
+          title: Unread
+          type: integer
+      required:
+      - post_id
+      - total
+      - read
+      - unread
+      - rate
+      title: ReadConfirmStatsResponse
+      type: object
+    ReadConfirmation:
+      description: '필독 확인 문서.
+
+
+        BR-BRD-010: 게시글 publish 시 is_must_read=true이면
+
+        대상자별 ReadConfirmation(status=unread) 자동 생성.
+
+        BR-BRD-011: 마감일 3일/1일 전 미확인자에게 리마인더 자동 발송.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        last_reminded_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Last Reminded At
+        post_id:
+          default: ''
+          title: Post Id
+          type: string
+        read_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Read At
+        reminder_count:
+          default: 0
+          title: Reminder Count
+          type: integer
+        status:
+          $ref: '#/components/schemas/ReadStatus'
+          default: unread
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        user_id:
+          default: ''
+          title: User Id
+          type: string
+      title: ReadConfirmation
+      type: object
+    ReadConfirmationCreate:
+      description: 필독 확인 생성 요청 스키마.
+      properties:
+        post_id:
+          title: Post Id
+          type: string
+        status:
+          $ref: '#/components/schemas/ReadStatus'
+          default: unread
+        user_id:
+          title: User Id
+          type: string
+      required:
+      - post_id
+      - user_id
+      title: ReadConfirmationCreate
+      type: object
+    ReadConfirmationUpdate:
+      description: 필독 확인 수정 요청 스키마.
+      properties:
+        last_reminded_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Last Reminded At
+        read_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Read At
+        reminder_count:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Reminder Count
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/ReadStatus'
+          - type: 'null'
+      title: ReadConfirmationUpdate
+      type: object
+    ReadStatus:
+      description: 필독 확인 상태.
+      enum:
+      - unread
+      - read
+      - reminded
+      title: ReadStatus
+      type: string
+    ReportReason:
+      description: 신고 사유 유형.
+      enum:
+      - spam
+      - harassment
+      - inappropriate
+      - privacy
+      - other
+      title: ReportReason
+      type: string
+    ReportRequest:
+      description: 신고 요청.
+      properties:
+        description:
+          default: ''
+          title: Description
+          type: string
+        reason:
+          title: Reason
+          type: string
+      required:
+      - reason
+      title: ReportRequest
+      type: object
+    ReportStatus:
+      description: 신고 처리 상태.
+      enum:
+      - pending
+      - reviewed
+      - dismissed
+      - action_taken
+      title: ReportStatus
+      type: string
+    RevisionEntry:
+      description: 수정 이력 — 임베디드 객체.
+      properties:
+        diff_summary:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Diff Summary
+        edited_at:
+          format: date-time
+          title: Edited At
+          type: string
+        editor_id:
+          title: Editor Id
+          type: string
+        previous_content:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Previous Content
+        previous_title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Previous Title
+        revision:
+          title: Revision
+          type: integer
+      required:
+      - revision
+      - editor_id
+      - edited_at
+      title: RevisionEntry
+      type: object
+    ShowFrequency:
+      description: 팝업 표시 빈도.
+      enum:
+      - once
+      - every_login
+      - daily
+      title: ShowFrequency
+      type: string
+    TranslationEntry:
+      description: 번역 — 임베디드 객체.
+      properties:
+        content:
+          title: Content
+          type: string
+        title:
+          title: Title
+          type: string
+        translated_at:
+          format: date-time
+          title: Translated At
+          type: string
+        translator_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Translator Id
+      required:
+      - title
+      - content
+      - translated_at
+      title: TranslationEntry
+      type: object
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+info:
+  contact:
+    name: OneERP 개발팀
+  description: OneERP Board 서비스 REST API
+  license:
+    name: Proprietary
+  title: OneERP Board API
+  version: 0.1.0
+openapi: 3.1.0
+paths:
+  /api/v1/attachments:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: attachment_목록_api_v1_attachments_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_Attachment_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Attachment 목록
+      tags:
+      - 첨부파일
+    post:
+      description: 엔티티를 생성한다.
+      operationId: attachment_생성_api_v1_attachments_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttachmentCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Attachment 생성 Api V1 Attachments Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Attachment 생성
+      tags:
+      - 첨부파일
+  /api/v1/attachments/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: attachment_삭제_api_v1_attachments__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Attachment 삭제
+      tags:
+      - 첨부파일
+    get:
+      description: 엔티티를 조회한다.
+      operationId: attachment_조회_api_v1_attachments__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Attachment 조회 Api V1 Attachments  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Attachment 조회
+      tags:
+      - 첨부파일
+    put:
+      description: 엔티티를 수정한다.
+      operationId: attachment_수정_api_v1_attachments__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttachmentUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Attachment 수정 Api V1 Attachments  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Attachment 수정
+      tags:
+      - 첨부파일
+  /api/v1/attachments/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: attachment_취소_api_v1_attachments__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Attachment 취소 Api V1 Attachments  Doc Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Attachment 취소
+      tags:
+      - 첨부파일
+  /api/v1/attachments/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: attachment_제출_api_v1_attachments__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Attachment 제출 Api V1 Attachments  Doc Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Attachment 제출
+      tags:
+      - 첨부파일
+  /api/v1/audit-logs:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: audit_log_목록_api_v1_audit_logs_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_AuditLog_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Audit Log 목록
+      tags:
+      - 감사 로그
+    post:
+      description: 엔티티를 생성한다.
+      operationId: audit_log_생성_api_v1_audit_logs_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuditLogCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Audit Log 생성 Api V1 Audit Logs Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Audit Log 생성
+      tags:
+      - 감사 로그
+  /api/v1/audit-logs/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: audit_log_삭제_api_v1_audit_logs__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Audit Log 삭제
+      tags:
+      - 감사 로그
+    get:
+      description: 엔티티를 조회한다.
+      operationId: audit_log_조회_api_v1_audit_logs__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Audit Log 조회 Api V1 Audit Logs  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Audit Log 조회
+      tags:
+      - 감사 로그
+    put:
+      description: 엔티티를 수정한다.
+      operationId: audit_log_수정_api_v1_audit_logs__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuditLogUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Audit Log 수정 Api V1 Audit Logs  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Audit Log 수정
+      tags:
+      - 감사 로그
+  /api/v1/audit-logs/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: audit_log_취소_api_v1_audit_logs__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Audit Log 취소 Api V1 Audit Logs  Doc Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Audit Log 취소
+      tags:
+      - 감사 로그
+  /api/v1/audit-logs/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: audit_log_제출_api_v1_audit_logs__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Audit Log 제출 Api V1 Audit Logs  Doc Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Audit Log 제출
+      tags:
+      - 감사 로그
+  /api/v1/auto-post-rules:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: auto_post_rule_목록_api_v1_auto_post_rules_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_AutoPostRule_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Auto Post Rule 목록
+      tags:
+      - 자동 공지 규칙
+    post:
+      description: 엔티티를 생성한다.
+      operationId: auto_post_rule_생성_api_v1_auto_post_rules_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutoPostRuleCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Auto Post Rule 생성 Api V1 Auto Post Rules Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Auto Post Rule 생성
+      tags:
+      - 자동 공지 규칙
+  /api/v1/auto-post-rules/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: auto_post_rule_삭제_api_v1_auto_post_rules__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Auto Post Rule 삭제
+      tags:
+      - 자동 공지 규칙
+    get:
+      description: 엔티티를 조회한다.
+      operationId: auto_post_rule_조회_api_v1_auto_post_rules__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Auto Post Rule 조회 Api V1 Auto Post Rules  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Auto Post Rule 조회
+      tags:
+      - 자동 공지 규칙
+    put:
+      description: 엔티티를 수정한다.
+      operationId: auto_post_rule_수정_api_v1_auto_post_rules__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutoPostRuleUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Auto Post Rule 수정 Api V1 Auto Post Rules  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Auto Post Rule 수정
+      tags:
+      - 자동 공지 규칙
+  /api/v1/board-permissions:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: board_permission_목록_api_v1_board_permissions_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_BoardPermission_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Board Permission 목록
+      tags:
+      - 게시판 권한
+    post:
+      description: 엔티티를 생성한다.
+      operationId: board_permission_생성_api_v1_board_permissions_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BoardPermissionCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Board Permission 생성 Api V1 Board Permissions Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Board Permission 생성
+      tags:
+      - 게시판 권한
+  /api/v1/board-permissions/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: board_permission_삭제_api_v1_board_permissions__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Board Permission 삭제
+      tags:
+      - 게시판 권한
+    get:
+      description: 엔티티를 조회한다.
+      operationId: board_permission_조회_api_v1_board_permissions__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Board Permission 조회 Api V1 Board Permissions  Doc
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Board Permission 조회
+      tags:
+      - 게시판 권한
+    put:
+      description: 엔티티를 수정한다.
+      operationId: board_permission_수정_api_v1_board_permissions__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BoardPermissionUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Board Permission 수정 Api V1 Board Permissions  Doc
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Board Permission 수정
+      tags:
+      - 게시판 권한
+  /api/v1/boards:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: board_목록_api_v1_boards_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_Board_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Board 목록
+      tags:
+      - 게시판
+    post:
+      description: 엔티티를 생성한다.
+      operationId: board_생성_api_v1_boards_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BoardCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Board 생성 Api V1 Boards Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Board 생성
+      tags:
+      - 게시판
+  /api/v1/boards/{board_id}/with-validation:
+    delete:
+      description: '게시판 삭제 (게시글 존재 시 차단).
+
+
+        BR-BRD-013: 게시글이 존재하는 게시판 삭제 불가.
+
+        기본 CRUD DELETE는 이 검증을 수행하지 않으므로 별도 엔드포인트 제공.'
+      operationId: delete_board_with_validation_api_v1_boards__board_id__with_validation_delete
+      parameters:
+      - in: path
+        name: board_id
+        required: true
+        schema:
+          title: Board Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  type: string
+                title: Response Delete Board With Validation Api V1 Boards  Board
+                  Id  With Validation Delete
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Delete Board With Validation
+      tags:
+      - 게시판
+  /api/v1/boards/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: board_삭제_api_v1_boards__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Board 삭제
+      tags:
+      - 게시판
+    get:
+      description: 엔티티를 조회한다.
+      operationId: board_조회_api_v1_boards__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Board 조회 Api V1 Boards  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Board 조회
+      tags:
+      - 게시판
+    put:
+      description: 엔티티를 수정한다.
+      operationId: board_수정_api_v1_boards__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BoardUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Board 수정 Api V1 Boards  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Board 수정
+      tags:
+      - 게시판
+  /api/v1/comments:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: comment_목록_api_v1_comments_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_Comment_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Comment 목록
+      tags:
+      - 댓글
+    post:
+      description: 엔티티를 생성한다.
+      operationId: comment_생성_api_v1_comments_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Comment 생성 Api V1 Comments Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Comment 생성
+      tags:
+      - 댓글
+  /api/v1/comments/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: comment_삭제_api_v1_comments__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Comment 삭제
+      tags:
+      - 댓글
+    get:
+      description: 엔티티를 조회한다.
+      operationId: comment_조회_api_v1_comments__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Comment 조회 Api V1 Comments  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Comment 조회
+      tags:
+      - 댓글
+    put:
+      description: 엔티티를 수정한다.
+      operationId: comment_수정_api_v1_comments__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Comment 수정 Api V1 Comments  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Comment 수정
+      tags:
+      - 댓글
+  /api/v1/comments/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: comment_취소_api_v1_comments__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Comment 취소 Api V1 Comments  Doc Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Comment 취소
+      tags:
+      - 댓글
+  /api/v1/comments/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: comment_제출_api_v1_comments__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Comment 제출 Api V1 Comments  Doc Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Comment 제출
+      tags:
+      - 댓글
+  /api/v1/popup-notices:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: popup_notice_목록_api_v1_popup_notices_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_PopupNotice_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Popup Notice 목록
+      tags:
+      - 팝업 공지
+    post:
+      description: 엔티티를 생성한다.
+      operationId: popup_notice_생성_api_v1_popup_notices_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PopupNoticeCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Popup Notice 생성 Api V1 Popup Notices Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Popup Notice 생성
+      tags:
+      - 팝업 공지
+  /api/v1/popup-notices/active:
+    get:
+      description: 현재 사용자에게 표시할 활성 팝업 조회.
+      operationId: get_active_popups_api_v1_popup_notices_active_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  items:
+                    additionalProperties: true
+                    type: object
+                  type: array
+                title: Response Get Active Popups Api V1 Popup Notices Active Get
+                type: object
+          description: Successful Response
+      summary: Get Active Popups
+      tags:
+      - 팝업 공지
+  /api/v1/popup-notices/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: popup_notice_삭제_api_v1_popup_notices__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Popup Notice 삭제
+      tags:
+      - 팝업 공지
+    get:
+      description: 엔티티를 조회한다.
+      operationId: popup_notice_조회_api_v1_popup_notices__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Popup Notice 조회 Api V1 Popup Notices  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Popup Notice 조회
+      tags:
+      - 팝업 공지
+    put:
+      description: 엔티티를 수정한다.
+      operationId: popup_notice_수정_api_v1_popup_notices__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PopupNoticeUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Popup Notice 수정 Api V1 Popup Notices  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Popup Notice 수정
+      tags:
+      - 팝업 공지
+  /api/v1/popup-notices/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: popup_notice_취소_api_v1_popup_notices__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Popup Notice 취소 Api V1 Popup Notices  Doc Id  Cancel
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Popup Notice 취소
+      tags:
+      - 팝업 공지
+  /api/v1/popup-notices/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: popup_notice_제출_api_v1_popup_notices__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Popup Notice 제출 Api V1 Popup Notices  Doc Id  Submit
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Popup Notice 제출
+      tags:
+      - 팝업 공지
+  /api/v1/popup-notices/{popup_id}/confirm:
+    post:
+      description: 팝업 공지 확인 처리.
+      operationId: confirm_popup_api_v1_popup_notices__popup_id__confirm_post
+      parameters:
+      - in: path
+        name: popup_id
+        required: true
+        schema:
+          title: Popup Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Confirm Popup Api V1 Popup Notices  Popup Id  Confirm
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Confirm Popup
+      tags:
+      - 팝업 공지
+  /api/v1/post-bookmarks:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: post_bookmark_목록_api_v1_post_bookmarks_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_PostBookmark_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post Bookmark 목록
+      tags:
+      - 북마크
+    post:
+      description: 엔티티를 생성한다.
+      operationId: post_bookmark_생성_api_v1_post_bookmarks_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostBookmarkCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Post Bookmark 생성 Api V1 Post Bookmarks Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post Bookmark 생성
+      tags:
+      - 북마크
+  /api/v1/post-bookmarks/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: post_bookmark_삭제_api_v1_post_bookmarks__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post Bookmark 삭제
+      tags:
+      - 북마크
+    get:
+      description: 엔티티를 조회한다.
+      operationId: post_bookmark_조회_api_v1_post_bookmarks__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Post Bookmark 조회 Api V1 Post Bookmarks  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post Bookmark 조회
+      tags:
+      - 북마크
+    put:
+      description: 엔티티를 수정한다.
+      operationId: post_bookmark_수정_api_v1_post_bookmarks__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostBookmarkUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Post Bookmark 수정 Api V1 Post Bookmarks  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post Bookmark 수정
+      tags:
+      - 북마크
+  /api/v1/post-bookmarks/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: post_bookmark_취소_api_v1_post_bookmarks__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Post Bookmark 취소 Api V1 Post Bookmarks  Doc Id  Cancel
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post Bookmark 취소
+      tags:
+      - 북마크
+  /api/v1/post-bookmarks/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: post_bookmark_제출_api_v1_post_bookmarks__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Post Bookmark 제출 Api V1 Post Bookmarks  Doc Id  Submit
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post Bookmark 제출
+      tags:
+      - 북마크
+  /api/v1/post-likes:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: post_like_목록_api_v1_post_likes_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_PostLike_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post Like 목록
+      tags:
+      - 좋아요
+    post:
+      description: 엔티티를 생성한다.
+      operationId: post_like_생성_api_v1_post_likes_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostLikeCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Post Like 생성 Api V1 Post Likes Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post Like 생성
+      tags:
+      - 좋아요
+  /api/v1/post-likes/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: post_like_삭제_api_v1_post_likes__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post Like 삭제
+      tags:
+      - 좋아요
+    get:
+      description: 엔티티를 조회한다.
+      operationId: post_like_조회_api_v1_post_likes__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Post Like 조회 Api V1 Post Likes  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post Like 조회
+      tags:
+      - 좋아요
+    put:
+      description: 엔티티를 수정한다.
+      operationId: post_like_수정_api_v1_post_likes__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostLikeUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Post Like 수정 Api V1 Post Likes  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post Like 수정
+      tags:
+      - 좋아요
+  /api/v1/post-likes/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: post_like_취소_api_v1_post_likes__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Post Like 취소 Api V1 Post Likes  Doc Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post Like 취소
+      tags:
+      - 좋아요
+  /api/v1/post-likes/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: post_like_제출_api_v1_post_likes__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Post Like 제출 Api V1 Post Likes  Doc Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post Like 제출
+      tags:
+      - 좋아요
+  /api/v1/post-reports:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: post_report_목록_api_v1_post_reports_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_PostReport_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post Report 목록
+      tags:
+      - 게시글 신고
+    post:
+      description: 엔티티를 생성한다.
+      operationId: post_report_생성_api_v1_post_reports_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostReportCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Post Report 생성 Api V1 Post Reports Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post Report 생성
+      tags:
+      - 게시글 신고
+  /api/v1/post-reports/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: post_report_삭제_api_v1_post_reports__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post Report 삭제
+      tags:
+      - 게시글 신고
+    get:
+      description: 엔티티를 조회한다.
+      operationId: post_report_조회_api_v1_post_reports__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Post Report 조회 Api V1 Post Reports  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post Report 조회
+      tags:
+      - 게시글 신고
+    put:
+      description: 엔티티를 수정한다.
+      operationId: post_report_수정_api_v1_post_reports__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostReportUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Post Report 수정 Api V1 Post Reports  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post Report 수정
+      tags:
+      - 게시글 신고
+  /api/v1/post-reports/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: post_report_취소_api_v1_post_reports__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Post Report 취소 Api V1 Post Reports  Doc Id  Cancel
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post Report 취소
+      tags:
+      - 게시글 신고
+  /api/v1/post-reports/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: post_report_제출_api_v1_post_reports__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Post Report 제출 Api V1 Post Reports  Doc Id  Submit
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post Report 제출
+      tags:
+      - 게시글 신고
+  /api/v1/posts:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: post_목록_api_v1_posts_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_Post_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post 목록
+      tags:
+      - 게시글
+    post:
+      description: 엔티티를 생성한다.
+      operationId: post_생성_api_v1_posts_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Post 생성 Api V1 Posts Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post 생성
+      tags:
+      - 게시글
+  /api/v1/posts/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: post_삭제_api_v1_posts__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post 삭제
+      tags:
+      - 게시글
+    get:
+      description: 엔티티를 조회한다.
+      operationId: post_조회_api_v1_posts__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Post 조회 Api V1 Posts  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post 조회
+      tags:
+      - 게시글
+    put:
+      description: 엔티티를 수정한다.
+      operationId: post_수정_api_v1_posts__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Post 수정 Api V1 Posts  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post 수정
+      tags:
+      - 게시글
+  /api/v1/posts/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: post_취소_api_v1_posts__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Post 취소 Api V1 Posts  Doc Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post 취소
+      tags:
+      - 게시글
+  /api/v1/posts/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: post_제출_api_v1_posts__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Post 제출 Api V1 Posts  Doc Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Post 제출
+      tags:
+      - 게시글
+  /api/v1/posts/{post_id}/archive:
+    post:
+      description: 게시글 아카이브 (published → archived).
+      operationId: archive_post_api_v1_posts__post_id__archive_post
+      parameters:
+      - in: path
+        name: post_id
+        required: true
+        schema:
+          title: Post Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Archive Post Api V1 Posts  Post Id  Archive Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Archive Post
+      tags:
+      - 게시글
+  /api/v1/posts/{post_id}/bookmark:
+    post:
+      description: '게시글 북마크 토글.
+
+
+        BR-BRD-014: 이미 북마크 상태면 취소, 아니면 추가.'
+      operationId: toggle_bookmark_api_v1_posts__post_id__bookmark_post
+      parameters:
+      - in: path
+        name: post_id
+        required: true
+        schema:
+          title: Post Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookmarkResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Toggle Bookmark
+      tags:
+      - 게시글
+  /api/v1/posts/{post_id}/like:
+    post:
+      description: '게시글 좋아요 토글.
+
+
+        BR-BRD-014: 이미 좋아요 상태면 취소, 아니면 추가.'
+      operationId: toggle_like_api_v1_posts__post_id__like_post
+      parameters:
+      - in: path
+        name: post_id
+        required: true
+        schema:
+          title: Post Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LikeResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Toggle Like
+      tags:
+      - 게시글
+  /api/v1/posts/{post_id}/publish:
+    post:
+      description: 게시글 게시 (draft/scheduled → published).
+      operationId: publish_post_api_v1_posts__post_id__publish_post
+      parameters:
+      - in: path
+        name: post_id
+        required: true
+        schema:
+          title: Post Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Publish Post Api V1 Posts  Post Id  Publish Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Publish Post
+      tags:
+      - 게시글
+  /api/v1/posts/{post_id}/read-confirm:
+    post:
+      description: '필독 확인.
+
+
+        SC-BRD-004: 대상자가 게시글 열람 후 확인 처리.'
+      operationId: confirm_read_api_v1_posts__post_id__read_confirm_post
+      parameters:
+      - in: path
+        name: post_id
+        required: true
+        schema:
+          title: Post Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadConfirmResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Confirm Read
+      tags:
+      - 게시글
+  /api/v1/posts/{post_id}/read-confirm/remind:
+    post:
+      description: '필독 미확인자 리마인더 발송.
+
+
+        BR-BRD-011: 최대 5회까지 리마인더 발송.'
+      operationId: send_reminders_api_v1_posts__post_id__read_confirm_remind_post
+      parameters:
+      - in: path
+        name: post_id
+        required: true
+        schema:
+          title: Post Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  type: integer
+                title: Response Send Reminders Api V1 Posts  Post Id  Read Confirm
+                  Remind Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Send Reminders
+      tags:
+      - 게시글
+  /api/v1/posts/{post_id}/read-confirm/stats:
+    get:
+      description: 필독 확인 통계.
+      operationId: read_confirm_stats_api_v1_posts__post_id__read_confirm_stats_get
+      parameters:
+      - in: path
+        name: post_id
+        required: true
+        schema:
+          title: Post Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadConfirmStatsResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Read Confirm Stats
+      tags:
+      - 게시글
+  /api/v1/posts/{post_id}/report:
+    post:
+      description: '게시글 신고.
+
+
+        BR-BRD-019: 동일 사용자 동일 게시글 pending 신고 중복 불가.'
+      operationId: report_post_api_v1_posts__post_id__report_post
+      parameters:
+      - in: path
+        name: post_id
+        required: true
+        schema:
+          title: Post Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Report Post Api V1 Posts  Post Id  Report Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Report Post
+      tags:
+      - 게시글
+  /api/v1/read-confirmations:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: read_confirmation_목록_api_v1_read_confirmations_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_ReadConfirmation_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Read Confirmation 목록
+      tags:
+      - 필독 확인
+    post:
+      description: 엔티티를 생성한다.
+      operationId: read_confirmation_생성_api_v1_read_confirmations_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReadConfirmationCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Read Confirmation 생성 Api V1 Read Confirmations Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Read Confirmation 생성
+      tags:
+      - 필독 확인
+  /api/v1/read-confirmations/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: read_confirmation_삭제_api_v1_read_confirmations__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Read Confirmation 삭제
+      tags:
+      - 필독 확인
+    get:
+      description: 엔티티를 조회한다.
+      operationId: read_confirmation_조회_api_v1_read_confirmations__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Read Confirmation 조회 Api V1 Read Confirmations  Doc
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Read Confirmation 조회
+      tags:
+      - 필독 확인
+    put:
+      description: 엔티티를 수정한다.
+      operationId: read_confirmation_수정_api_v1_read_confirmations__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReadConfirmationUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Read Confirmation 수정 Api V1 Read Confirmations  Doc
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Read Confirmation 수정
+      tags:
+      - 필독 확인
+  /api/v1/read-confirmations/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: read_confirmation_취소_api_v1_read_confirmations__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Read Confirmation 취소 Api V1 Read Confirmations  Doc
+                  Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Read Confirmation 취소
+      tags:
+      - 필독 확인
+  /api/v1/read-confirmations/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: read_confirmation_제출_api_v1_read_confirmations__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Read Confirmation 제출 Api V1 Read Confirmations  Doc
+                  Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Read Confirmation 제출
+      tags:
+      - 필독 확인
+  /health:
+    get:
+      description: 서비스 상태를 확인한다 (하위 호환).
+      operationId: health_health_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Health Health Get
+                type: object
+          description: Successful Response
+      summary: Health
+      tags:
+      - health
+  /health/live:
+    get:
+      description: Liveness probe — 프로세스 생존 확인.
+      operationId: liveness_health_live_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Liveness Health Live Get
+                type: object
+          description: Successful Response
+      summary: Liveness
+      tags:
+      - health
+  /health/ready:
+    get:
+      description: Readiness probe — DB/NATS/Valkey 연결 포함 서비스 준비 상태 확인.
+      operationId: readiness_health_ready_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Readiness
+      tags:
+      - health
+  /health/startup:
+    get:
+      description: Startup probe — 서비스 초기화 완료 확인 (readiness와 동일).
+      operationId: startup_health_startup_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Startup
+      tags:
+      - health
+servers:
+- url: /board
+- description: 현재 서버
+  url: /
+tags:
+- description: 게시판 API
+  name: 게시판
+- description: 게시판 권한 API
+  name: 게시판 권한
+- description: 자동 공지 규칙 API
+  name: 자동 공지 규칙
+- description: 게시글 API
+  name: 게시글
+- description: 댓글 API
+  name: 댓글
+- description: 첨부파일 API
+  name: 첨부파일
+- description: 필독 확인 API
+  name: 필독 확인
+- description: 팝업 공지 API
+  name: 팝업 공지
+- description: 좋아요 API
+  name: 좋아요
+- description: 북마크 API
+  name: 북마크
+- description: 게시글 신고 API
+  name: 게시글 신고
+- description: 감사 로그 API
+  name: 감사 로그

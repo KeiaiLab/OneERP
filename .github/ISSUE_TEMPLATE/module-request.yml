@@ -1,0 +1,27 @@
+name: Module Request
+description: 새 ERP 모듈을 제안합니다
+title: "[Module] "
+labels: ["module-request"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: 모듈 설명
+      description: 어떤 비즈니스 영역을 다루나요?
+    validations:
+      required: true
+  - type: textarea
+    id: use-cases
+    attributes:
+      label: 주요 사용 사례
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: reference
+    attributes:
+      label: 참고 자료
+      description: ERPNext, Odoo 등 기존 ERP에서의 유사 기능

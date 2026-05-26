@@ -1,0 +1,2153 @@
+components:
+  schemas:
+    DocStatus:
+      description: 문서 상태 — ERPNext 호환.
+      enum:
+      - 0
+      - 1
+      - 2
+      title: DocStatus
+      type: integer
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    PaginatedResponse_WikiAttachment_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/WikiAttachment'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[WikiAttachment]
+      type: object
+    PaginatedResponse_WikiComment_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/WikiComment'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[WikiComment]
+      type: object
+    PaginatedResponse_WikiPageRevision_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/WikiPageRevision'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[WikiPageRevision]
+      type: object
+    PaginatedResponse_WikiPage_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/WikiPage'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[WikiPage]
+      type: object
+    PaginatedResponse_WikiSpace_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/WikiSpace'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[WikiSpace]
+      type: object
+    PaginatedResponse_WikiTemplate_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/WikiTemplate'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[WikiTemplate]
+      type: object
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    WikiAttachment:
+      description: '위키 첨부파일 — 페이지 첨부 파일 메타데이터.
+
+
+        naming prefix: WA'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        file_name:
+          default: ''
+          description: 파일명
+          title: File Name
+          type: string
+        file_size:
+          default: 0
+          description: 파일 크기 (바이트)
+          title: File Size
+          type: integer
+        file_url:
+          default: ''
+          description: 파일 URL
+          title: File Url
+          type: string
+        mime_type:
+          default: ''
+          description: MIME 타입
+          title: Mime Type
+          type: string
+        page_id:
+          default: ''
+          description: 위키 페이지 ID
+          title: Page Id
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        uploader_id:
+          default: ''
+          description: 업로더 ID
+          title: Uploader Id
+          type: string
+      title: WikiAttachment
+      type: object
+    WikiAttachmentCreate:
+      description: 위키 첨부파일 생성 요청 스키마.
+      properties:
+        file_name:
+          default: ''
+          title: File Name
+          type: string
+        file_size:
+          default: 0
+          title: File Size
+          type: integer
+        file_url:
+          default: ''
+          title: File Url
+          type: string
+        mime_type:
+          default: ''
+          title: Mime Type
+          type: string
+        page_id:
+          title: Page Id
+          type: string
+        uploader_id:
+          default: ''
+          title: Uploader Id
+          type: string
+      required:
+      - page_id
+      title: WikiAttachmentCreate
+      type: object
+    WikiAttachmentUpdate:
+      description: 위키 첨부파일 수정 요청 스키마.
+      properties:
+        file_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: File Name
+        file_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: File Url
+      title: WikiAttachmentUpdate
+      type: object
+    WikiComment:
+      description: '위키 댓글 — 페이지 토론.
+
+
+        naming prefix: WC'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        author_id:
+          default: ''
+          description: 작성자 ID
+          title: Author Id
+          type: string
+        content:
+          default: ''
+          description: 댓글 내용
+          title: Content
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        page_id:
+          default: ''
+          description: 위키 페이지 ID
+          title: Page Id
+          type: string
+        parent_comment_id:
+          default: ''
+          description: 상위 댓글 ID (답글)
+          title: Parent Comment Id
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: WikiComment
+      type: object
+    WikiCommentCreate:
+      description: 위키 댓글 생성 요청 스키마.
+      properties:
+        author_id:
+          default: ''
+          title: Author Id
+          type: string
+        content:
+          default: ''
+          title: Content
+          type: string
+        page_id:
+          title: Page Id
+          type: string
+        parent_comment_id:
+          default: ''
+          title: Parent Comment Id
+          type: string
+      required:
+      - page_id
+      title: WikiCommentCreate
+      type: object
+    WikiCommentUpdate:
+      description: 위키 댓글 수정 요청 스키마.
+      properties:
+        content:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Content
+      title: WikiCommentUpdate
+      type: object
+    WikiPage:
+      description: '위키 페이지 — 마크다운 기반 지식 문서.
+
+
+        naming prefix: WP'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        author_id:
+          default: ''
+          description: 작성자 ID
+          title: Author Id
+          type: string
+        content:
+          default: ''
+          description: 마크다운 본문
+          title: Content
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        parent_page_id:
+          default: ''
+          description: 상위 페이지 ID
+          title: Parent Page Id
+          type: string
+        space_id:
+          default: ''
+          description: 소속 위키 공간 ID
+          title: Space Id
+          type: string
+        status:
+          $ref: '#/components/schemas/WikiPageStatus'
+          default: draft
+          description: 페이지 상태
+        tags:
+          description: 태그 목록
+          items:
+            type: string
+          title: Tags
+          type: array
+        tenant_id:
+          title: Tenant Id
+          type: string
+        title:
+          default: ''
+          description: 페이지 제목
+          title: Title
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        version:
+          default: 1
+          description: 현재 버전
+          title: Version
+          type: integer
+        view_count:
+          default: 0
+          description: 조회수
+          title: View Count
+          type: integer
+      title: WikiPage
+      type: object
+    WikiPageCreate:
+      description: 위키 페이지 생성 요청 스키마.
+      properties:
+        author_id:
+          default: ''
+          title: Author Id
+          type: string
+        content:
+          default: ''
+          title: Content
+          type: string
+        parent_page_id:
+          default: ''
+          title: Parent Page Id
+          type: string
+        space_id:
+          default: ''
+          title: Space Id
+          type: string
+        tags:
+          default: []
+          items:
+            type: string
+          title: Tags
+          type: array
+        title:
+          title: Title
+          type: string
+      required:
+      - title
+      title: WikiPageCreate
+      type: object
+    WikiPageRevision:
+      description: '위키 페이지 리비전 — 페이지 버전 스냅샷.
+
+
+        naming prefix: WPR'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        change_summary:
+          default: ''
+          description: 변경 요약
+          title: Change Summary
+          type: string
+        content:
+          default: ''
+          description: 해당 버전의 본문
+          title: Content
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        editor_id:
+          default: ''
+          description: 편집자 ID
+          title: Editor Id
+          type: string
+        page_id:
+          default: ''
+          description: 위키 페이지 ID
+          title: Page Id
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        title:
+          default: ''
+          description: 해당 버전의 제목
+          title: Title
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        version:
+          default: 1
+          description: 리비전 버전 번호
+          title: Version
+          type: integer
+      title: WikiPageRevision
+      type: object
+    WikiPageRevisionCreate:
+      description: 위키 페이지 리비전 생성 요청 스키마.
+      properties:
+        change_summary:
+          default: ''
+          title: Change Summary
+          type: string
+        content:
+          default: ''
+          title: Content
+          type: string
+        editor_id:
+          default: ''
+          title: Editor Id
+          type: string
+        page_id:
+          title: Page Id
+          type: string
+        title:
+          default: ''
+          title: Title
+          type: string
+        version:
+          default: 1
+          title: Version
+          type: integer
+      required:
+      - page_id
+      title: WikiPageRevisionCreate
+      type: object
+    WikiPageRevisionUpdate:
+      description: 위키 페이지 리비전 수정 요청 스키마.
+      properties:
+        change_summary:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Change Summary
+      title: WikiPageRevisionUpdate
+      type: object
+    WikiPageStatus:
+      description: 위키 페이지 상태.
+      enum:
+      - draft
+      - published
+      - archived
+      title: WikiPageStatus
+      type: string
+    WikiPageUpdate:
+      description: 위키 페이지 수정 요청 스키마.
+      properties:
+        content:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Content
+        parent_page_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Parent Page Id
+        space_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Space Id
+        tags:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Tags
+        title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Title
+      title: WikiPageUpdate
+      type: object
+    WikiSpace:
+      description: '위키 공간 — 위키 페이지의 논리적 컨테이너.
+
+
+        naming prefix: WS'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        description:
+          default: ''
+          description: 공간 설명
+          title: Description
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        name:
+          default: ''
+          description: 공간 이름
+          title: Name
+          type: string
+        owner_id:
+          default: ''
+          description: 소유자 ID
+          title: Owner Id
+          type: string
+        page_count:
+          default: 0
+          description: 페이지 수
+          title: Page Count
+          type: integer
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        visibility:
+          $ref: '#/components/schemas/WikiSpaceVisibility'
+          default: public
+          description: 공개 범위
+      title: WikiSpace
+      type: object
+    WikiSpaceCreate:
+      description: 위키 공간 생성 요청 스키마.
+      properties:
+        description:
+          default: ''
+          title: Description
+          type: string
+        name:
+          title: Name
+          type: string
+        owner_id:
+          default: ''
+          title: Owner Id
+          type: string
+        visibility:
+          $ref: '#/components/schemas/WikiSpaceVisibility'
+          default: public
+      required:
+      - name
+      title: WikiSpaceCreate
+      type: object
+    WikiSpaceUpdate:
+      description: 위키 공간 수정 요청 스키마.
+      properties:
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        owner_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Owner Id
+        visibility:
+          anyOf:
+          - $ref: '#/components/schemas/WikiSpaceVisibility'
+          - type: 'null'
+      title: WikiSpaceUpdate
+      type: object
+    WikiSpaceVisibility:
+      description: 위키 공간 공개 범위.
+      enum:
+      - public
+      - private
+      - restricted
+      title: WikiSpaceVisibility
+      type: string
+    WikiTemplate:
+      description: '위키 템플릿 — 재사용 가능한 페이지 골격.
+
+
+        naming prefix: WT'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        category:
+          default: ''
+          description: 템플릿 분류
+          title: Category
+          type: string
+        content:
+          default: ''
+          description: 마크다운 템플릿 본문
+          title: Content
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        description:
+          default: ''
+          description: 템플릿 설명
+          title: Description
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        name:
+          default: ''
+          description: 템플릿 이름
+          title: Name
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: WikiTemplate
+      type: object
+    WikiTemplateCreate:
+      description: 위키 템플릿 생성 요청 스키마.
+      properties:
+        category:
+          default: ''
+          title: Category
+          type: string
+        content:
+          default: ''
+          title: Content
+          type: string
+        description:
+          default: ''
+          title: Description
+          type: string
+        name:
+          title: Name
+          type: string
+      required:
+      - name
+      title: WikiTemplateCreate
+      type: object
+    WikiTemplateUpdate:
+      description: 위키 템플릿 수정 요청 스키마.
+      properties:
+        category:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Category
+        content:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Content
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+      title: WikiTemplateUpdate
+      type: object
+info:
+  contact:
+    name: OneERP 개발팀
+  description: OneERP Wiki 서비스 REST API
+  license:
+    name: Proprietary
+  title: OneERP Wiki API
+  version: 0.1.0
+openapi: 3.1.0
+paths:
+  /api/v1/wiki-attachments:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: wiki_attachment_목록_api_v1_wiki_attachments_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_WikiAttachment_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Attachment 목록
+      tags:
+      - 위키첨부파일
+    post:
+      description: 엔티티를 생성한다.
+      operationId: wiki_attachment_생성_api_v1_wiki_attachments_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WikiAttachmentCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Attachment 생성 Api V1 Wiki Attachments Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Attachment 생성
+      tags:
+      - 위키첨부파일
+  /api/v1/wiki-attachments/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: wiki_attachment_삭제_api_v1_wiki_attachments__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Attachment 삭제
+      tags:
+      - 위키첨부파일
+    get:
+      description: 엔티티를 조회한다.
+      operationId: wiki_attachment_조회_api_v1_wiki_attachments__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Attachment 조회 Api V1 Wiki Attachments  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Attachment 조회
+      tags:
+      - 위키첨부파일
+    put:
+      description: 엔티티를 수정한다.
+      operationId: wiki_attachment_수정_api_v1_wiki_attachments__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WikiAttachmentUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Attachment 수정 Api V1 Wiki Attachments  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Attachment 수정
+      tags:
+      - 위키첨부파일
+  /api/v1/wiki-attachments/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: wiki_attachment_취소_api_v1_wiki_attachments__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Attachment 취소 Api V1 Wiki Attachments  Doc Id  Cancel
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Attachment 취소
+      tags:
+      - 위키첨부파일
+  /api/v1/wiki-attachments/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: wiki_attachment_제출_api_v1_wiki_attachments__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Attachment 제출 Api V1 Wiki Attachments  Doc Id  Submit
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Attachment 제출
+      tags:
+      - 위키첨부파일
+  /api/v1/wiki-comments:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: wiki_comment_목록_api_v1_wiki_comments_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_WikiComment_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Comment 목록
+      tags:
+      - 위키댓글
+    post:
+      description: 엔티티를 생성한다.
+      operationId: wiki_comment_생성_api_v1_wiki_comments_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WikiCommentCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Comment 생성 Api V1 Wiki Comments Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Comment 생성
+      tags:
+      - 위키댓글
+  /api/v1/wiki-comments/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: wiki_comment_삭제_api_v1_wiki_comments__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Comment 삭제
+      tags:
+      - 위키댓글
+    get:
+      description: 엔티티를 조회한다.
+      operationId: wiki_comment_조회_api_v1_wiki_comments__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Comment 조회 Api V1 Wiki Comments  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Comment 조회
+      tags:
+      - 위키댓글
+    put:
+      description: 엔티티를 수정한다.
+      operationId: wiki_comment_수정_api_v1_wiki_comments__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WikiCommentUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Comment 수정 Api V1 Wiki Comments  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Comment 수정
+      tags:
+      - 위키댓글
+  /api/v1/wiki-comments/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: wiki_comment_취소_api_v1_wiki_comments__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Comment 취소 Api V1 Wiki Comments  Doc Id  Cancel
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Comment 취소
+      tags:
+      - 위키댓글
+  /api/v1/wiki-comments/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: wiki_comment_제출_api_v1_wiki_comments__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Comment 제출 Api V1 Wiki Comments  Doc Id  Submit
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Comment 제출
+      tags:
+      - 위키댓글
+  /api/v1/wiki-page-revisions:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: wiki_page_revision_목록_api_v1_wiki_page_revisions_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_WikiPageRevision_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Page Revision 목록
+      tags:
+      - 위키페이지리비전
+    post:
+      description: 엔티티를 생성한다.
+      operationId: wiki_page_revision_생성_api_v1_wiki_page_revisions_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WikiPageRevisionCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Page Revision 생성 Api V1 Wiki Page Revisions Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Page Revision 생성
+      tags:
+      - 위키페이지리비전
+  /api/v1/wiki-page-revisions/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: wiki_page_revision_삭제_api_v1_wiki_page_revisions__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Page Revision 삭제
+      tags:
+      - 위키페이지리비전
+    get:
+      description: 엔티티를 조회한다.
+      operationId: wiki_page_revision_조회_api_v1_wiki_page_revisions__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Page Revision 조회 Api V1 Wiki Page Revisions  Doc
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Page Revision 조회
+      tags:
+      - 위키페이지리비전
+    put:
+      description: 엔티티를 수정한다.
+      operationId: wiki_page_revision_수정_api_v1_wiki_page_revisions__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WikiPageRevisionUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Page Revision 수정 Api V1 Wiki Page Revisions  Doc
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Page Revision 수정
+      tags:
+      - 위키페이지리비전
+  /api/v1/wiki-page-revisions/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: wiki_page_revision_취소_api_v1_wiki_page_revisions__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Page Revision 취소 Api V1 Wiki Page Revisions  Doc
+                  Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Page Revision 취소
+      tags:
+      - 위키페이지리비전
+  /api/v1/wiki-page-revisions/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: wiki_page_revision_제출_api_v1_wiki_page_revisions__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Page Revision 제출 Api V1 Wiki Page Revisions  Doc
+                  Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Page Revision 제출
+      tags:
+      - 위키페이지리비전
+  /api/v1/wiki-pages:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: wiki_page_목록_api_v1_wiki_pages_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_WikiPage_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Page 목록
+      tags:
+      - 위키페이지
+    post:
+      description: 엔티티를 생성한다.
+      operationId: wiki_page_생성_api_v1_wiki_pages_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WikiPageCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Page 생성 Api V1 Wiki Pages Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Page 생성
+      tags:
+      - 위키페이지
+  /api/v1/wiki-pages/tree/{space_id}:
+    get:
+      description: 위키 공간의 페이지 트리를 조회한다.
+      operationId: get_page_tree_api_v1_wiki_pages_tree__space_id__get
+      parameters:
+      - in: path
+        name: space_id
+        required: true
+        schema:
+          title: Space Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  additionalProperties: true
+                  type: object
+                title: Response Get Page Tree Api V1 Wiki Pages Tree  Space Id  Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Page Tree
+      tags:
+      - 위키페이지
+  /api/v1/wiki-pages/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: wiki_page_삭제_api_v1_wiki_pages__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Page 삭제
+      tags:
+      - 위키페이지
+    get:
+      description: 엔티티를 조회한다.
+      operationId: wiki_page_조회_api_v1_wiki_pages__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Page 조회 Api V1 Wiki Pages  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Page 조회
+      tags:
+      - 위키페이지
+    put:
+      description: 엔티티를 수정한다.
+      operationId: wiki_page_수정_api_v1_wiki_pages__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WikiPageUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Page 수정 Api V1 Wiki Pages  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Page 수정
+      tags:
+      - 위키페이지
+  /api/v1/wiki-pages/{doc_id}/archive:
+    post:
+      description: 위키 페이지를 보관 처리한다.
+      operationId: archive_page_api_v1_wiki_pages__doc_id__archive_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Archive Page Api V1 Wiki Pages  Doc Id  Archive Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Archive Page
+      tags:
+      - 위키페이지
+  /api/v1/wiki-pages/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: wiki_page_취소_api_v1_wiki_pages__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Page 취소 Api V1 Wiki Pages  Doc Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Page 취소
+      tags:
+      - 위키페이지
+  /api/v1/wiki-pages/{doc_id}/publish:
+    post:
+      description: 위키 페이지를 발행한다.
+      operationId: publish_page_api_v1_wiki_pages__doc_id__publish_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Publish Page Api V1 Wiki Pages  Doc Id  Publish Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Publish Page
+      tags:
+      - 위키페이지
+  /api/v1/wiki-pages/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: wiki_page_제출_api_v1_wiki_pages__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Page 제출 Api V1 Wiki Pages  Doc Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Page 제출
+      tags:
+      - 위키페이지
+  /api/v1/wiki-spaces:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: wiki_space_목록_api_v1_wiki_spaces_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_WikiSpace_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Space 목록
+      tags:
+      - 위키공간
+    post:
+      description: 엔티티를 생성한다.
+      operationId: wiki_space_생성_api_v1_wiki_spaces_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WikiSpaceCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Space 생성 Api V1 Wiki Spaces Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Space 생성
+      tags:
+      - 위키공간
+  /api/v1/wiki-spaces/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: wiki_space_삭제_api_v1_wiki_spaces__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Space 삭제
+      tags:
+      - 위키공간
+    get:
+      description: 엔티티를 조회한다.
+      operationId: wiki_space_조회_api_v1_wiki_spaces__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Space 조회 Api V1 Wiki Spaces  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Space 조회
+      tags:
+      - 위키공간
+    put:
+      description: 엔티티를 수정한다.
+      operationId: wiki_space_수정_api_v1_wiki_spaces__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WikiSpaceUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Space 수정 Api V1 Wiki Spaces  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Space 수정
+      tags:
+      - 위키공간
+  /api/v1/wiki-templates:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: wiki_template_목록_api_v1_wiki_templates_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_WikiTemplate_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Template 목록
+      tags:
+      - 위키템플릿
+    post:
+      description: 엔티티를 생성한다.
+      operationId: wiki_template_생성_api_v1_wiki_templates_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WikiTemplateCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Template 생성 Api V1 Wiki Templates Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Template 생성
+      tags:
+      - 위키템플릿
+  /api/v1/wiki-templates/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: wiki_template_삭제_api_v1_wiki_templates__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Template 삭제
+      tags:
+      - 위키템플릿
+    get:
+      description: 엔티티를 조회한다.
+      operationId: wiki_template_조회_api_v1_wiki_templates__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Template 조회 Api V1 Wiki Templates  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Template 조회
+      tags:
+      - 위키템플릿
+    put:
+      description: 엔티티를 수정한다.
+      operationId: wiki_template_수정_api_v1_wiki_templates__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WikiTemplateUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Wiki Template 수정 Api V1 Wiki Templates  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Wiki Template 수정
+      tags:
+      - 위키템플릿
+  /health:
+    get:
+      description: 서비스 상태를 확인한다 (하위 호환).
+      operationId: health_health_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Health Health Get
+                type: object
+          description: Successful Response
+      summary: Health
+      tags:
+      - health
+  /health/live:
+    get:
+      description: Liveness probe — 프로세스 생존 확인.
+      operationId: liveness_health_live_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Liveness Health Live Get
+                type: object
+          description: Successful Response
+      summary: Liveness
+      tags:
+      - health
+  /health/ready:
+    get:
+      description: Readiness probe — DB/NATS/Valkey 연결 포함 서비스 준비 상태 확인.
+      operationId: readiness_health_ready_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Readiness
+      tags:
+      - health
+  /health/startup:
+    get:
+      description: Startup probe — 서비스 초기화 완료 확인 (readiness와 동일).
+      operationId: startup_health_startup_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Startup
+      tags:
+      - health
+servers:
+- url: /wiki
+- description: 현재 서버
+  url: /
+tags:
+- description: 위키공간 API
+  name: 위키공간
+- description: 위키템플릿 API
+  name: 위키템플릿
+- description: 위키페이지 API
+  name: 위키페이지
+- description: 위키페이지리비전 API
+  name: 위키페이지리비전
+- description: 위키댓글 API
+  name: 위키댓글
+- description: 위키첨부파일 API
+  name: 위키첨부파일

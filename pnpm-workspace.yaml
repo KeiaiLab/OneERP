@@ -1,0 +1,12 @@
+packages:
+  - "web"
+
+# W1.1 정공법 (~/.claude/plans/woolly-doodling-tarjan.md, 2026-05-14):
+# pnpm v10 strict 모드 native build 패키지 명시 승인.
+# pnpm 정책: onlyBuiltDependencies 는 workspace root 에서만 유효 (web/package.json 의 동일 필드는 무시).
+onlyBuiltDependencies:
+  - sharp
+  - esbuild
+  - "@biomejs/biome"
+  - "@tailwindcss/oxide"
+  - unrs-resolver

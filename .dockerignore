@@ -1,0 +1,102 @@
+# 빌드 컨텍스트 최소화 — 이미지 빌드 속도·보안에 직접 영향
+# 원칙: .gitignore보다 더 공격적으로 제외한다. 컨테이너 런타임에 불필요한 것 전부.
+
+# ── VCS / 개발 메타 ──────────────────────────────
+.git/
+.gitignore
+.gitmodules
+.gitattributes
+.github/
+.gitea/
+
+# ── 에디터 / IDE ──────────────────────────────
+.vscode/
+.idea/
+.editorconfig
+*.swp
+*.swo
+
+# ── macOS / OS 노이즈 ──────────────────────────────
+.DS_Store
+Icon?
+.Spotlight-V100
+.Trashes
+Thumbs.db
+
+# ── Python 캐시 / 빌드 산출물 ──────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+.ty_cache/
+.tox/
+.hypothesis/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+htmlcov/
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+pip-wheel-metadata/
+
+# ── 가상환경 ──────────────────────────────
+.venv/
+venv/
+env/
+
+# ── Node / FE 아티팩트 ──────────────────────────────
+node_modules/
+.next/
+.turbo/
+.pnpm-store/
+*.tsbuildinfo
+.eslintcache
+
+# ── 테스트 / E2E 결과물 ──────────────────────────────
+.playwright/
+playwright-report/
+test-results/
+tests/e2e/
+# 유닛 테스트는 컨테이너 smoke 검증에 쓸 수 있으므로 제외 안 함
+# 통합/E2E는 CI 단계에서만 필요
+
+# ── 문서 / 계획 / 메모 ──────────────────────────────
+docs/
+.planning/
+.claude/
+.remember/
+
+# ── 로그 / PID ──────────────────────────────
+*.log
+logs/
+*.pid
+
+# ── 시크릿 / 로컬 설정 ──────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Dockerfile / compose 메타 ──────────────────────────────
+# Dockerfile 자체는 빌더가 참조하지만, 다른 Dockerfile은 컨텍스트에 불필요
+**/Dockerfile.*.local
+docker-compose*.yml
+docker-compose*.yaml
+compose*.yml
+compose*.yaml
+
+# ── Worktree / 로컬 산출물 ──────────────────────────────
+.worktrees/
+worktrees/
+artifacts/
+
+# ── 기타 임시 파일 ──────────────────────────────
+*.bak
+*.tmp
+*.old
+/2026-*-local-command-caveatcaveat-*.txt

@@ -1,0 +1,4946 @@
+{
+  "components": {
+    "schemas": {
+      "BillingCycle": {
+        "description": "청구 주기.",
+        "enum": [
+          "daily",
+          "weekly",
+          "monthly"
+        ],
+        "title": "BillingCycle",
+        "type": "string"
+      },
+      "DocStatus": {
+        "description": "문서 상태 — ERPNext 호환.",
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "title": "DocStatus",
+        "type": "integer"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "InvoiceStatus": {
+        "description": "청구서 상태.",
+        "enum": [
+          "draft",
+          "issued",
+          "paid",
+          "overdue",
+          "cancelled"
+        ],
+        "title": "InvoiceStatus",
+        "type": "string"
+      },
+      "MaintenanceStatus": {
+        "description": "유지보수 상태.",
+        "enum": [
+          "scheduled",
+          "in_progress",
+          "completed",
+          "cancelled"
+        ],
+        "title": "MaintenanceStatus",
+        "type": "string"
+      },
+      "MaintenanceType": {
+        "description": "유지보수 유형.",
+        "enum": [
+          "inspection",
+          "repair",
+          "cleaning",
+          "replacement"
+        ],
+        "title": "MaintenanceType",
+        "type": "string"
+      },
+      "PaginatedResponse_RentalInvoice_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/RentalInvoice"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[RentalInvoice]",
+        "type": "object"
+      },
+      "PaginatedResponse_RentalItem_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/RentalItem"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[RentalItem]",
+        "type": "object"
+      },
+      "PaginatedResponse_RentalMaintenance_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/RentalMaintenance"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[RentalMaintenance]",
+        "type": "object"
+      },
+      "PaginatedResponse_RentalOrder_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/RentalOrder"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[RentalOrder]",
+        "type": "object"
+      },
+      "PaginatedResponse_RentalReturn_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/RentalReturn"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[RentalReturn]",
+        "type": "object"
+      },
+      "RecurrenceType": {
+        "description": "반복 유형.",
+        "enum": [
+          "none",
+          "daily",
+          "weekly",
+          "monthly"
+        ],
+        "title": "RecurrenceType",
+        "type": "string"
+      },
+      "RentalInvoice": {
+        "description": "렌탈 청구서 문서.\n\n청구 기간, 렌탈 금액, 연체료, 손상 비용, 세금을 포함한다.",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "billing_period_end": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Billing Period End"
+          },
+          "billing_period_start": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Billing Period Start"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "customer_id": {
+            "default": "",
+            "title": "Customer Id",
+            "type": "string"
+          },
+          "damage_charge": {
+            "default": "0",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Damage Charge",
+            "type": "string"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "due_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Due Date"
+          },
+          "invoice_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Invoice Date"
+          },
+          "late_fee": {
+            "default": "0",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Late Fee",
+            "type": "string"
+          },
+          "memo": {
+            "default": "",
+            "title": "Memo",
+            "type": "string"
+          },
+          "rental_amount": {
+            "default": "0",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Rental Amount",
+            "type": "string"
+          },
+          "rental_order_id": {
+            "default": "",
+            "title": "Rental Order Id",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/InvoiceStatus",
+            "default": "draft"
+          },
+          "tax_amount": {
+            "default": "0",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Tax Amount",
+            "type": "string"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "total_amount": {
+            "default": "0",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Total Amount",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          }
+        },
+        "title": "RentalInvoice",
+        "type": "object"
+      },
+      "RentalInvoiceCreate": {
+        "description": "렌탈 청구서 생성 요청 스키마.",
+        "properties": {
+          "billing_period_end": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Billing Period End"
+          },
+          "billing_period_start": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Billing Period Start"
+          },
+          "customer_id": {
+            "default": "",
+            "title": "Customer Id",
+            "type": "string"
+          },
+          "damage_charge": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "default": "0",
+            "title": "Damage Charge"
+          },
+          "due_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Due Date"
+          },
+          "invoice_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Invoice Date"
+          },
+          "late_fee": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "default": "0",
+            "title": "Late Fee"
+          },
+          "memo": {
+            "default": "",
+            "title": "Memo",
+            "type": "string"
+          },
+          "rental_amount": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "default": "0",
+            "title": "Rental Amount"
+          },
+          "rental_order_id": {
+            "title": "Rental Order Id",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/InvoiceStatus",
+            "default": "draft"
+          },
+          "tax_amount": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "default": "0",
+            "title": "Tax Amount"
+          },
+          "total_amount": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "default": "0",
+            "title": "Total Amount"
+          }
+        },
+        "required": [
+          "rental_order_id"
+        ],
+        "title": "RentalInvoiceCreate",
+        "type": "object"
+      },
+      "RentalInvoiceUpdate": {
+        "description": "렌탈 청구서 수정 요청 스키마.",
+        "properties": {
+          "billing_period_end": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Billing Period End"
+          },
+          "billing_period_start": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Billing Period Start"
+          },
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Customer Id"
+          },
+          "damage_charge": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Damage Charge"
+          },
+          "due_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Due Date"
+          },
+          "invoice_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Invoice Date"
+          },
+          "late_fee": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Late Fee"
+          },
+          "memo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Memo"
+          },
+          "rental_amount": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rental Amount"
+          },
+          "rental_order_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rental Order Id"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/InvoiceStatus"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "tax_amount": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tax Amount"
+          },
+          "total_amount": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Total Amount"
+          }
+        },
+        "title": "RentalInvoiceUpdate",
+        "type": "object"
+      },
+      "RentalItem": {
+        "description": "렌탈 품목 문서.\n\n렌탈 가능 자산의 기본 정보, 요금, 가용 상태를 저장한다.",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "category": {
+            "default": "",
+            "title": "Category",
+            "type": "string"
+          },
+          "condition": {
+            "default": "",
+            "title": "Condition",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "daily_rate": {
+            "default": "0",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Daily Rate",
+            "type": "string"
+          },
+          "deposit_amount": {
+            "default": "0",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Deposit Amount",
+            "type": "string"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "item_code": {
+            "default": "",
+            "title": "Item Code",
+            "type": "string"
+          },
+          "item_name": {
+            "default": "",
+            "title": "Item Name",
+            "type": "string"
+          },
+          "monthly_rate": {
+            "default": "0",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Monthly Rate",
+            "type": "string"
+          },
+          "serial_no": {
+            "default": "",
+            "title": "Serial No",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/RentalItemStatus",
+            "default": "available"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "total_rental_count": {
+            "default": 0,
+            "description": "누적 렌탈 횟수",
+            "title": "Total Rental Count",
+            "type": "integer"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          },
+          "warehouse": {
+            "default": "",
+            "title": "Warehouse",
+            "type": "string"
+          },
+          "weekly_rate": {
+            "default": "0",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Weekly Rate",
+            "type": "string"
+          }
+        },
+        "title": "RentalItem",
+        "type": "object"
+      },
+      "RentalItemCreate": {
+        "description": "렌탈 품목 생성 요청 스키마.",
+        "properties": {
+          "category": {
+            "default": "",
+            "title": "Category",
+            "type": "string"
+          },
+          "condition": {
+            "default": "",
+            "title": "Condition",
+            "type": "string"
+          },
+          "daily_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "default": "0",
+            "title": "Daily Rate"
+          },
+          "deposit_amount": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "default": "0",
+            "title": "Deposit Amount"
+          },
+          "item_code": {
+            "title": "Item Code",
+            "type": "string"
+          },
+          "item_name": {
+            "default": "",
+            "title": "Item Name",
+            "type": "string"
+          },
+          "monthly_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "default": "0",
+            "title": "Monthly Rate"
+          },
+          "serial_no": {
+            "default": "",
+            "title": "Serial No",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/RentalItemStatus",
+            "default": "available"
+          },
+          "warehouse": {
+            "default": "",
+            "title": "Warehouse",
+            "type": "string"
+          },
+          "weekly_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "default": "0",
+            "title": "Weekly Rate"
+          }
+        },
+        "required": [
+          "item_code"
+        ],
+        "title": "RentalItemCreate",
+        "type": "object"
+      },
+      "RentalItemStatus": {
+        "description": "렌탈 품목 가용 상태.",
+        "enum": [
+          "available",
+          "rented",
+          "maintenance",
+          "retired"
+        ],
+        "title": "RentalItemStatus",
+        "type": "string"
+      },
+      "RentalItemUpdate": {
+        "description": "렌탈 품목 수정 요청 스키마.",
+        "properties": {
+          "category": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category"
+          },
+          "condition": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Condition"
+          },
+          "daily_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Daily Rate"
+          },
+          "deposit_amount": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deposit Amount"
+          },
+          "item_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Code"
+          },
+          "item_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Name"
+          },
+          "monthly_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Monthly Rate"
+          },
+          "serial_no": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Serial No"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RentalItemStatus"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "warehouse": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Warehouse"
+          },
+          "weekly_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weekly Rate"
+          }
+        },
+        "title": "RentalItemUpdate",
+        "type": "object"
+      },
+      "RentalMaintenance": {
+        "description": "렌탈 유지보수 문서.\n\n유지보수 유형, 일정, 비용, 담당 기술자 정보를 포함한다.",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "completed_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed Date"
+          },
+          "cost": {
+            "default": "0",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Cost",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "maintenance_type": {
+            "$ref": "#/components/schemas/MaintenanceType",
+            "default": "inspection"
+          },
+          "rental_item_id": {
+            "default": "",
+            "title": "Rental Item Id",
+            "type": "string"
+          },
+          "scheduled_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scheduled Date"
+          },
+          "status": {
+            "$ref": "#/components/schemas/MaintenanceStatus",
+            "default": "scheduled"
+          },
+          "technician": {
+            "default": "",
+            "title": "Technician",
+            "type": "string"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          }
+        },
+        "title": "RentalMaintenance",
+        "type": "object"
+      },
+      "RentalMaintenanceCreate": {
+        "description": "렌탈 유지보수 생성 요청 스키마.",
+        "properties": {
+          "completed_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed Date"
+          },
+          "cost": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "default": "0",
+            "title": "Cost"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "maintenance_type": {
+            "$ref": "#/components/schemas/MaintenanceType",
+            "default": "inspection"
+          },
+          "rental_item_id": {
+            "title": "Rental Item Id",
+            "type": "string"
+          },
+          "scheduled_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scheduled Date"
+          },
+          "status": {
+            "$ref": "#/components/schemas/MaintenanceStatus",
+            "default": "scheduled"
+          },
+          "technician": {
+            "default": "",
+            "title": "Technician",
+            "type": "string"
+          }
+        },
+        "required": [
+          "rental_item_id"
+        ],
+        "title": "RentalMaintenanceCreate",
+        "type": "object"
+      },
+      "RentalMaintenanceUpdate": {
+        "description": "렌탈 유지보수 수정 요청 스키마.",
+        "properties": {
+          "completed_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed Date"
+          },
+          "cost": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cost"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "maintenance_type": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MaintenanceType"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "rental_item_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rental Item Id"
+          },
+          "scheduled_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scheduled Date"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MaintenanceStatus"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "technician": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Technician"
+          }
+        },
+        "title": "RentalMaintenanceUpdate",
+        "type": "object"
+      },
+      "RentalOrder": {
+        "description": "렌탈 주문 문서.\n\n렌탈 기간, 요금, 보증금, 청구 주기를 포함한다.",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "billing_cycle": {
+            "$ref": "#/components/schemas/BillingCycle",
+            "default": "daily"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "customer_id": {
+            "default": "",
+            "title": "Customer Id",
+            "type": "string"
+          },
+          "customer_name": {
+            "default": "",
+            "title": "Customer Name",
+            "type": "string"
+          },
+          "daily_rate": {
+            "default": "0",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Daily Rate",
+            "type": "string"
+          },
+          "deposit_amount": {
+            "default": "0",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Deposit Amount",
+            "type": "string"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "end_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Date"
+          },
+          "item_code": {
+            "default": "",
+            "title": "Item Code",
+            "type": "string"
+          },
+          "memo": {
+            "default": "",
+            "title": "Memo",
+            "type": "string"
+          },
+          "rental_item_id": {
+            "default": "",
+            "title": "Rental Item Id",
+            "type": "string"
+          },
+          "start_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start Date"
+          },
+          "status": {
+            "$ref": "#/components/schemas/RentalOrderStatus",
+            "default": "draft"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "total_amount": {
+            "default": "0",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Total Amount",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          }
+        },
+        "title": "RentalOrder",
+        "type": "object"
+      },
+      "RentalOrderCreate": {
+        "description": "렌탈 주문 생성 요청 스키마.",
+        "properties": {
+          "billing_cycle": {
+            "$ref": "#/components/schemas/BillingCycle",
+            "default": "daily"
+          },
+          "customer_id": {
+            "title": "Customer Id",
+            "type": "string"
+          },
+          "customer_name": {
+            "default": "",
+            "title": "Customer Name",
+            "type": "string"
+          },
+          "daily_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "default": "0",
+            "title": "Daily Rate"
+          },
+          "deposit_amount": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "default": "0",
+            "title": "Deposit Amount"
+          },
+          "end_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Date"
+          },
+          "item_code": {
+            "default": "",
+            "title": "Item Code",
+            "type": "string"
+          },
+          "memo": {
+            "default": "",
+            "title": "Memo",
+            "type": "string"
+          },
+          "rental_item_id": {
+            "default": "",
+            "title": "Rental Item Id",
+            "type": "string"
+          },
+          "start_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start Date"
+          },
+          "status": {
+            "$ref": "#/components/schemas/RentalOrderStatus",
+            "default": "draft"
+          },
+          "total_amount": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "default": "0",
+            "title": "Total Amount"
+          }
+        },
+        "required": [
+          "customer_id"
+        ],
+        "title": "RentalOrderCreate",
+        "type": "object"
+      },
+      "RentalOrderStatus": {
+        "description": "렌탈 주문 상태.",
+        "enum": [
+          "draft",
+          "confirmed",
+          "active",
+          "overdue",
+          "returned",
+          "cancelled"
+        ],
+        "title": "RentalOrderStatus",
+        "type": "string"
+      },
+      "RentalOrderUpdate": {
+        "description": "렌탈 주문 수정 요청 스키마.",
+        "properties": {
+          "billing_cycle": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BillingCycle"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Customer Id"
+          },
+          "customer_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Customer Name"
+          },
+          "daily_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Daily Rate"
+          },
+          "deposit_amount": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deposit Amount"
+          },
+          "end_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Date"
+          },
+          "item_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Code"
+          },
+          "memo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Memo"
+          },
+          "rental_item_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rental Item Id"
+          },
+          "start_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start Date"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RentalOrderStatus"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "total_amount": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Total Amount"
+          }
+        },
+        "title": "RentalOrderUpdate",
+        "type": "object"
+      },
+      "RentalReturn": {
+        "description": "렌탈 반납 문서.\n\n반납 일자, 상태, 손상 비용, 연체료, 보증금 환불 정보를 포함한다.",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "condition": {
+            "$ref": "#/components/schemas/ReturnCondition",
+            "default": "good"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "damage_charge": {
+            "default": "0",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Damage Charge",
+            "type": "string"
+          },
+          "deposit_refund": {
+            "default": "0",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Deposit Refund",
+            "type": "string"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "late_fee": {
+            "default": "0",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Late Fee",
+            "type": "string"
+          },
+          "memo": {
+            "default": "",
+            "title": "Memo",
+            "type": "string"
+          },
+          "rental_order_id": {
+            "default": "",
+            "title": "Rental Order Id",
+            "type": "string"
+          },
+          "return_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Return Date"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          }
+        },
+        "title": "RentalReturn",
+        "type": "object"
+      },
+      "RentalReturnCreate": {
+        "description": "렌탈 반납 생성 요청 스키마.",
+        "properties": {
+          "condition": {
+            "$ref": "#/components/schemas/ReturnCondition",
+            "default": "good"
+          },
+          "damage_charge": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "default": "0",
+            "title": "Damage Charge"
+          },
+          "deposit_refund": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "default": "0",
+            "title": "Deposit Refund"
+          },
+          "late_fee": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "default": "0",
+            "title": "Late Fee"
+          },
+          "memo": {
+            "default": "",
+            "title": "Memo",
+            "type": "string"
+          },
+          "rental_order_id": {
+            "title": "Rental Order Id",
+            "type": "string"
+          },
+          "return_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Return Date"
+          }
+        },
+        "required": [
+          "rental_order_id"
+        ],
+        "title": "RentalReturnCreate",
+        "type": "object"
+      },
+      "RentalReturnUpdate": {
+        "description": "렌탈 반납 수정 요청 스키마.",
+        "properties": {
+          "condition": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReturnCondition"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "damage_charge": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Damage Charge"
+          },
+          "deposit_refund": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deposit Refund"
+          },
+          "late_fee": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Late Fee"
+          },
+          "memo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Memo"
+          },
+          "rental_order_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rental Order Id"
+          },
+          "return_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Return Date"
+          }
+        },
+        "title": "RentalReturnUpdate",
+        "type": "object"
+      },
+      "ReservationCreate": {
+        "description": "예약 생성 요청 스키마.",
+        "properties": {
+          "attendees": {
+            "description": "참석자 ID 목록",
+            "items": {
+              "type": "string"
+            },
+            "title": "Attendees",
+            "type": "array"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "end_time": {
+            "format": "date-time",
+            "title": "End Time",
+            "type": "string"
+          },
+          "notes": {
+            "default": "",
+            "title": "Notes",
+            "type": "string"
+          },
+          "recurrence_count": {
+            "default": 1,
+            "description": "반복 횟수",
+            "maximum": 52.0,
+            "minimum": 1.0,
+            "title": "Recurrence Count",
+            "type": "integer"
+          },
+          "recurrence_type": {
+            "$ref": "#/components/schemas/RecurrenceType",
+            "default": "none"
+          },
+          "requester_id": {
+            "default": "",
+            "title": "Requester Id",
+            "type": "string"
+          },
+          "requester_name": {
+            "default": "",
+            "title": "Requester Name",
+            "type": "string"
+          },
+          "resource_id": {
+            "title": "Resource Id",
+            "type": "string"
+          },
+          "start_time": {
+            "format": "date-time",
+            "title": "Start Time",
+            "type": "string"
+          },
+          "title": {
+            "default": "",
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "resource_id",
+          "start_time",
+          "end_time"
+        ],
+        "title": "ReservationCreate",
+        "type": "object"
+      },
+      "ReservationPolicyCreate": {
+        "description": "예약 정책 생성 요청 스키마.",
+        "properties": {
+          "auto_release_minutes": {
+            "default": 15,
+            "description": "미체크인 자동 해제 시간 (분)",
+            "minimum": 0.0,
+            "title": "Auto Release Minutes",
+            "type": "integer"
+          },
+          "cancellation_deadline_minutes": {
+            "default": 30,
+            "description": "취소 마감 시간 (시작 전 분)",
+            "minimum": 0.0,
+            "title": "Cancellation Deadline Minutes",
+            "type": "integer"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "max_advance_days": {
+            "default": 30,
+            "description": "사전 예약 가능 일수",
+            "minimum": 1.0,
+            "title": "Max Advance Days",
+            "type": "integer"
+          },
+          "max_concurrent_reservations": {
+            "default": 3,
+            "description": "사용자당 최대 동시 예약 수",
+            "minimum": 1.0,
+            "title": "Max Concurrent Reservations",
+            "type": "integer"
+          },
+          "max_duration_minutes": {
+            "default": 120,
+            "description": "최대 예약 시간 (분)",
+            "minimum": 15.0,
+            "title": "Max Duration Minutes",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "requires_approval": {
+            "default": false,
+            "description": "승인 필요 여부",
+            "title": "Requires Approval",
+            "type": "boolean"
+          },
+          "resource_type": {
+            "$ref": "#/components/schemas/ResourceType",
+            "default": "meeting_room"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "ReservationPolicyCreate",
+        "type": "object"
+      },
+      "ReservationPolicyUpdate": {
+        "description": "예약 정책 수정 요청 스키마.",
+        "properties": {
+          "auto_release_minutes": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Auto Release Minutes"
+          },
+          "cancellation_deadline_minutes": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cancellation Deadline Minutes"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "max_advance_days": {
+            "anyOf": [
+              {
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Advance Days"
+          },
+          "max_concurrent_reservations": {
+            "anyOf": [
+              {
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Concurrent Reservations"
+          },
+          "max_duration_minutes": {
+            "anyOf": [
+              {
+                "minimum": 15.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Duration Minutes"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "requires_approval": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Requires Approval"
+          },
+          "resource_type": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ResourceType"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "title": "ReservationPolicyUpdate",
+        "type": "object"
+      },
+      "ReservationUpdate": {
+        "description": "예약 수정 요청 스키마.",
+        "properties": {
+          "attendees": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Attendees"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "end_time": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Time"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "start_time": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start Time"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          }
+        },
+        "title": "ReservationUpdate",
+        "type": "object"
+      },
+      "ResourceCreate": {
+        "description": "자원 생성 요청 스키마.",
+        "properties": {
+          "available_hours_end": {
+            "default": "18:00",
+            "description": "이용 가능 종료 시간 (HH:MM)",
+            "title": "Available Hours End",
+            "type": "string"
+          },
+          "available_hours_start": {
+            "default": "09:00",
+            "description": "이용 가능 시작 시간 (HH:MM)",
+            "title": "Available Hours Start",
+            "type": "string"
+          },
+          "capacity": {
+            "default": 0,
+            "description": "수용 인원 (회의실 등)",
+            "minimum": 0.0,
+            "title": "Capacity",
+            "type": "integer"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "location": {
+            "default": "",
+            "title": "Location",
+            "type": "string"
+          },
+          "manager_id": {
+            "default": "",
+            "description": "자원 관리 담당자 ID",
+            "title": "Manager Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "resource_type": {
+            "$ref": "#/components/schemas/ResourceType",
+            "default": "meeting_room"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ResourceStatus",
+            "default": "active"
+          },
+          "tags": {
+            "description": "분류 태그",
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "ResourceCreate",
+        "type": "object"
+      },
+      "ResourceStatus": {
+        "description": "자원 상태.",
+        "enum": [
+          "active",
+          "inactive",
+          "maintenance"
+        ],
+        "title": "ResourceStatus",
+        "type": "string"
+      },
+      "ResourceType": {
+        "description": "자원 유형.",
+        "enum": [
+          "meeting_room",
+          "equipment",
+          "vehicle",
+          "facility",
+          "other"
+        ],
+        "title": "ResourceType",
+        "type": "string"
+      },
+      "ResourceUpdate": {
+        "description": "자원 수정 요청 스키마.",
+        "properties": {
+          "available_hours_end": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Available Hours End"
+          },
+          "available_hours_start": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Available Hours Start"
+          },
+          "capacity": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Capacity"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "manager_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Manager Id"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "resource_type": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ResourceType"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ResourceStatus"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tags"
+          }
+        },
+        "title": "ResourceUpdate",
+        "type": "object"
+      },
+      "ReturnCondition": {
+        "description": "반납 상태.",
+        "enum": [
+          "good",
+          "fair",
+          "damaged",
+          "lost"
+        ],
+        "title": "ReturnCondition",
+        "type": "string"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "contact": {
+      "name": "OneERP 개발팀"
+    },
+    "description": "OneERP Reservation 서비스 REST API",
+    "license": {
+      "name": "Proprietary"
+    },
+    "title": "OneERP Reservation API",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/v1/rental-invoices": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "rental_invoice_목록_api_v1_rental_invoices_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_RentalInvoice_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Invoice 목록",
+        "tags": [
+          "렌탈 청구서"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "rental_invoice_생성_api_v1_rental_invoices_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RentalInvoiceCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Rental Invoice 생성 Api V1 Rental Invoices Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Invoice 생성",
+        "tags": [
+          "렌탈 청구서"
+        ]
+      }
+    },
+    "/api/v1/rental-invoices/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "rental_invoice_삭제_api_v1_rental_invoices__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Invoice 삭제",
+        "tags": [
+          "렌탈 청구서"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "rental_invoice_조회_api_v1_rental_invoices__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Rental Invoice 조회 Api V1 Rental Invoices  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Invoice 조회",
+        "tags": [
+          "렌탈 청구서"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "rental_invoice_수정_api_v1_rental_invoices__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RentalInvoiceUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Rental Invoice 수정 Api V1 Rental Invoices  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Invoice 수정",
+        "tags": [
+          "렌탈 청구서"
+        ]
+      }
+    },
+    "/api/v1/rental-invoices/{doc_id}/cancel": {
+      "post": {
+        "description": "문서를 취소한다 (제출 → 취소).",
+        "operationId": "rental_invoice_취소_api_v1_rental_invoices__doc_id__cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Rental Invoice 취소 Api V1 Rental Invoices  Doc Id  Cancel Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Invoice 취소",
+        "tags": [
+          "렌탈 청구서"
+        ]
+      }
+    },
+    "/api/v1/rental-invoices/{doc_id}/submit": {
+      "post": {
+        "description": "문서를 제출한다 (초안 → 제출).",
+        "operationId": "rental_invoice_제출_api_v1_rental_invoices__doc_id__submit_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Rental Invoice 제출 Api V1 Rental Invoices  Doc Id  Submit Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Invoice 제출",
+        "tags": [
+          "렌탈 청구서"
+        ]
+      }
+    },
+    "/api/v1/rental-items": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "rental_item_목록_api_v1_rental_items_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_RentalItem_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Item 목록",
+        "tags": [
+          "렌탈 품목"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "rental_item_생성_api_v1_rental_items_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RentalItemCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Rental Item 생성 Api V1 Rental Items Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Item 생성",
+        "tags": [
+          "렌탈 품목"
+        ]
+      }
+    },
+    "/api/v1/rental-items/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "rental_item_삭제_api_v1_rental_items__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Item 삭제",
+        "tags": [
+          "렌탈 품목"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "rental_item_조회_api_v1_rental_items__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Rental Item 조회 Api V1 Rental Items  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Item 조회",
+        "tags": [
+          "렌탈 품목"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "rental_item_수정_api_v1_rental_items__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RentalItemUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Rental Item 수정 Api V1 Rental Items  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Item 수정",
+        "tags": [
+          "렌탈 품목"
+        ]
+      }
+    },
+    "/api/v1/rental-maintenances": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "rental_maintenance_목록_api_v1_rental_maintenances_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_RentalMaintenance_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Maintenance 목록",
+        "tags": [
+          "렌탈 유지보수"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "rental_maintenance_생성_api_v1_rental_maintenances_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RentalMaintenanceCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Rental Maintenance 생성 Api V1 Rental Maintenances Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Maintenance 생성",
+        "tags": [
+          "렌탈 유지보수"
+        ]
+      }
+    },
+    "/api/v1/rental-maintenances/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "rental_maintenance_삭제_api_v1_rental_maintenances__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Maintenance 삭제",
+        "tags": [
+          "렌탈 유지보수"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "rental_maintenance_조회_api_v1_rental_maintenances__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Rental Maintenance 조회 Api V1 Rental Maintenances  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Maintenance 조회",
+        "tags": [
+          "렌탈 유지보수"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "rental_maintenance_수정_api_v1_rental_maintenances__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RentalMaintenanceUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Rental Maintenance 수정 Api V1 Rental Maintenances  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Maintenance 수정",
+        "tags": [
+          "렌탈 유지보수"
+        ]
+      }
+    },
+    "/api/v1/rental-orders": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "rental_order_목록_api_v1_rental_orders_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_RentalOrder_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Order 목록",
+        "tags": [
+          "렌탈 주문"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "rental_order_생성_api_v1_rental_orders_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RentalOrderCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Rental Order 생성 Api V1 Rental Orders Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Order 생성",
+        "tags": [
+          "렌탈 주문"
+        ]
+      }
+    },
+    "/api/v1/rental-orders/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "rental_order_삭제_api_v1_rental_orders__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Order 삭제",
+        "tags": [
+          "렌탈 주문"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "rental_order_조회_api_v1_rental_orders__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Rental Order 조회 Api V1 Rental Orders  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Order 조회",
+        "tags": [
+          "렌탈 주문"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "rental_order_수정_api_v1_rental_orders__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RentalOrderUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Rental Order 수정 Api V1 Rental Orders  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Order 수정",
+        "tags": [
+          "렌탈 주문"
+        ]
+      }
+    },
+    "/api/v1/rental-orders/{doc_id}/cancel": {
+      "post": {
+        "description": "문서를 취소한다 (제출 → 취소).",
+        "operationId": "rental_order_취소_api_v1_rental_orders__doc_id__cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Rental Order 취소 Api V1 Rental Orders  Doc Id  Cancel Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Order 취소",
+        "tags": [
+          "렌탈 주문"
+        ]
+      }
+    },
+    "/api/v1/rental-orders/{doc_id}/submit": {
+      "post": {
+        "description": "문서를 제출한다 (초안 → 제출).",
+        "operationId": "rental_order_제출_api_v1_rental_orders__doc_id__submit_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Rental Order 제출 Api V1 Rental Orders  Doc Id  Submit Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Order 제출",
+        "tags": [
+          "렌탈 주문"
+        ]
+      }
+    },
+    "/api/v1/rental-returns": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "rental_return_목록_api_v1_rental_returns_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_RentalReturn_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Return 목록",
+        "tags": [
+          "렌탈 반납"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "rental_return_생성_api_v1_rental_returns_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RentalReturnCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Rental Return 생성 Api V1 Rental Returns Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Return 생성",
+        "tags": [
+          "렌탈 반납"
+        ]
+      }
+    },
+    "/api/v1/rental-returns/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "rental_return_삭제_api_v1_rental_returns__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Return 삭제",
+        "tags": [
+          "렌탈 반납"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "rental_return_조회_api_v1_rental_returns__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Rental Return 조회 Api V1 Rental Returns  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Return 조회",
+        "tags": [
+          "렌탈 반납"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "rental_return_수정_api_v1_rental_returns__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RentalReturnUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Rental Return 수정 Api V1 Rental Returns  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Return 수정",
+        "tags": [
+          "렌탈 반납"
+        ]
+      }
+    },
+    "/api/v1/rental-returns/{doc_id}/cancel": {
+      "post": {
+        "description": "문서를 취소한다 (제출 → 취소).",
+        "operationId": "rental_return_취소_api_v1_rental_returns__doc_id__cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Rental Return 취소 Api V1 Rental Returns  Doc Id  Cancel Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Return 취소",
+        "tags": [
+          "렌탈 반납"
+        ]
+      }
+    },
+    "/api/v1/rental-returns/{doc_id}/submit": {
+      "post": {
+        "description": "문서를 제출한다 (초안 → 제출).",
+        "operationId": "rental_return_제출_api_v1_rental_returns__doc_id__submit_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Rental Return 제출 Api V1 Rental Returns  Doc Id  Submit Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rental Return 제출",
+        "tags": [
+          "렌탈 반납"
+        ]
+      }
+    },
+    "/api/v1/reservation-policies/": {
+      "get": {
+        "description": "예약 정책 목록을 조회한다.",
+        "operationId": "list_policies_api_v1_reservation_policies__get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response List Policies Api V1 Reservation Policies  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Policies",
+        "tags": [
+          "예약정책"
+        ]
+      },
+      "post": {
+        "description": "예약 정책을 생성한다.",
+        "operationId": "create_policy_api_v1_reservation_policies__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReservationPolicyCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Create Policy Api V1 Reservation Policies  Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create Policy",
+        "tags": [
+          "예약정책"
+        ]
+      }
+    },
+    "/api/v1/reservation-policies/{doc_id}": {
+      "get": {
+        "description": "예약 정책 상세 정보를 조회한다.",
+        "operationId": "get_policy_api_v1_reservation_policies__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Get Policy Api V1 Reservation Policies  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Policy",
+        "tags": [
+          "예약정책"
+        ]
+      },
+      "put": {
+        "description": "예약 정책을 수정한다.",
+        "operationId": "update_policy_api_v1_reservation_policies__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReservationPolicyUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Update Policy Api V1 Reservation Policies  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Update Policy",
+        "tags": [
+          "예약정책"
+        ]
+      }
+    },
+    "/api/v1/reservations/": {
+      "get": {
+        "description": "예약 목록을 페이지네이션으로 조회한다.",
+        "operationId": "list_reservations_api_v1_reservations__get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response List Reservations Api V1 Reservations  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Reservations",
+        "tags": [
+          "예약"
+        ]
+      },
+      "post": {
+        "description": "예약을 생성한다.\n\nBR-RSV-003 ~ BR-RSV-009 규칙 적용.",
+        "operationId": "create_reservation_api_v1_reservations__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReservationCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Create Reservation Api V1 Reservations  Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create Reservation",
+        "tags": [
+          "예약"
+        ]
+      }
+    },
+    "/api/v1/reservations/release-no-shows": {
+      "post": {
+        "description": "미체크인 예약을 자동 해제한다.",
+        "operationId": "release_no_shows_api_v1_reservations_release_no_shows_post",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Release No Shows Api V1 Reservations Release No Shows Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Release No Shows",
+        "tags": [
+          "예약"
+        ]
+      }
+    },
+    "/api/v1/reservations/resource/{resource_id}/availability": {
+      "get": {
+        "description": "특정 자원의 특정 날짜 가용성을 조회한다.",
+        "operationId": "get_availability_api_v1_reservations_resource__resource_id__availability_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "resource_id",
+            "required": true,
+            "schema": {
+              "title": "Resource Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "date",
+            "required": true,
+            "schema": {
+              "title": "Date",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Get Availability Api V1 Reservations Resource  Resource Id  Availability Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Availability",
+        "tags": [
+          "예약"
+        ]
+      }
+    },
+    "/api/v1/reservations/{doc_id}": {
+      "get": {
+        "description": "예약 상세 정보를 조회한다.",
+        "operationId": "get_reservation_api_v1_reservations__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Get Reservation Api V1 Reservations  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Reservation",
+        "tags": [
+          "예약"
+        ]
+      },
+      "put": {
+        "description": "예약을 수정한다.",
+        "operationId": "update_reservation_api_v1_reservations__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReservationUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Update Reservation Api V1 Reservations  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Update Reservation",
+        "tags": [
+          "예약"
+        ]
+      }
+    },
+    "/api/v1/reservations/{doc_id}/cancel": {
+      "post": {
+        "description": "예약을 취소한다.\n\nBR-RSV-005, BR-RSV-010 규칙 적용.",
+        "operationId": "cancel_reservation_api_v1_reservations__doc_id__cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Cancel Reservation Api V1 Reservations  Doc Id  Cancel Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Cancel Reservation",
+        "tags": [
+          "예약"
+        ]
+      }
+    },
+    "/api/v1/reservations/{doc_id}/check-in": {
+      "post": {
+        "description": "예약 체크인을 처리한다.",
+        "operationId": "check_in_api_v1_reservations__doc_id__check_in_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Check In Api V1 Reservations  Doc Id  Check In Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Check In",
+        "tags": [
+          "예약"
+        ]
+      }
+    },
+    "/api/v1/reservations/{doc_id}/check-out": {
+      "post": {
+        "description": "예약 체크아웃(완료)을 처리한다.",
+        "operationId": "check_out_api_v1_reservations__doc_id__check_out_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Check Out Api V1 Reservations  Doc Id  Check Out Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Check Out",
+        "tags": [
+          "예약"
+        ]
+      }
+    },
+    "/api/v1/resources/": {
+      "get": {
+        "description": "자원 목록을 페이지네이션으로 조회한다.",
+        "operationId": "list_resources_api_v1_resources__get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response List Resources Api V1 Resources  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Resources",
+        "tags": [
+          "자원"
+        ]
+      },
+      "post": {
+        "description": "자원을 생성한다.\n\nBR-RSV-001: 자원명 고유성 검증.",
+        "operationId": "create_resource_api_v1_resources__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResourceCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Create Resource Api V1 Resources  Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create Resource",
+        "tags": [
+          "자원"
+        ]
+      }
+    },
+    "/api/v1/resources/{doc_id}": {
+      "get": {
+        "description": "자원 상세 정보를 조회한다.",
+        "operationId": "get_resource_api_v1_resources__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Get Resource Api V1 Resources  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Resource",
+        "tags": [
+          "자원"
+        ]
+      },
+      "put": {
+        "description": "자원을 수정한다.",
+        "operationId": "update_resource_api_v1_resources__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResourceUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Update Resource Api V1 Resources  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Update Resource",
+        "tags": [
+          "자원"
+        ]
+      }
+    },
+    "/api/v1/resources/{doc_id}/deactivate": {
+      "post": {
+        "description": "자원을 비활성화한다.\n\nBR-RSV-002: 활성 예약이 없을 때만 비활성화 가능.",
+        "operationId": "deactivate_resource_api_v1_resources__doc_id__deactivate_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Deactivate Resource Api V1 Resources  Doc Id  Deactivate Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Deactivate Resource",
+        "tags": [
+          "자원"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "description": "서비스 상태를 확인한다 (하위 호환).",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Health Health Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/health/live": {
+      "get": {
+        "description": "Liveness probe — 프로세스 생존 확인.",
+        "operationId": "liveness_health_live_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Liveness Health Live Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Liveness",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "description": "Readiness probe — DB/NATS/Valkey 연결 포함 서비스 준비 상태 확인.",
+        "operationId": "readiness_health_ready_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Readiness",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/health/startup": {
+      "get": {
+        "description": "Startup probe — 서비스 초기화 완료 확인 (readiness와 동일).",
+        "operationId": "startup_health_startup_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Startup",
+        "tags": [
+          "health"
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/reservation"
+    },
+    {
+      "description": "현재 서버",
+      "url": "/"
+    }
+  ],
+  "tags": [
+    {
+      "description": "렌탈 품목 API",
+      "name": "렌탈 품목"
+    },
+    {
+      "description": "렌탈 유지보수 API",
+      "name": "렌탈 유지보수"
+    },
+    {
+      "description": "렌탈 주문 API",
+      "name": "렌탈 주문"
+    },
+    {
+      "description": "렌탈 반납 API",
+      "name": "렌탈 반납"
+    },
+    {
+      "description": "렌탈 청구서 API",
+      "name": "렌탈 청구서"
+    }
+  ]
+}

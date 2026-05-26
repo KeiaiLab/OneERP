@@ -1,0 +1,12 @@
+{
+  "tenant_name": "주식회사 원ERP",
+  "domain": "oneerp.example.com",
+  "is_active": true,
+  "plan": "standard",
+  "allowed_modules": ["hr", "payroll", "expenses", "crm", "assets"],
+  "max_users": 100,
+  "admin_user_id": "user-001",
+  "contact_email": "admin@oneerp.example.com",
+  "contract_start": "2026-04-01",
+  "contract_end": "2027-03-31"
+}

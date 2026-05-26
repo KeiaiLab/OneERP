@@ -1,0 +1,242 @@
+# OneERP Umbrella 레포 — 서브모듈 조합 및 개발 도구 설정
+[project]
+name = "oneerp"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "nats-py>=2.14.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+    "pytest-cov>=7.0.0",
+    "pytest-xdist>=3.6.1",
+    "ruff==0.15.0",
+    "ty==0.0.15",
+    "bandit[toml]>=1.7.9",
+    "pip-audit>=2.7.3",
+    "httpx>=0.28.0",
+    "anyio>=4.9.0",
+    "pymongo>=4.16.0",
+    "jinja2>=3.1.0",
+    "pyyaml>=6.0.0",
+    "playwright>=1.50.0",
+    "pytest-playwright>=0.6.2",
+    "appium-python-client>=4.0.0",
+]
+
+[tool.uv.workspace]
+members = [
+    "core",
+    "services/finance/*",
+    "services/hr/*",
+    "services/scm/*",
+    "services/sales/*",
+    "services/platform/*",
+    "services/collab/*",
+    "services/marketing/*",
+    "services/logistics/*",
+    "services/portal/*",
+    "services/compliance/*",
+    "services/assets/*",
+    "services/ehs/*",
+    # ADR-0014 Runtime-Plane 분해
+    "planes/_shared",
+    "planes/api_plane",
+    "planes/realtime_plane",
+    "planes/worker_plane",
+    "planes/scheduler_plane",
+    "planes/edge_plane",
+    "planes/extension_plane",
+]
+
+[tool.uv.sources]
+oneerp-core = { workspace = true }
+oneerp-plane-shared = { workspace = true }
+# ADR-0014: 각 plane 이 마운트하는 도메인 서비스 (workspace 내부 참조)
+oneerp-selling = { workspace = true }
+oneerp-crm = { workspace = true }
+oneerp-pos = { workspace = true }
+oneerp-commerce = { workspace = true }
+oneerp-reservation = { workspace = true }
+oneerp-buying = { workspace = true }
+oneerp-stock = { workspace = true }
+oneerp-manufacturing = { workspace = true }
+oneerp-qm = { workspace = true }
+oneerp-accounting = { workspace = true }
+oneerp-expenses = { workspace = true }
+oneerp-payroll = { workspace = true }
+oneerp-finance-extra = { workspace = true }
+oneerp-hr = { workspace = true }
+oneerp-learning = { workspace = true }
+oneerp-plm = { workspace = true }
+oneerp-assets = { workspace = true }
+oneerp-compliance = { workspace = true }
+oneerp-ehs = { workspace = true }
+oneerp-logistics = { workspace = true }
+oneerp-advanced-planning = { workspace = true }
+oneerp-portal-core = { workspace = true }
+oneerp-portal-comms = { workspace = true }
+oneerp-calendar = { workspace = true }
+oneerp-analytics = { workspace = true }
+oneerp-rpa = { workspace = true }
+oneerp-automation-orchestrator = { workspace = true }
+oneerp-marketing-automation = { workspace = true }
+oneerp-gateway = { workspace = true }
+oneerp-iot = { workspace = true }
+oneerp-integration-hub = { workspace = true }
+oneerp-marketing = { workspace = true }
+oneerp-gtm = { workspace = true }
+oneerp-board = { workspace = true }
+oneerp-projects = { workspace = true }
+oneerp-wiki = { workspace = true }
+oneerp-knowledge = { workspace = true }
+oneerp-documents = { workspace = true }
+oneerp-survey = { workspace = true }
+
+[tool.pytest.ini_options]
+# 모노레포 루트에서의 pytest 범위:
+#   - `tests/`          umbrella 레벨 통합/E2E 테스트
+#   - `core/`           공통 커널 단위 테스트
+#   - `services/`       ⚠️  제외: 각 서비스가 동일 top-level `app` 패키지를
+#                        공유하므로 루트에서 `pytest services/*/*` 와 같이
+#                        다중 서비스를 한 프로세스로 실행하면 `app.services`
+#                        namespace 충돌이 발생한다(Wave 5-M 진단 참조).
+#                        CI(ci-be.yml)는 이미 `uv run --directory services/{svc}
+#                        pytest tests/` 방식으로 서비스별 독립 프로세스에서
+#                        실행하므로 품질 게이트에는 영향 없음.
+#                        로컬 통합 재현이 필요하면 `services/` 디렉터리에서
+#                        `uv run pytest` 로 실행하거나 서비스별로 실행하라.
+testpaths = ["tests", "core"]
+addopts = "-q --import-mode=importlib"
+pythonpath = [".", "core"]
+consider_namespace_packages = true
+markers = [
+    "integration: 통합 테스트 (FerretDB 필요)",
+    "e2e: E2E 테스트 (배포된 앱 필요)",
+    "e2e_ui: Playwright 브라우저 E2E 테스트",
+    "security: 보안 시나리오 테스트 (authN/authZ/OWASP)",
+    "playwright: Wave D Playwright UI 시나리오 (ONEERP_FE_URL 필요)",
+]
+
+# ── Q2 BE 타입체크 (ty) ──────────────────────────────────────────
+# ty(astral) 0.0.15 — ruff 제작사의 Python 타입 체커. 점진적 도입 중.
+# 현재 전체 디렉토리 대상 fail 수: 364 diagnostics (core는 통과)
+# 전환 정책:
+#   1단계(현재) — ci-be.yml에서 continue-on-error: true 로 관측만
+#   2단계(Wave 3) — services/{finance,hr,sales,scm} 등 핵심 경로 strict
+#   3단계(Wave 4) — 전체 strict + fail
+[tool.ty]
+# 제외 경로: 빌드/캐시/워크트리/FE
+[tool.ty.src]
+exclude = [
+    "artifacts",
+    ".worktrees",
+    "worktrees",
+    ".venv",
+    "web",
+    "apps/web",
+    "**/__pycache__",
+    ".ruff_cache",
+    ".pytest_cache",
+    ".planning",
+]
+
+# ── Q5 보안 스캔 (bandit) ────────────────────────────────────────
+# OWASP/CWE 기반 Python 정적 보안 스캔
+# skip 규칙:
+#   B101 — assert 사용 (pytest에서 필수)
+#   B601 — paramiko 주의 (OneERP는 미사용)
+[tool.bandit]
+exclude_dirs = [
+    "tests",
+    "**/tests",
+    ".venv",
+    "artifacts",
+    ".worktrees",
+    "worktrees",
+    "web",
+    "apps/web",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".planning",
+]
+skips = ["B101"]
+
+# ── Q6 커버리지 강제 (pytest-cov) ────────────────────────────────
+# 소스: services/ 와 core/oneerp_core
+# 임계치 정책:
+#   현재 Wave 2 — fail_under = 50 (기반 구축)
+#   Wave 3 — fail_under = 65 (도메인 서비스 확장)
+#   Wave 4 — fail_under = 80 (DoD 기준)
+[tool.coverage.run]
+source = ["services", "core/oneerp_core"]
+omit = [
+    "*/tests/*",
+    "*/migrations/*",
+    "*/__init__.py",
+    "**/conftest.py",
+    "**/entities.py",
+    "**/models.py",
+    "*/alembic/*",
+    "artifacts/*",
+    ".worktrees/*",
+    "worktrees/*",
+]
+branch = true
+parallel = false
+relative_files = true
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+skip_covered = false
+# 점진적 도입: 현재 50 → Wave 3 65 → Wave 4 80
+fail_under = 50
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+
+[tool.coverage.html]
+directory = "artifacts/coverage-html"
+
+[tool.coverage.xml]
+output = "artifacts/coverage.xml"
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+extend-exclude = ["artifacts", ".worktrees", "worktrees", ".venv", "web"]
+
+[tool.ruff.lint]
+select = [
+    "E", "W", "F", "I", "B", "UP", "SIM",
+    "S", "RUF", "PT", "TCH", "PERF",
+    "C4", "DTZ", "PIE", "RET", "ERA",
+    "FA", "ISC", "ICN", "TID", "PTH",
+    "FLY", "FURB", "LOG", "G", "T20",
+    "ARG", "FBT", "A", "COM", "RSE",
+    "SLF", "SLOT",
+]
+ignore = [
+    "E501",
+    "COM812",
+    "ISC001",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/**/*.py" = ["S101", "ARG", "FBT", "TC002", "TC003", "SLF001", "ERA001"]
+"**/tests/security/**/*.py" = ["S101", "S105", "S106", "S107", "ARG", "FBT", "TC002", "TC003", "SLF001"]
+"**/tests/unit/test_commercial_readiness*.py" = ["S607", "S603"]
+"**/models/**/*.py" = ["RUF012"]
+"**/routes/**/*.py" = ["TID252", "TC001", "TC002", "FA100", "S101"]
+"**/entities.py" = ["TC001", "TC002"]
+"**/app/main.py" = ["TID252"]
+"scripts/**/*.py" = ["T20", "S112", "TC003", "S603", "S607", "ERA001"]

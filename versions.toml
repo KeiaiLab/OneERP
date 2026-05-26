@@ -1,0 +1,31 @@
+# OneERP 공식 버전 사양 (SoT)
+#
+# 이 파일은 README.md / .claude/CLAUDE.md / docs/onboarding/00-quickstart.md /
+# docs/engineering/standards.md 의 버전 표기를 파생시키는 **단일 진실 공급원**이다.
+#
+# 갱신 절차:
+#   1. 실제 도구 버전 변경 시 아래 [versions]·[metadata] 수정
+#   2. python3 scripts/docs/render_versions.py --write  실행
+#   3. 변경된 문서와 본 파일을 함께 커밋
+#
+# CI job `docs-versions-consistent` 가 매 PR에서 drift 를 검사한다.
+
+[versions]
+python           = "3.14"
+python_patch     = "3.14.3"
+uv               = "0.11.1"
+ruff             = "0.15.0"
+ty               = "0.0.15"
+pnpm             = "10.30.3"
+biome            = "2.0.0"
+node             = "22"
+fastapi          = ">=0.115.0"
+pydantic         = ">=2.11.0"
+next             = "16"
+tailwindcss      = "4.1"
+ferretdb         = "2.7.0"
+ferretdb_postgres = "17-0.107.0-ferretdb-2.7.0"
+
+[metadata]
+last_updated = "2026-04-12"
+rendered_by  = "scripts/docs/render_versions.py"

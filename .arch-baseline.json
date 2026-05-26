@@ -1,0 +1,7 @@
+{
+  "OE002-route-direct-repo-instantiate": 208,
+  "OE002-route-import-repository": 123,
+  "OE004-models-define-create-dto": 910,
+  "OE101-plane-domain-rule-leak": 0,
+  "OE201-web-contract-bypass": 0
+}

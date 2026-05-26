@@ -1,0 +1,25 @@
+{
+  "name": "oneerp",
+  "private": true,
+  "packageManager": "pnpm@10.30.3",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "dev:web": "pnpm --filter @oneerp/web dev",
+    "build:web": "pnpm --filter @oneerp/web build",
+    "lint:fe": "pnpm --filter @oneerp/web lint",
+    "typecheck:fe": "pnpm --filter @oneerp/web typecheck"
+  },
+  "pnpm": {
+    "overrides": {
+      "basic-ftp": "5.3.1",
+      "picomatch": "4.0.4",
+      "vite": "8.0.10"
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.5.3",
+    "@commitlint/config-conventional": "^20.5.3"
+  }
+}

@@ -1,0 +1,28 @@
+[project]
+name = "oneerp-plane-extension"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.34.0",
+    "oneerp-core",
+    "oneerp-plane-shared",
+    "oneerp-iot",
+    "oneerp-integration-hub",
+    "oneerp-marketing",
+    "oneerp-marketing-automation",
+    "oneerp-gtm",
+    "oneerp-board",
+    "oneerp-projects",
+    "oneerp-wiki",
+    "oneerp-knowledge",
+    "oneerp-documents",
+    "oneerp-survey",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["plane_extension"]

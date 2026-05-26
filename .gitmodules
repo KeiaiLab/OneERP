@@ -1,0 +1,6 @@
+[submodule "core"]
+	path = core
+	url = git@github.com:keiailab/oneerp-core.git
+[submodule "web"]
+	path = web
+	url = git@github.com:keiailab/oneerp-web.git

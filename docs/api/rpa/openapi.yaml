@@ -1,0 +1,664 @@
+components:
+  schemas:
+    DocStatus:
+      description: 문서 상태 — ERPNext 호환.
+      enum:
+      - 0
+      - 1
+      - 2
+      title: DocStatus
+      type: integer
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    PaginatedResponse_RPAResult_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/RPAResult'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[RPAResult]
+      type: object
+    RPAResult:
+      description: RPA 결과 문서 — 작업 실행의 개별 단계를 기록한다.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        data:
+          additionalProperties: true
+          default: {}
+          title: Data
+          type: object
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        duration_ms:
+          default: 0
+          title: Duration Ms
+          type: integer
+        error:
+          default: ''
+          title: Error
+          type: string
+        screenshot_url:
+          default: ''
+          title: Screenshot Url
+          type: string
+        step_name:
+          default: ''
+          title: Step Name
+          type: string
+        success:
+          default: true
+          title: Success
+          type: boolean
+        task_id:
+          default: ''
+          title: Task Id
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: RPAResult
+      type: object
+    RPAResultCreate:
+      description: RPA 결과 생성 요청 스키마.
+      properties:
+        data:
+          additionalProperties: true
+          default: {}
+          title: Data
+          type: object
+        duration_ms:
+          default: 0
+          title: Duration Ms
+          type: integer
+        error:
+          default: ''
+          title: Error
+          type: string
+        screenshot_url:
+          default: ''
+          title: Screenshot Url
+          type: string
+        step_name:
+          title: Step Name
+          type: string
+        success:
+          default: true
+          title: Success
+          type: boolean
+        task_id:
+          title: Task Id
+          type: string
+      required:
+      - task_id
+      - step_name
+      title: RPAResultCreate
+      type: object
+    RPAResultUpdate:
+      description: RPA 결과 수정 요청 스키마.
+      properties:
+        data:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Data
+        error:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error
+        success:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Success
+      title: RPAResultUpdate
+      type: object
+    RPATaskCreate:
+      description: RPA 작업 생성 요청 스키마.
+      properties:
+        device_id:
+          default: ''
+          title: Device Id
+          type: string
+        input_data:
+          additionalProperties: true
+          default: {}
+          title: Input Data
+          type: object
+        priority:
+          default: 0
+          title: Priority
+          type: integer
+        task_type:
+          title: Task Type
+          type: string
+      required:
+      - task_type
+      title: RPATaskCreate
+      type: object
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+info:
+  contact:
+    name: OneERP 개발팀
+  description: OneERP Rpa 서비스 REST API
+  license:
+    name: Proprietary
+  title: OneERP Rpa API
+  version: 0.1.0
+openapi: 3.1.0
+paths:
+  /api/v1/rpa/results:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: rpa_result_목록_api_v1_rpa_results_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_RPAResult_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Rpa Result 목록
+      tags:
+      - RPA 결과
+    post:
+      description: 엔티티를 생성한다.
+      operationId: rpa_result_생성_api_v1_rpa_results_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RPAResultCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Rpa Result 생성 Api V1 Rpa Results Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Rpa Result 생성
+      tags:
+      - RPA 결과
+  /api/v1/rpa/results/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: rpa_result_삭제_api_v1_rpa_results__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Rpa Result 삭제
+      tags:
+      - RPA 결과
+    get:
+      description: 엔티티를 조회한다.
+      operationId: rpa_result_조회_api_v1_rpa_results__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Rpa Result 조회 Api V1 Rpa Results  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Rpa Result 조회
+      tags:
+      - RPA 결과
+    put:
+      description: 엔티티를 수정한다.
+      operationId: rpa_result_수정_api_v1_rpa_results__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RPAResultUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Rpa Result 수정 Api V1 Rpa Results  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Rpa Result 수정
+      tags:
+      - RPA 결과
+  /api/v1/rpa/results/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: rpa_result_취소_api_v1_rpa_results__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Rpa Result 취소 Api V1 Rpa Results  Doc Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Rpa Result 취소
+      tags:
+      - RPA 결과
+  /api/v1/rpa/results/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: rpa_result_제출_api_v1_rpa_results__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Rpa Result 제출 Api V1 Rpa Results  Doc Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Rpa Result 제출
+      tags:
+      - RPA 결과
+  /api/v1/rpa/tasks/:
+    get:
+      description: RPA 작업 목록을 페이지네이션으로 조회한다.
+      operationId: list_rpa_tasks_api_v1_rpa_tasks__get
+      parameters:
+      - in: query
+        name: status
+        required: false
+        schema:
+          default: ''
+          title: Status
+          type: string
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response List Rpa Tasks Api V1 Rpa Tasks  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: List Rpa Tasks
+      tags:
+      - RPA
+    post:
+      description: RPA 작업을 생성한다.
+      operationId: create_rpa_task_api_v1_rpa_tasks__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RPATaskCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Create Rpa Task Api V1 Rpa Tasks  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create Rpa Task
+      tags:
+      - RPA
+  /api/v1/rpa/tasks/devices:
+    get:
+      description: 연결된 Android 기기 목록을 반환한다.
+      operationId: list_devices_api_v1_rpa_tasks_devices_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response List Devices Api V1 Rpa Tasks Devices Get
+                type: object
+          description: Successful Response
+      summary: List Devices
+      tags:
+      - RPA
+  /api/v1/rpa/tasks/{task_id}:
+    get:
+      description: RPA 작업 상세를 조회한다.
+      operationId: get_rpa_task_api_v1_rpa_tasks__task_id__get
+      parameters:
+      - in: path
+        name: task_id
+        required: true
+        schema:
+          title: Task Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Get Rpa Task Api V1 Rpa Tasks  Task Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Rpa Task
+      tags:
+      - RPA
+  /api/v1/rpa/tasks/{task_id}/cancel:
+    post:
+      description: RPA 작업을 취소한다.
+      operationId: cancel_rpa_task_api_v1_rpa_tasks__task_id__cancel_post
+      parameters:
+      - in: path
+        name: task_id
+        required: true
+        schema:
+          title: Task Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Cancel Rpa Task Api V1 Rpa Tasks  Task Id  Cancel
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Cancel Rpa Task
+      tags:
+      - RPA
+  /api/v1/rpa/tasks/{task_id}/run:
+    post:
+      description: RPA 작업을 수동 실행한다.
+      operationId: run_rpa_task_api_v1_rpa_tasks__task_id__run_post
+      parameters:
+      - in: path
+        name: task_id
+        required: true
+        schema:
+          title: Task Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Run Rpa Task Api V1 Rpa Tasks  Task Id  Run Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Run Rpa Task
+      tags:
+      - RPA
+  /health:
+    get:
+      description: 서비스 상태를 확인한다 (하위 호환).
+      operationId: health_health_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Health Health Get
+                type: object
+          description: Successful Response
+      summary: Health
+      tags:
+      - health
+  /health/live:
+    get:
+      description: Liveness probe — 프로세스 생존 확인.
+      operationId: liveness_health_live_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Liveness Health Live Get
+                type: object
+          description: Successful Response
+      summary: Liveness
+      tags:
+      - health
+  /health/ready:
+    get:
+      description: Readiness probe — DB/NATS/Valkey 연결 포함 서비스 준비 상태 확인.
+      operationId: readiness_health_ready_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Readiness
+      tags:
+      - health
+  /health/startup:
+    get:
+      description: Startup probe — 서비스 초기화 완료 확인 (readiness와 동일).
+      operationId: startup_health_startup_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Startup
+      tags:
+      - health
+servers:
+- url: /rpa
+- description: 현재 서버
+  url: /
+tags:
+- description: RPA 결과 API
+  name: RPA 결과

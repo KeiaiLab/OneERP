@@ -1,0 +1,4 @@
+backend_e2e:
+  - tests/e2e/test_order_to_cash.py
+web_e2e:
+  - web/tests/e2e/smoke.spec.ts

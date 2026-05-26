@@ -1,0 +1,39 @@
+# lefthook.yml — enforcement 모드 (D9~) — mixed (py + node)
+# ralph-loop 우회: LEFTHOOK=0 또는 [skip-hooks] 트레일러.
+
+assert_lefthook_installed: true
+no_tty: true
+
+pre-commit:
+  parallel: true
+  commands:
+    py-format:
+      # W1.2 — .pre-commit-config.yaml 폐기 후 ruff format --check 이관 (2026-05-14)
+      glob: "{core,src,services,planes,packages}/**/*.py"
+      run: uv run ruff format --check {staged_files}
+    py-lint:
+      glob: "{core,src,services,planes,packages}/**/*.py"
+      run: uv run ruff check {staged_files}
+    js-lint:
+      glob: "{web,apps}/**/*.{ts,tsx,js,jsx}"
+      run: pnpm exec biome check --no-errors-on-unmatched {staged_files}
+    secrets:
+      run: gitleaks protect --staged --no-banner --redact
+    artifacts-guard:
+      glob: "artifacts/**"
+      run: |
+        echo "ERROR: artifacts/ 커밋 금지 — gitignore 대상 (CLAUDE.md 프로젝트 고유 규칙)" >&2
+        exit 1
+
+commit-msg:
+  commands:
+    commitlint:
+      # 2026-05-16 RFC-0038 sister fix: glob 가드 — Non-Node repo (no package.json) skip.
+      run: |
+        if grep -q '\[skip-hooks\]' {1}; then exit 0; fi
+        if [ ! -f package.json ]; then exit 0; fi
+        if command -v commitlint >/dev/null 2>&1; then
+          commitlint --edit {1}
+        else
+          pnpm exec commitlint --edit {1}
+        fi

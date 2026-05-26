@@ -1,0 +1,36 @@
+{{ generated_marker }}
+"""{{ feature_name }}({{ entity_name }}) 문서 모델.
+
+{{ notes }}
+"""
+
+from __future__ import annotations
+
+{% if states %}
+from enum import StrEnum
+
+{% endif %}
+from oneerp_core.document import BaseDocument
+from pydantic import Field
+
+{% if states %}
+
+class {{ entity_name }}Status(StrEnum):
+    """{{ feature_name }} 상태."""
+
+    {% for state in states %}
+    {{ state }} = "{{ state.lower() }}"
+    {% endfor %}
+
+{% endif %}
+
+class {{ entity_name }}(BaseDocument):
+    """{{ feature_name }} 문서."""
+
+    {% if states %}
+    status: {{ entity_name }}Status = Field(
+        default={{ entity_name }}Status.{{ states[0] }},
+        description="{{ feature_name }} 상태",
+    )
+    {% endif %}
+    # TODO: 필드 정의 필요

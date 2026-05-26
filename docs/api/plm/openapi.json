@@ -1,0 +1,5111 @@
+{
+  "components": {
+    "schemas": {
+      "Acknowledgement": {
+        "description": "수신 확인 — 임베디드 모델.",
+        "properties": {
+          "acknowledged": {
+            "default": false,
+            "description": "확인 여부",
+            "title": "Acknowledged",
+            "type": "boolean"
+          },
+          "acknowledged_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "확인 시각",
+            "title": "Acknowledged At"
+          },
+          "user_id": {
+            "description": "수신자 ID",
+            "title": "User Id",
+            "type": "string"
+          },
+          "user_name": {
+            "default": "",
+            "description": "수신자명",
+            "title": "User Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id"
+        ],
+        "title": "Acknowledgement",
+        "type": "object"
+      },
+      "BOMChange": {
+        "description": "BOM 변경 — 임베디드 모델.",
+        "properties": {
+          "bom_version_from": {
+            "description": "변경 전 BOM 버전 ID",
+            "title": "Bom Version From",
+            "type": "string"
+          },
+          "bom_version_to": {
+            "description": "변경 후 BOM 버전 ID",
+            "title": "Bom Version To",
+            "type": "string"
+          },
+          "change_summary": {
+            "default": "",
+            "description": "변경 요약",
+            "title": "Change Summary",
+            "type": "string"
+          }
+        },
+        "required": [
+          "bom_version_from",
+          "bom_version_to"
+        ],
+        "title": "BOMChange",
+        "type": "object"
+      },
+      "BOMItemCreate": {
+        "description": "BOM 구성 품목 생성 스키마.",
+        "properties": {
+          "child_bom_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Child Bom Id"
+          },
+          "find_number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Find Number"
+          },
+          "is_phantom": {
+            "default": false,
+            "title": "Is Phantom",
+            "type": "boolean"
+          },
+          "item_code": {
+            "title": "Item Code",
+            "type": "string"
+          },
+          "item_name": {
+            "title": "Item Name",
+            "type": "string"
+          },
+          "notes": {
+            "default": "",
+            "title": "Notes",
+            "type": "string"
+          },
+          "quantity": {
+            "title": "Quantity",
+            "type": "number"
+          },
+          "reference_designator": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reference Designator"
+          },
+          "substitute_group": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Substitute Group"
+          },
+          "unit_cost": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "default": "0",
+            "title": "Unit Cost"
+          },
+          "uom": {
+            "default": "EA",
+            "title": "Uom",
+            "type": "string"
+          }
+        },
+        "required": [
+          "item_code",
+          "item_name",
+          "quantity"
+        ],
+        "title": "BOMItemCreate",
+        "type": "object"
+      },
+      "BOMType": {
+        "description": "BOM 유형.",
+        "enum": [
+          "ebom",
+          "mbom"
+        ],
+        "title": "BOMType",
+        "type": "string"
+      },
+      "BOMVersionCreate": {
+        "description": "BOM 버전 생성 요청 스키마.",
+        "properties": {
+          "base_quantity": {
+            "default": 1.0,
+            "title": "Base Quantity",
+            "type": "number"
+          },
+          "bom_type": {
+            "$ref": "#/components/schemas/BOMType"
+          },
+          "eco_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Eco Id"
+          },
+          "effectivity_end": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effectivity End"
+          },
+          "effectivity_start": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effectivity Start"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/BOMItemCreate"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "notes": {
+            "default": "",
+            "title": "Notes",
+            "type": "string"
+          },
+          "parent_version_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent Version Id"
+          },
+          "product_id": {
+            "title": "Product Id",
+            "type": "string"
+          },
+          "source_ebom_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Ebom Id"
+          }
+        },
+        "required": [
+          "product_id",
+          "bom_type"
+        ],
+        "title": "BOMVersionCreate",
+        "type": "object"
+      },
+      "CertStatus": {
+        "description": "인증 상태.",
+        "enum": [
+          "pending",
+          "active",
+          "expiring_soon",
+          "expired",
+          "suspended",
+          "revoked"
+        ],
+        "title": "CertStatus",
+        "type": "string"
+      },
+      "CertType": {
+        "description": "인증 유형.",
+        "enum": [
+          "kc_safety",
+          "kc_emc",
+          "kc_telecom",
+          "ce",
+          "ul",
+          "fcc",
+          "rohs",
+          "reach",
+          "weee",
+          "other"
+        ],
+        "title": "CertType",
+        "type": "string"
+      },
+      "Certification": {
+        "description": "규격/인증 문서 — 제품별 인증 관리.\n\nnaming prefix: CERT",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "alert_30d_sent": {
+            "default": false,
+            "description": "30일 전 알림 발송 여부",
+            "title": "Alert 30D Sent",
+            "type": "boolean"
+          },
+          "alert_60d_sent": {
+            "default": false,
+            "description": "60일 전 알림 발송 여���",
+            "title": "Alert 60D Sent",
+            "type": "boolean"
+          },
+          "alert_90d_sent": {
+            "default": false,
+            "description": "90일 전 알림 발송 여부",
+            "title": "Alert 90D Sent",
+            "type": "boolean"
+          },
+          "cert_name": {
+            "default": "",
+            "description": "인증명",
+            "title": "Cert Name",
+            "type": "string"
+          },
+          "cert_number": {
+            "default": "",
+            "description": "인증 번호",
+            "title": "Cert Number",
+            "type": "string"
+          },
+          "cert_type": {
+            "$ref": "#/components/schemas/CertType",
+            "default": "other",
+            "description": "인증 유형"
+          },
+          "certificate_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "인증서 파일",
+            "title": "Certificate Url"
+          },
+          "certifying_body": {
+            "default": "",
+            "description": "인증 기관",
+            "title": "Certifying Body",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "deleted_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "삭제 시각",
+            "title": "Deleted At"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "expiry_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "인증 만��일",
+            "title": "Expiry Date"
+          },
+          "issued_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "인증 취득일",
+            "title": "Issued Date"
+          },
+          "notes": {
+            "default": "",
+            "description": "비고",
+            "title": "Notes",
+            "type": "string"
+          },
+          "product_id": {
+            "default": "",
+            "description": "대상 제품",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "renewal_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "갱신 예정일",
+            "title": "Renewal Date"
+          },
+          "responsible_person": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "인증 담당자",
+            "title": "Responsible Person"
+          },
+          "scope": {
+            "default": "",
+            "description": "인증 범위",
+            "title": "Scope",
+            "type": "string"
+          },
+          "standard_reference": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "적용 규��",
+            "title": "Standard Reference"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CertStatus",
+            "default": "active",
+            "description": "인증 상태"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "test_report_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "시험 성적서 파일",
+            "title": "Test Report Url"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          }
+        },
+        "title": "Certification",
+        "type": "object"
+      },
+      "CertificationCreate": {
+        "description": "인증 생성 요청 스키마.",
+        "properties": {
+          "cert_name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Cert Name",
+            "type": "string"
+          },
+          "cert_number": {
+            "title": "Cert Number",
+            "type": "string"
+          },
+          "cert_type": {
+            "$ref": "#/components/schemas/CertType"
+          },
+          "certificate_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Certificate Url"
+          },
+          "certifying_body": {
+            "title": "Certifying Body",
+            "type": "string"
+          },
+          "expiry_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expiry Date"
+          },
+          "issued_date": {
+            "format": "date",
+            "title": "Issued Date",
+            "type": "string"
+          },
+          "notes": {
+            "default": "",
+            "title": "Notes",
+            "type": "string"
+          },
+          "product_id": {
+            "title": "Product Id",
+            "type": "string"
+          },
+          "renewal_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Renewal Date"
+          },
+          "responsible_person": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Responsible Person"
+          },
+          "scope": {
+            "default": "",
+            "title": "Scope",
+            "type": "string"
+          },
+          "standard_reference": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Standard Reference"
+          },
+          "test_report_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Test Report Url"
+          }
+        },
+        "required": [
+          "product_id",
+          "cert_type",
+          "cert_number",
+          "cert_name",
+          "certifying_body",
+          "issued_date"
+        ],
+        "title": "CertificationCreate",
+        "type": "object"
+      },
+      "CertificationUpdate": {
+        "description": "인증 수정 요청 스키���.",
+        "properties": {
+          "cert_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cert Name"
+          },
+          "certificate_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Certificate Url"
+          },
+          "certifying_body": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Certifying Body"
+          },
+          "expiry_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expiry Date"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "renewal_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Renewal Date"
+          },
+          "responsible_person": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Responsible Person"
+          },
+          "scope": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scope"
+          },
+          "standard_reference": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Standard Reference"
+          },
+          "test_report_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Test Report Url"
+          }
+        },
+        "title": "CertificationUpdate",
+        "type": "object"
+      },
+      "ChangeType": {
+        "description": "변경 유형.",
+        "enum": [
+          "design",
+          "process",
+          "material",
+          "cost_reduction",
+          "quality",
+          "safety",
+          "regulatory"
+        ],
+        "title": "ChangeType",
+        "type": "string"
+      },
+      "CostImpact": {
+        "description": "비용 영향 — 임베디드 모델.",
+        "properties": {
+          "certification_cost": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "default": "0",
+            "title": "Certification Cost"
+          },
+          "material_cost_delta": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "default": "0",
+            "title": "Material Cost Delta"
+          },
+          "payback_period_months": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Payback Period Months"
+          },
+          "scrap_cost": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "default": "0",
+            "title": "Scrap Cost"
+          },
+          "tooling_cost": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "default": "0",
+            "title": "Tooling Cost"
+          },
+          "total_cost_impact": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "default": "0",
+            "title": "Total Cost Impact"
+          }
+        },
+        "title": "CostImpact",
+        "type": "object"
+      },
+      "CostReview": {
+        "description": "비용 검토 — 임베디드 모델.",
+        "properties": {
+          "comments": {
+            "default": "",
+            "title": "Comments",
+            "type": "string"
+          },
+          "lead_time_days": {
+            "default": 0,
+            "title": "Lead Time Days",
+            "type": "integer"
+          },
+          "moq": {
+            "default": 0,
+            "title": "Moq",
+            "type": "integer"
+          },
+          "price_compared_to_current": {
+            "default": 0.0,
+            "title": "Price Compared To Current",
+            "type": "number"
+          },
+          "result": {
+            "default": "pending",
+            "title": "Result",
+            "type": "string"
+          },
+          "reviewed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewed At"
+          },
+          "reviewer_id": {
+            "default": "",
+            "title": "Reviewer Id",
+            "type": "string"
+          },
+          "unit_price": {
+            "default": "0",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Unit Price",
+            "type": "string"
+          }
+        },
+        "title": "CostReview",
+        "type": "object"
+      },
+      "Dimensions": {
+        "description": "치수 — 임베디드 모델.",
+        "properties": {
+          "depth": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "높이(mm)",
+            "title": "Depth"
+          },
+          "height": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "세로(mm)",
+            "title": "Height"
+          },
+          "width": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "가로(mm)",
+            "title": "Width"
+          }
+        },
+        "title": "Dimensions",
+        "type": "object"
+      },
+      "DocStatus": {
+        "description": "문서 상태 — ERPNext 호환.",
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "title": "DocStatus",
+        "type": "integer"
+      },
+      "Drawing": {
+        "description": "도면 문서 — 엔지니어링 문서를 버전 관리.\n\nnaming prefix: DWG",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "checked_out_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "체크아��� 시각",
+            "title": "Checked Out At"
+          },
+          "checked_out_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "체크아웃 사용자",
+            "title": "Checked Out By"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "deleted_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "삭제 시각",
+            "title": "Deleted At"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "drawing_number": {
+            "default": "",
+            "description": "도면 번호",
+            "title": "Drawing Number",
+            "type": "string"
+          },
+          "drawing_type": {
+            "$ref": "#/components/schemas/DrawingType",
+            "default": "part_drawing",
+            "description": "도면 유형"
+          },
+          "file_format": {
+            "default": "",
+            "description": "파일 형식",
+            "title": "File Format",
+            "type": "string"
+          },
+          "file_name": {
+            "default": "",
+            "description": "파일명",
+            "title": "File Name",
+            "type": "string"
+          },
+          "file_size": {
+            "default": 0,
+            "description": "파일 크기(bytes)",
+            "title": "File Size",
+            "type": "integer"
+          },
+          "file_url": {
+            "default": "",
+            "description": "원본 파일 URL",
+            "title": "File Url",
+            "type": "string"
+          },
+          "linked_bom_items": {
+            "description": "연결된 BOM 부품",
+            "items": {
+              "type": "string"
+            },
+            "title": "Linked Bom Items",
+            "type": "array"
+          },
+          "linked_eco_ids": {
+            "description": "관련 ECO",
+            "items": {
+              "type": "string"
+            },
+            "title": "Linked Eco Ids",
+            "type": "array"
+          },
+          "product_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "관련 제품",
+            "title": "Product Id"
+          },
+          "revision": {
+            "default": "A",
+            "description": "현재 리비전",
+            "title": "Revision",
+            "type": "string"
+          },
+          "revision_history": {
+            "description": "리비전 이력",
+            "items": {
+              "$ref": "#/components/schemas/RevisionEntry"
+            },
+            "title": "Revision History",
+            "type": "array"
+          },
+          "status": {
+            "$ref": "#/components/schemas/DrawingStatus",
+            "default": "work_in_progress",
+            "description": "���태"
+          },
+          "tags": {
+            "description": "검색 태그",
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "thumbnail_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "썸네일 이미지 URL",
+            "title": "Thumbnail Url"
+          },
+          "title": {
+            "default": "",
+            "description": "도면 제목",
+            "title": "Title",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          }
+        },
+        "title": "Drawing",
+        "type": "object"
+      },
+      "DrawingChange": {
+        "description": "도면 변경 — 임베디드 모델.",
+        "properties": {
+          "change_summary": {
+            "default": "",
+            "description": "변경 요약",
+            "title": "Change Summary",
+            "type": "string"
+          },
+          "drawing_id": {
+            "description": "도면 ID",
+            "title": "Drawing Id",
+            "type": "string"
+          },
+          "revision_from": {
+            "description": "변경 전 리비전",
+            "title": "Revision From",
+            "type": "string"
+          },
+          "revision_to": {
+            "description": "변경 후 리비전",
+            "title": "Revision To",
+            "type": "string"
+          }
+        },
+        "required": [
+          "drawing_id",
+          "revision_from",
+          "revision_to"
+        ],
+        "title": "DrawingChange",
+        "type": "object"
+      },
+      "DrawingCreate": {
+        "description": "도면 생성 요청 스키마.",
+        "properties": {
+          "drawing_number": {
+            "minLength": 1,
+            "title": "Drawing Number",
+            "type": "string"
+          },
+          "drawing_type": {
+            "$ref": "#/components/schemas/DrawingType"
+          },
+          "file_format": {
+            "title": "File Format",
+            "type": "string"
+          },
+          "file_name": {
+            "title": "File Name",
+            "type": "string"
+          },
+          "file_size": {
+            "title": "File Size",
+            "type": "integer"
+          },
+          "file_url": {
+            "title": "File Url",
+            "type": "string"
+          },
+          "linked_bom_items": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Linked Bom Items",
+            "type": "array"
+          },
+          "product_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product Id"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          },
+          "thumbnail_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Thumbnail Url"
+          },
+          "title": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "drawing_number",
+          "title",
+          "drawing_type",
+          "file_url",
+          "file_name",
+          "file_size",
+          "file_format"
+        ],
+        "title": "DrawingCreate",
+        "type": "object"
+      },
+      "DrawingStatus": {
+        "description": "도면 상태.",
+        "enum": [
+          "work_in_progress",
+          "in_review",
+          "released",
+          "obsolete"
+        ],
+        "title": "DrawingStatus",
+        "type": "string"
+      },
+      "DrawingType": {
+        "description": "도면 유형.",
+        "enum": [
+          "part_drawing",
+          "assembly_drawing",
+          "schematic",
+          "specification",
+          "test_report",
+          "sop",
+          "other"
+        ],
+        "title": "DrawingType",
+        "type": "string"
+      },
+      "DrawingUpdate": {
+        "description": "도면 수정 요청 스키마.",
+        "properties": {
+          "drawing_type": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DrawingType"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "linked_bom_items": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Linked Bom Items"
+          },
+          "product_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product Id"
+          },
+          "tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tags"
+          },
+          "thumbnail_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Thumbnail Url"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          }
+        },
+        "title": "DrawingUpdate",
+        "type": "object"
+      },
+      "ECNCreate": {
+        "description": "ECN 생성 요청 스키마.",
+        "properties": {
+          "bom_changes": {
+            "items": {
+              "$ref": "#/components/schemas/BOMChange"
+            },
+            "title": "Bom Changes",
+            "type": "array"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "distribution_list": {
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "title": "Distribution List",
+            "type": "array"
+          },
+          "drawing_changes": {
+            "items": {
+              "$ref": "#/components/schemas/DrawingChange"
+            },
+            "title": "Drawing Changes",
+            "type": "array"
+          },
+          "eco_id": {
+            "title": "Eco Id",
+            "type": "string"
+          },
+          "effective_date": {
+            "format": "date",
+            "title": "Effective Date",
+            "type": "string"
+          },
+          "effectivity_type": {
+            "default": "date",
+            "title": "Effectivity Type",
+            "type": "string"
+          },
+          "effectivity_value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effectivity Value"
+          },
+          "issued_by": {
+            "default": "",
+            "title": "Issued By",
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "eco_id",
+          "title",
+          "description",
+          "effective_date",
+          "distribution_list"
+        ],
+        "title": "ECNCreate",
+        "type": "object"
+      },
+      "ECNStatus": {
+        "description": "ECN 상태.",
+        "enum": [
+          "issued",
+          "acknowledged",
+          "completed",
+          "cancelled"
+        ],
+        "title": "ECNStatus",
+        "type": "string"
+      },
+      "ECNUpdate": {
+        "description": "ECN 수정 요청 스키마.",
+        "properties": {
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "effective_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effective Date"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          }
+        },
+        "title": "ECNUpdate",
+        "type": "object"
+      },
+      "ECOCreate": {
+        "description": "ECO 생성 요청 스키마.",
+        "properties": {
+          "affected_bom_versions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Affected Bom Versions",
+            "type": "array"
+          },
+          "affected_products": {
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "title": "Affected Products",
+            "type": "array"
+          },
+          "change_type": {
+            "$ref": "#/components/schemas/ChangeType"
+          },
+          "cost_impact": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CostImpact"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "description": {
+            "minLength": 1,
+            "title": "Description",
+            "type": "string"
+          },
+          "is_emergency": {
+            "default": false,
+            "title": "Is Emergency",
+            "type": "boolean"
+          },
+          "priority": {
+            "$ref": "#/components/schemas/Priority",
+            "default": "medium"
+          },
+          "proposed_changes": {
+            "items": {
+              "$ref": "#/components/schemas/ProposedChange"
+            },
+            "minItems": 1,
+            "title": "Proposed Changes",
+            "type": "array"
+          },
+          "target_effective_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Effective Date"
+          },
+          "title": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "description",
+          "change_type",
+          "affected_products",
+          "proposed_changes"
+        ],
+        "title": "ECOCreate",
+        "type": "object"
+      },
+      "EngChangeNotice": {
+        "description": "설계 변경 통보 문서 — ECN.\n\nnaming prefix: ECN",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "acknowledgements": {
+            "description": "수신 확인",
+            "items": {
+              "$ref": "#/components/schemas/Acknowledgement"
+            },
+            "title": "Acknowledgements",
+            "type": "array"
+          },
+          "bom_changes": {
+            "description": "BOM 변경 목록",
+            "items": {
+              "$ref": "#/components/schemas/BOMChange"
+            },
+            "title": "Bom Changes",
+            "type": "array"
+          },
+          "completed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "���료 시각",
+            "title": "Completed At"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "description": "변경 내용 상세",
+            "title": "Description",
+            "type": "string"
+          },
+          "distribution_list": {
+            "description": "배포 대상",
+            "items": {
+              "type": "string"
+            },
+            "title": "Distribution List",
+            "type": "array"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "drawing_changes": {
+            "description": "도면 변경 목록",
+            "items": {
+              "$ref": "#/components/schemas/DrawingChange"
+            },
+            "title": "Drawing Changes",
+            "type": "array"
+          },
+          "ecn_number": {
+            "default": "",
+            "description": "ECN 번호",
+            "title": "Ecn Number",
+            "type": "string"
+          },
+          "eco_id": {
+            "default": "",
+            "description": "원본 ECO",
+            "title": "Eco Id",
+            "type": "string"
+          },
+          "effective_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "변경 적용일",
+            "title": "Effective Date"
+          },
+          "effectivity_type": {
+            "default": "date",
+            "description": "유효성 기준 유��",
+            "title": "Effectivity Type",
+            "type": "string"
+          },
+          "effectivity_value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "유효성 기준 값",
+            "title": "Effectivity Value"
+          },
+          "issued_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "발행 시각",
+            "title": "Issued At"
+          },
+          "issued_by": {
+            "default": "",
+            "description": "발행자",
+            "title": "Issued By",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ECNStatus",
+            "default": "issued",
+            "description": "상태"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "title": {
+            "default": "",
+            "description": "변경 통보 제목",
+            "title": "Title",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          }
+        },
+        "title": "EngChangeNotice",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "PaginatedResponse_Certification_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/Certification"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[Certification]",
+        "type": "object"
+      },
+      "PaginatedResponse_Drawing_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/Drawing"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[Drawing]",
+        "type": "object"
+      },
+      "PaginatedResponse_EngChangeNotice_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/EngChangeNotice"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[EngChangeNotice]",
+        "type": "object"
+      },
+      "PaginatedResponse_PartApproval_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/PartApproval"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[PartApproval]",
+        "type": "object"
+      },
+      "PartApproval": {
+        "description": "부품 승인 문서 — PAP.\n\nnaming prefix: PAR",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "approved_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "승인 시각",
+            "title": "Approved At"
+          },
+          "approved_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "최종 승인자",
+            "title": "Approved By"
+          },
+          "conditions": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "승인 조건",
+            "title": "Conditions"
+          },
+          "cost_review": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CostReview"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "비용 검토"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "datasheet_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "데이터시트 파일",
+            "title": "Datasheet Url"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "expiry_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "승인 만료일",
+            "title": "Expiry Date"
+          },
+          "intended_use": {
+            "default": "",
+            "description": "사용 용도",
+            "title": "Intended Use",
+            "type": "string"
+          },
+          "manufacturer": {
+            "default": "",
+            "description": "제조사",
+            "title": "Manufacturer",
+            "type": "string"
+          },
+          "manufacturer_part_number": {
+            "default": "",
+            "description": "제조사 부품번호",
+            "title": "Manufacturer Part Number",
+            "type": "string"
+          },
+          "part_code": {
+            "default": "",
+            "description": "부품 코드",
+            "title": "Part Code",
+            "type": "string"
+          },
+          "part_name": {
+            "default": "",
+            "description": "부품명",
+            "title": "Part Name",
+            "type": "string"
+          },
+          "quality_review": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/QualityReview"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "품질 검토"
+          },
+          "request_reason": {
+            "default": "",
+            "description": "요청 사유",
+            "title": "Request Reason",
+            "type": "string"
+          },
+          "requested_by": {
+            "default": "",
+            "description": "요청자",
+            "title": "Requested By",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/PartApprovalStatus",
+            "default": "requested",
+            "description": "상태"
+          },
+          "supplier_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "공급사",
+            "title": "Supplier Id"
+          },
+          "target_products": {
+            "description": "적용 예정 제품",
+            "items": {
+              "type": "string"
+            },
+            "title": "Target Products",
+            "type": "array"
+          },
+          "technical_review": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TechnicalReview"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "기술 검토"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          }
+        },
+        "title": "PartApproval",
+        "type": "object"
+      },
+      "PartApprovalCreate": {
+        "description": "부품 승인 생성 요청 스키마.",
+        "properties": {
+          "datasheet_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Datasheet Url"
+          },
+          "intended_use": {
+            "title": "Intended Use",
+            "type": "string"
+          },
+          "manufacturer": {
+            "title": "Manufacturer",
+            "type": "string"
+          },
+          "manufacturer_part_number": {
+            "title": "Manufacturer Part Number",
+            "type": "string"
+          },
+          "part_code": {
+            "title": "Part Code",
+            "type": "string"
+          },
+          "part_name": {
+            "title": "Part Name",
+            "type": "string"
+          },
+          "request_reason": {
+            "title": "Request Reason",
+            "type": "string"
+          },
+          "supplier_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Supplier Id"
+          },
+          "target_products": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Target Products",
+            "type": "array"
+          }
+        },
+        "required": [
+          "part_code",
+          "part_name",
+          "manufacturer",
+          "manufacturer_part_number",
+          "request_reason",
+          "intended_use"
+        ],
+        "title": "PartApprovalCreate",
+        "type": "object"
+      },
+      "PartApprovalStatus": {
+        "description": "부품 승인 상태.",
+        "enum": [
+          "requested",
+          "technical_review",
+          "quality_review",
+          "cost_review",
+          "approved",
+          "rejected",
+          "conditional"
+        ],
+        "title": "PartApprovalStatus",
+        "type": "string"
+      },
+      "PartApprovalUpdate": {
+        "description": "부품 승인 수정 요청 스키마.",
+        "properties": {
+          "datasheet_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Datasheet Url"
+          },
+          "intended_use": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Intended Use"
+          },
+          "manufacturer": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Manufacturer"
+          },
+          "manufacturer_part_number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Manufacturer Part Number"
+          },
+          "part_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Part Name"
+          },
+          "request_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Request Reason"
+          },
+          "supplier_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Supplier Id"
+          },
+          "target_products": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Products"
+          }
+        },
+        "title": "PartApprovalUpdate",
+        "type": "object"
+      },
+      "Priority": {
+        "description": "우선순위.",
+        "enum": [
+          "low",
+          "medium",
+          "high",
+          "critical"
+        ],
+        "title": "Priority",
+        "type": "string"
+      },
+      "ProductAttribute": {
+        "description": "커스텀 속성 — 임베디드 모델.",
+        "properties": {
+          "key": {
+            "description": "속성 키",
+            "title": "Key",
+            "type": "string"
+          },
+          "unit": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "단위",
+            "title": "Unit"
+          },
+          "value": {
+            "description": "속성 값",
+            "title": "Value",
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "value"
+        ],
+        "title": "ProductAttribute",
+        "type": "object"
+      },
+      "ProductCreate": {
+        "description": "제품 마스터 생성 요청 스키마.",
+        "properties": {
+          "attributes": {
+            "items": {
+              "$ref": "#/components/schemas/ProductAttribute"
+            },
+            "title": "Attributes",
+            "type": "array"
+          },
+          "category_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category Id"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "dimensions": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Dimensions"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "family_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Family Id"
+          },
+          "product_code": {
+            "maxLength": 50,
+            "minLength": 1,
+            "title": "Product Code",
+            "type": "string"
+          },
+          "product_name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Product Name",
+            "type": "string"
+          },
+          "product_type": {
+            "$ref": "#/components/schemas/ProductType",
+            "default": "finished_good"
+          },
+          "responsible_engineer": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Responsible Engineer"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          },
+          "thumbnail_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Thumbnail Url"
+          },
+          "uom": {
+            "default": "EA",
+            "title": "Uom",
+            "type": "string"
+          },
+          "weight": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weight"
+          }
+        },
+        "required": [
+          "product_code",
+          "product_name"
+        ],
+        "title": "ProductCreate",
+        "type": "object"
+      },
+      "ProductType": {
+        "description": "제품 유형.",
+        "enum": [
+          "finished_good",
+          "semi_finished",
+          "raw_material",
+          "assembly",
+          "component"
+        ],
+        "title": "ProductType",
+        "type": "string"
+      },
+      "ProductUpdate": {
+        "description": "제품 마스터 수정 요청 스키마.",
+        "properties": {
+          "attributes": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/ProductAttribute"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Attributes"
+          },
+          "category_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category Id"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "dimensions": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Dimensions"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "family_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Family Id"
+          },
+          "product_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product Name"
+          },
+          "product_type": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProductType"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "responsible_engineer": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Responsible Engineer"
+          },
+          "tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tags"
+          },
+          "thumbnail_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Thumbnail Url"
+          },
+          "uom": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Uom"
+          },
+          "weight": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weight"
+          }
+        },
+        "title": "ProductUpdate",
+        "type": "object"
+      },
+      "ProposedChange": {
+        "description": "제안 변경 — 임베디드 모델.",
+        "properties": {
+          "after_value": {
+            "default": "",
+            "description": "변경 후 값",
+            "title": "After Value",
+            "type": "string"
+          },
+          "before_value": {
+            "default": "",
+            "description": "변경 전 값",
+            "title": "Before Value",
+            "type": "string"
+          },
+          "change_description": {
+            "description": "변경 내용 설명",
+            "title": "Change Description",
+            "type": "string"
+          },
+          "change_target_id": {
+            "description": "변경 대상 엔티티 ID",
+            "title": "Change Target Id",
+            "type": "string"
+          },
+          "change_target_type": {
+            "description": "변경 대상 유형 (bom/drawing/part/process/certification)",
+            "title": "Change Target Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "change_target_type",
+          "change_target_id",
+          "change_description"
+        ],
+        "title": "ProposedChange",
+        "type": "object"
+      },
+      "QualityReview": {
+        "description": "품질 검토 — 임베디드 모델.",
+        "properties": {
+          "comments": {
+            "default": "",
+            "title": "Comments",
+            "type": "string"
+          },
+          "incoming_inspection_plan": {
+            "default": false,
+            "title": "Incoming Inspection Plan",
+            "type": "boolean"
+          },
+          "result": {
+            "default": "pending",
+            "title": "Result",
+            "type": "string"
+          },
+          "reviewed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewed At"
+          },
+          "reviewer_id": {
+            "default": "",
+            "title": "Reviewer Id",
+            "type": "string"
+          },
+          "rohs_compliance": {
+            "default": false,
+            "title": "Rohs Compliance",
+            "type": "boolean"
+          },
+          "supplier_quality_rating": {
+            "default": "",
+            "title": "Supplier Quality Rating",
+            "type": "string"
+          }
+        },
+        "title": "QualityReview",
+        "type": "object"
+      },
+      "RevisionEntry": {
+        "description": "리비전 이력 — 임베디드 모델.",
+        "properties": {
+          "change_summary": {
+            "default": "",
+            "description": "변경 요약",
+            "title": "Change Summary",
+            "type": "string"
+          },
+          "eco_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "변경 사유 ECO ID",
+            "title": "Eco Id"
+          },
+          "file_url": {
+            "description": "파일 URL",
+            "title": "File Url",
+            "type": "string"
+          },
+          "released_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "릴리즈 시각",
+            "title": "Released At"
+          },
+          "released_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "릴리즈 승인자",
+            "title": "Released By"
+          },
+          "revision": {
+            "description": "리비전",
+            "title": "Revision",
+            "type": "string"
+          }
+        },
+        "required": [
+          "revision",
+          "file_url"
+        ],
+        "title": "RevisionEntry",
+        "type": "object"
+      },
+      "TechnicalReview": {
+        "description": "기술 검토 — 임베디드 모델.",
+        "properties": {
+          "comments": {
+            "default": "",
+            "title": "Comments",
+            "type": "string"
+          },
+          "form_fit_function": {
+            "default": false,
+            "title": "Form Fit Function",
+            "type": "boolean"
+          },
+          "reliability_assessment": {
+            "default": "",
+            "title": "Reliability Assessment",
+            "type": "string"
+          },
+          "result": {
+            "default": "pending",
+            "title": "Result",
+            "type": "string"
+          },
+          "reviewed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewed At"
+          },
+          "reviewer_id": {
+            "default": "",
+            "title": "Reviewer Id",
+            "type": "string"
+          },
+          "spec_compliance": {
+            "default": false,
+            "title": "Spec Compliance",
+            "type": "boolean"
+          }
+        },
+        "title": "TechnicalReview",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "contact": {
+      "name": "OneERP 개발팀"
+    },
+    "description": "OneERP Plm 서비스 REST API",
+    "license": {
+      "name": "Proprietary"
+    },
+    "title": "OneERP Plm API",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/v1/plm/bom-versions": {
+      "get": {
+        "description": "BOM 버전 목록을 조회한다.",
+        "operationId": "BOM_목록_api_v1_plm_bom_versions_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "product_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Product Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "bom_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Bom Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Bom 목록 Api V1 Plm Bom Versions Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Bom 목록",
+        "tags": [
+          "PLM BOM"
+        ]
+      },
+      "post": {
+        "description": "BOM 버전을 생성한다.",
+        "operationId": "BOM_생성_api_v1_plm_bom_versions_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BOMVersionCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Bom 생성 Api V1 Plm Bom Versions Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Bom 생성",
+        "tags": [
+          "PLM BOM"
+        ]
+      }
+    },
+    "/api/v1/plm/bom-versions/{bom_id_1}/compare/{bom_id_2}": {
+      "get": {
+        "description": "두 BOM 버전을 비교한다.",
+        "operationId": "BOM_비교_api_v1_plm_bom_versions__bom_id_1__compare__bom_id_2__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bom_id_1",
+            "required": true,
+            "schema": {
+              "title": "Bom Id 1",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "bom_id_2",
+            "required": true,
+            "schema": {
+              "title": "Bom Id 2",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Bom 비교 Api V1 Plm Bom Versions  Bom Id 1  Compare  Bom Id 2  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Bom 비교",
+        "tags": [
+          "PLM BOM"
+        ]
+      }
+    },
+    "/api/v1/plm/bom-versions/{bom_version_id}": {
+      "get": {
+        "description": "BOM 버전 상세를 조회한다.",
+        "operationId": "BOM_상세_api_v1_plm_bom_versions__bom_version_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bom_version_id",
+            "required": true,
+            "schema": {
+              "title": "Bom Version Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Bom 상세 Api V1 Plm Bom Versions  Bom Version Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Bom 상세",
+        "tags": [
+          "PLM BOM"
+        ]
+      }
+    },
+    "/api/v1/plm/bom-versions/{bom_version_id}/release": {
+      "post": {
+        "description": "BOM을 릴리즈한다.",
+        "operationId": "BOM_릴리즈_api_v1_plm_bom_versions__bom_version_id__release_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bom_version_id",
+            "required": true,
+            "schema": {
+              "title": "Bom Version Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "title": "Body",
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Bom 릴리즈 Api V1 Plm Bom Versions  Bom Version Id  Release Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Bom 릴리즈",
+        "tags": [
+          "PLM BOM"
+        ]
+      }
+    },
+    "/api/v1/plm/bom-versions/{ebom_id}/convert-to-mbom": {
+      "post": {
+        "description": "E-BOM을 M-BOM으로 전환한다.",
+        "operationId": "EBOM_MBOM_전환_api_v1_plm_bom_versions__ebom_id__convert_to_mbom_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ebom_id",
+            "required": true,
+            "schema": {
+              "title": "Ebom Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "title": "Body",
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ebom Mbom 전환 Api V1 Plm Bom Versions  Ebom Id  Convert To Mbom Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Ebom Mbom 전환",
+        "tags": [
+          "PLM BOM"
+        ]
+      }
+    },
+    "/api/v1/plm/certifications": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "plm_certification_목록_api_v1_plm_certifications_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_Certification_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Certification 목록",
+        "tags": [
+          "PLM 인증"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "plm_certification_생성_api_v1_plm_certifications_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CertificationCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Plm Certification 생성 Api V1 Plm Certifications Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Certification 생성",
+        "tags": [
+          "PLM 인증"
+        ]
+      }
+    },
+    "/api/v1/plm/certifications/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "plm_certification_삭제_api_v1_plm_certifications__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Certification 삭제",
+        "tags": [
+          "PLM 인증"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "plm_certification_조회_api_v1_plm_certifications__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Plm Certification 조회 Api V1 Plm Certifications  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Certification 조회",
+        "tags": [
+          "PLM 인증"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "plm_certification_수정_api_v1_plm_certifications__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CertificationUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Plm Certification 수정 Api V1 Plm Certifications  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Certification 수정",
+        "tags": [
+          "PLM 인증"
+        ]
+      }
+    },
+    "/api/v1/plm/drawings": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "plm_drawing_목록_api_v1_plm_drawings_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_Drawing_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Drawing 목록",
+        "tags": [
+          "PLM 도면"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "plm_drawing_생성_api_v1_plm_drawings_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DrawingCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Plm Drawing 생성 Api V1 Plm Drawings Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Drawing 생성",
+        "tags": [
+          "PLM 도면"
+        ]
+      }
+    },
+    "/api/v1/plm/drawings/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "plm_drawing_삭제_api_v1_plm_drawings__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Drawing 삭제",
+        "tags": [
+          "PLM 도면"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "plm_drawing_조회_api_v1_plm_drawings__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Plm Drawing 조회 Api V1 Plm Drawings  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Drawing 조회",
+        "tags": [
+          "PLM 도면"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "plm_drawing_수정_api_v1_plm_drawings__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DrawingUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Plm Drawing 수정 Api V1 Plm Drawings  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Drawing 수정",
+        "tags": [
+          "PLM 도면"
+        ]
+      }
+    },
+    "/api/v1/plm/ecn": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "plm_ecn_목록_api_v1_plm_ecn_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_EngChangeNotice_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Ecn 목록",
+        "tags": [
+          "PLM ECN"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "plm_ecn_생성_api_v1_plm_ecn_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ECNCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Plm Ecn 생성 Api V1 Plm Ecn Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Ecn 생성",
+        "tags": [
+          "PLM ECN"
+        ]
+      }
+    },
+    "/api/v1/plm/ecn/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "plm_ecn_삭제_api_v1_plm_ecn__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Ecn 삭제",
+        "tags": [
+          "PLM ECN"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "plm_ecn_조회_api_v1_plm_ecn__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Plm Ecn 조회 Api V1 Plm Ecn  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Ecn 조회",
+        "tags": [
+          "PLM ECN"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "plm_ecn_수정_api_v1_plm_ecn__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ECNUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Plm Ecn 수정 Api V1 Plm Ecn  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Ecn 수정",
+        "tags": [
+          "PLM ECN"
+        ]
+      }
+    },
+    "/api/v1/plm/ecn/{doc_id}/cancel": {
+      "post": {
+        "description": "문서를 취소한다 (제출 → 취소).",
+        "operationId": "plm_ecn_취소_api_v1_plm_ecn__doc_id__cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Plm Ecn 취소 Api V1 Plm Ecn  Doc Id  Cancel Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Ecn 취소",
+        "tags": [
+          "PLM ECN"
+        ]
+      }
+    },
+    "/api/v1/plm/ecn/{doc_id}/submit": {
+      "post": {
+        "description": "문서를 제출한다 (초안 → 제출).",
+        "operationId": "plm_ecn_제출_api_v1_plm_ecn__doc_id__submit_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Plm Ecn 제출 Api V1 Plm Ecn  Doc Id  Submit Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Ecn 제출",
+        "tags": [
+          "PLM ECN"
+        ]
+      }
+    },
+    "/api/v1/plm/eco": {
+      "get": {
+        "description": "ECO 목록을 조회한다.",
+        "operationId": "ECO_목록_api_v1_plm_eco_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Eco 목록 Api V1 Plm Eco Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Eco 목록",
+        "tags": [
+          "PLM ECO"
+        ]
+      },
+      "post": {
+        "description": "ECO를 생성한다.",
+        "operationId": "ECO_생성_api_v1_plm_eco_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ECOCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Eco 생성 Api V1 Plm Eco Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Eco 생성",
+        "tags": [
+          "PLM ECO"
+        ]
+      }
+    },
+    "/api/v1/plm/eco/{eco_id}": {
+      "get": {
+        "description": "ECO 상세를 조회한다.",
+        "operationId": "ECO_상세_api_v1_plm_eco__eco_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "eco_id",
+            "required": true,
+            "schema": {
+              "title": "Eco Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Eco 상세 Api V1 Plm Eco  Eco Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Eco 상세",
+        "tags": [
+          "PLM ECO"
+        ]
+      }
+    },
+    "/api/v1/plm/eco/{eco_id}/analyze-impact": {
+      "post": {
+        "description": "ECO 영향도를 분석한다.",
+        "operationId": "ECO_영향도_분석_api_v1_plm_eco__eco_id__analyze_impact_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "eco_id",
+            "required": true,
+            "schema": {
+              "title": "Eco Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Eco 영향도 분석 Api V1 Plm Eco  Eco Id  Analyze Impact Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Eco 영향도 분석",
+        "tags": [
+          "PLM ECO"
+        ]
+      }
+    },
+    "/api/v1/plm/eco/{eco_id}/approve": {
+      "post": {
+        "description": "ECO를 최종 승인한다.",
+        "operationId": "ECO_승인_api_v1_plm_eco__eco_id__approve_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "eco_id",
+            "required": true,
+            "schema": {
+              "title": "Eco Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "title": "Body",
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Eco 승인 Api V1 Plm Eco  Eco Id  Approve Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Eco 승인",
+        "tags": [
+          "PLM ECO"
+        ]
+      }
+    },
+    "/api/v1/plm/eco/{eco_id}/assign-reviewers": {
+      "post": {
+        "description": "ECO에 검토자를 배정한다.",
+        "operationId": "ECO_검토자_배정_api_v1_plm_eco__eco_id__assign_reviewers_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "eco_id",
+            "required": true,
+            "schema": {
+              "title": "Eco Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "title": "Body",
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Eco 검토자 배정 Api V1 Plm Eco  Eco Id  Assign Reviewers Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Eco 검토자 배정",
+        "tags": [
+          "PLM ECO"
+        ]
+      }
+    },
+    "/api/v1/plm/eco/{eco_id}/review": {
+      "post": {
+        "description": "ECO 검토를 제출한다.",
+        "operationId": "ECO_검토_api_v1_plm_eco__eco_id__review_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "eco_id",
+            "required": true,
+            "schema": {
+              "title": "Eco Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "title": "Body",
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Eco 검토 Api V1 Plm Eco  Eco Id  Review Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Eco 검토",
+        "tags": [
+          "PLM ECO"
+        ]
+      }
+    },
+    "/api/v1/plm/eco/{eco_id}/submit": {
+      "post": {
+        "description": "ECO를 제출한다.",
+        "operationId": "ECO_제출_api_v1_plm_eco__eco_id__submit_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "eco_id",
+            "required": true,
+            "schema": {
+              "title": "Eco Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Eco 제출 Api V1 Plm Eco  Eco Id  Submit Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Eco 제출",
+        "tags": [
+          "PLM ECO"
+        ]
+      }
+    },
+    "/api/v1/plm/part-approvals": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "plm_part_approval_목록_api_v1_plm_part_approvals_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_PartApproval_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Part Approval 목록",
+        "tags": [
+          "PLM 부품승인"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "plm_part_approval_생성_api_v1_plm_part_approvals_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PartApprovalCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Plm Part Approval 생성 Api V1 Plm Part Approvals Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Part Approval 생성",
+        "tags": [
+          "PLM 부품승인"
+        ]
+      }
+    },
+    "/api/v1/plm/part-approvals/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "plm_part_approval_삭제_api_v1_plm_part_approvals__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Part Approval 삭제",
+        "tags": [
+          "PLM 부품승인"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "plm_part_approval_조회_api_v1_plm_part_approvals__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Plm Part Approval 조회 Api V1 Plm Part Approvals  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Part Approval 조회",
+        "tags": [
+          "PLM 부품승인"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "plm_part_approval_수정_api_v1_plm_part_approvals__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PartApprovalUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Plm Part Approval 수정 Api V1 Plm Part Approvals  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Part Approval 수정",
+        "tags": [
+          "PLM 부품승인"
+        ]
+      }
+    },
+    "/api/v1/plm/part-approvals/{doc_id}/cancel": {
+      "post": {
+        "description": "문서를 취소한다 (제출 → 취소).",
+        "operationId": "plm_part_approval_취소_api_v1_plm_part_approvals__doc_id__cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Plm Part Approval 취소 Api V1 Plm Part Approvals  Doc Id  Cancel Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Part Approval 취소",
+        "tags": [
+          "PLM 부품승인"
+        ]
+      }
+    },
+    "/api/v1/plm/part-approvals/{doc_id}/submit": {
+      "post": {
+        "description": "문서를 제출한다 (초안 → 제출).",
+        "operationId": "plm_part_approval_제출_api_v1_plm_part_approvals__doc_id__submit_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Plm Part Approval 제출 Api V1 Plm Part Approvals  Doc Id  Submit Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Plm Part Approval 제출",
+        "tags": [
+          "PLM 부품승인"
+        ]
+      }
+    },
+    "/api/v1/plm/products": {
+      "get": {
+        "description": "제품 목록을 조회한다.",
+        "operationId": "제품_목록_api_v1_plm_products_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "lifecycle_status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Lifecycle Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "product_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Product Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response 제품 목록 Api V1 Plm Products Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "제품 목록",
+        "tags": [
+          "PLM 제품"
+        ]
+      },
+      "post": {
+        "description": "제품 마스터를 생성한다.",
+        "operationId": "제품_생성_api_v1_plm_products_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response 제품 생성 Api V1 Plm Products Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "제품 생성",
+        "tags": [
+          "PLM 제품"
+        ]
+      }
+    },
+    "/api/v1/plm/products/{product_id}": {
+      "get": {
+        "description": "제품 상세 정보를 조회한다.",
+        "operationId": "제품_상세_api_v1_plm_products__product_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "product_id",
+            "required": true,
+            "schema": {
+              "title": "Product Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response 제품 상세 Api V1 Plm Products  Product Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "제품 상세",
+        "tags": [
+          "PLM 제품"
+        ]
+      },
+      "patch": {
+        "description": "제품 정보를 수정한다.",
+        "operationId": "제품_수정_api_v1_plm_products__product_id__patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "product_id",
+            "required": true,
+            "schema": {
+              "title": "Product Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response 제품 수정 Api V1 Plm Products  Product Id  Patch",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "제품 수정",
+        "tags": [
+          "PLM 제품"
+        ]
+      }
+    },
+    "/api/v1/plm/products/{product_id}/lifecycle": {
+      "post": {
+        "description": "제품 수명주기 상태를 전이한다.",
+        "operationId": "수명주기_전이_api_v1_plm_products__product_id__lifecycle_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "product_id",
+            "required": true,
+            "schema": {
+              "title": "Product Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "title": "Body",
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response 수명주기 전이 Api V1 Plm Products  Product Id  Lifecycle Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "수명주기 전이",
+        "tags": [
+          "PLM 제품"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "description": "서비스 상태를 확인한다 (하위 호환).",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Health Health Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/health/live": {
+      "get": {
+        "description": "Liveness probe — 프로세스 생존 확인.",
+        "operationId": "liveness_health_live_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Liveness Health Live Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Liveness",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "description": "Readiness probe — DB/NATS/Valkey 연결 포함 서비스 준비 상태 확인.",
+        "operationId": "readiness_health_ready_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Readiness",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/health/startup": {
+      "get": {
+        "description": "Startup probe — 서비스 초기화 완료 확인 (readiness와 동일).",
+        "operationId": "startup_health_startup_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Startup",
+        "tags": [
+          "health"
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/plm"
+    },
+    {
+      "description": "현재 서버",
+      "url": "/"
+    }
+  ],
+  "tags": [
+    {
+      "description": "PLM ECN API",
+      "name": "PLM ECN"
+    },
+    {
+      "description": "PLM 도면 API",
+      "name": "PLM 도면"
+    },
+    {
+      "description": "PLM 인증 API",
+      "name": "PLM 인증"
+    },
+    {
+      "description": "PLM 부품승인 API",
+      "name": "PLM 부품승인"
+    }
+  ]
+}

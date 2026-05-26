@@ -1,0 +1,27 @@
+# OneERP Services 도메인 소유권
+# 각 도메인 디렉토리의 코드 리뷰 담당팀을 지정한다.
+# 팀명을 실제 GitHub/Gitea 팀으로 교체해야 한다.
+
+# 공유 커널
+core/                       @keiailab/core-team
+
+# 배포/인프라
+deploy/                     @keiailab/platform-team
+scripts/                    @keiailab/platform-team
+
+# 도메인별 소유권
+finance/                    @keiailab/finance-team
+hr/                         @keiailab/hr-team
+scm/                        @keiailab/scm-team
+sales/                      @keiailab/sales-team
+platform/                   @keiailab/platform-team
+collab/                     @keiailab/collab-team
+marketing/                  @keiailab/marketing-team
+logistics/                  @keiailab/logistics-team
+portal/                     @keiailab/portal-team
+compliance/                 @keiailab/compliance-team
+assets/                     @keiailab/assets-team
+ehs/                        @keiailab/ehs-team
+
+# E2E 테스트
+tests/                      @keiailab/qa-team

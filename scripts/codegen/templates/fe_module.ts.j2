@@ -1,0 +1,20 @@
+{{ generated_marker }}
+import type { EntityConfig } from "@/lib/crud/types";
+
+/**
+ * {{ feature_name }} ({{ entity_name }}) EntityConfig
+ * 모듈: {{ module_name }}
+ */
+export const {{ entity_name }}Config: EntityConfig = {
+  name: "{{ entity_name }}",
+  label: "{{ feature_name }}",
+  module: "{{ module_name }}",
+  apiBase: "{{ api_base }}",
+  pageUrl: "{{ page_url }}",
+  permissions: [
+    {% for perm in permissions %}
+    "{{ perm }}",
+    {% endfor %}
+  ],
+  roles: "{{ roles }}",
+};

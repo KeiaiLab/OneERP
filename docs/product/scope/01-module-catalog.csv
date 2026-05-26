@@ -1,0 +1,19 @@
+module,service,doctype_or_entity,note,parent_module,kr_specific
+Accounting,accounting,PaymentEntry,결제 전표 · 회계 서비스 귀속,,
+Accounting,accounting,JournalEntry,분개 전표,,
+Accounting,accounting,Invoice,세금계산서/청구서,,Y
+Sales,sales,SalesOrder,판매 주문,,
+Sales,sales,Quotation,견적,,
+SCM,scm,PurchaseOrder,구매 주문,,
+SCM,scm,StockEntry,재고 이동,,
+Logistics,logistics,DeliveryNote,출고 전표,,
+HR,hr,Employee,임직원 마스터,,
+HR,hr,LeaveApplication,휴가 신청,,Y
+Finance,finance,Budget,예산 계획,,
+Marketing,marketing,Campaign,마케팅 캠페인,,
+Collab,collab,Workspace,협업 워크스페이스,,
+Compliance,compliance,Policy,규정 정책,,Y
+EHS,ehs,Incident,환경안전 사건,,
+Platform,platform,Tenant,테넌트 관리,,
+Portal,portal,PortalUser,포털 사용자,,
+Deploy,deploy,Release,릴리스 단위,,

@@ -1,0 +1,1573 @@
+components:
+  schemas:
+    BarcodeConfiguration:
+      description: 바코드 설정 문서.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        ai_codes:
+          default: []
+          items:
+            additionalProperties: true
+            type: object
+          title: Ai Codes
+          type: array
+        auto_generate:
+          default: false
+          title: Auto Generate
+          type: boolean
+        barcode_type:
+          default: ''
+          title: Barcode Type
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        label_template:
+          default: ''
+          title: Label Template
+          type: string
+        prefix:
+          default: ''
+          title: Prefix
+          type: string
+        printer_config:
+          additionalProperties: true
+          default: {}
+          title: Printer Config
+          type: object
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: BarcodeConfiguration
+      type: object
+    BarcodeConfigurationCreate:
+      description: 바코드 설정 생성 요청 스키마.
+      properties:
+        ai_codes:
+          default: []
+          items:
+            additionalProperties: true
+            type: object
+          title: Ai Codes
+          type: array
+        auto_generate:
+          default: false
+          title: Auto Generate
+          type: boolean
+        barcode_type:
+          title: Barcode Type
+          type: string
+        label_template:
+          default: ''
+          title: Label Template
+          type: string
+        prefix:
+          default: ''
+          title: Prefix
+          type: string
+        printer_config:
+          additionalProperties: true
+          default: {}
+          title: Printer Config
+          type: object
+      required:
+      - barcode_type
+      title: BarcodeConfigurationCreate
+      type: object
+    BarcodeConfigurationUpdate:
+      description: 바코드 설정 수정 요청 스키마.
+      properties:
+        ai_codes:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Ai Codes
+        auto_generate:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Auto Generate
+        barcode_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Barcode Type
+        label_template:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Label Template
+        prefix:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prefix
+        printer_config:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Printer Config
+      title: BarcodeConfigurationUpdate
+      type: object
+    DocStatus:
+      description: 문서 상태 — ERPNext 호환.
+      enum:
+      - 0
+      - 1
+      - 2
+      title: DocStatus
+      type: integer
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    IoTAlert:
+      description: IoT 알림 문서.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        acknowledged_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Acknowledged At
+        acknowledged_by:
+          default: ''
+          title: Acknowledged By
+          type: string
+        alert_type:
+          default: threshold
+          title: Alert Type
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        data_point_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Data Point Id
+        device_id:
+          default: ''
+          title: Device Id
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        message:
+          default: ''
+          title: Message
+          type: string
+        resolved_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Resolved At
+        severity:
+          default: info
+          title: Severity
+          type: string
+        status:
+          default: triggered
+          title: Status
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        triggered_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Triggered At
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: IoTAlert
+      type: object
+    IoTAlertCreate:
+      description: IoT 알림 생성 요청 스키마.
+      properties:
+        acknowledged_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Acknowledged At
+        acknowledged_by:
+          default: ''
+          title: Acknowledged By
+          type: string
+        alert_type:
+          default: threshold
+          title: Alert Type
+          type: string
+        data_point_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Data Point Id
+        device_id:
+          title: Device Id
+          type: string
+        message:
+          default: ''
+          title: Message
+          type: string
+        resolved_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Resolved At
+        severity:
+          default: info
+          title: Severity
+          type: string
+        status:
+          default: triggered
+          title: Status
+          type: string
+        triggered_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Triggered At
+      required:
+      - device_id
+      title: IoTAlertCreate
+      type: object
+    IoTAlertUpdate:
+      description: IoT 알림 수정 요청 스키마.
+      properties:
+        acknowledged_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Acknowledged At
+        acknowledged_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Acknowledged By
+        alert_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Alert Type
+        data_point_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Data Point Id
+        device_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Device Id
+        message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Message
+        resolved_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Resolved At
+        severity:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Severity
+        status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+        triggered_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Triggered At
+      title: IoTAlertUpdate
+      type: object
+    IoTDataPoint:
+      description: IoT 데이터 포인트 문서.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        device_id:
+          default: ''
+          title: Device Id
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        metric_name:
+          default: ''
+          title: Metric Name
+          type: string
+        quality:
+          default: good
+          title: Quality
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        timestamp:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Timestamp
+        unit:
+          default: ''
+          title: Unit
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        value:
+          default: '0'
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Value
+          type: string
+      title: IoTDataPoint
+      type: object
+    IoTDataPointCreate:
+      description: IoT 데이터 포인트 생성 요청 스키마.
+      properties:
+        device_id:
+          title: Device Id
+          type: string
+        metric_name:
+          title: Metric Name
+          type: string
+        quality:
+          default: good
+          title: Quality
+          type: string
+        timestamp:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Timestamp
+        unit:
+          default: ''
+          title: Unit
+          type: string
+        value:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          default: '0'
+          title: Value
+      required:
+      - device_id
+      - metric_name
+      title: IoTDataPointCreate
+      type: object
+    IoTDataPointUpdate:
+      description: IoT 데이터 포인트 수정 요청 스키마.
+      properties:
+        device_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Device Id
+        metric_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Metric Name
+        quality:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Quality
+        timestamp:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Timestamp
+        unit:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Unit
+        value:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Value
+      title: IoTDataPointUpdate
+      type: object
+    IoTDevice:
+      description: IoT 장치 문서.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        alert_rules:
+          default: []
+          items:
+            additionalProperties: true
+            type: object
+          title: Alert Rules
+          type: array
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        device_name:
+          default: ''
+          title: Device Name
+          type: string
+        device_type:
+          default: sensor
+          title: Device Type
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        firmware_version:
+          default: ''
+          title: Firmware Version
+          type: string
+        ip_address:
+          default: ''
+          title: Ip Address
+          type: string
+        last_heartbeat:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Last Heartbeat
+        location:
+          default: ''
+          title: Location
+          type: string
+        polling_interval:
+          default: 60
+          title: Polling Interval
+          type: integer
+        protocol:
+          default: mqtt
+          title: Protocol
+          type: string
+        status:
+          default: active
+          title: Status
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: IoTDevice
+      type: object
+    IoTDeviceCreate:
+      description: IoT 장치 생성 요청 스키마.
+      properties:
+        alert_rules:
+          default: []
+          items:
+            additionalProperties: true
+            type: object
+          title: Alert Rules
+          type: array
+        device_name:
+          title: Device Name
+          type: string
+        device_type:
+          default: sensor
+          title: Device Type
+          type: string
+        firmware_version:
+          default: ''
+          title: Firmware Version
+          type: string
+        ip_address:
+          default: ''
+          title: Ip Address
+          type: string
+        last_heartbeat:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Last Heartbeat
+        location:
+          default: ''
+          title: Location
+          type: string
+        polling_interval:
+          default: 60
+          title: Polling Interval
+          type: integer
+        protocol:
+          default: mqtt
+          title: Protocol
+          type: string
+        status:
+          default: active
+          title: Status
+          type: string
+      required:
+      - device_name
+      title: IoTDeviceCreate
+      type: object
+    IoTDeviceUpdate:
+      description: IoT 장치 수정 요청 스키마.
+      properties:
+        alert_rules:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Alert Rules
+        device_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Device Name
+        device_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Device Type
+        firmware_version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Firmware Version
+        ip_address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ip Address
+        last_heartbeat:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Last Heartbeat
+        location:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Location
+        polling_interval:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Polling Interval
+        protocol:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Protocol
+        status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+      title: IoTDeviceUpdate
+      type: object
+    PaginatedResponse_BarcodeConfiguration_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/BarcodeConfiguration'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[BarcodeConfiguration]
+      type: object
+    PaginatedResponse_IoTAlert_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/IoTAlert'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[IoTAlert]
+      type: object
+    PaginatedResponse_IoTDataPoint_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/IoTDataPoint'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[IoTDataPoint]
+      type: object
+    PaginatedResponse_IoTDevice_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/IoTDevice'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[IoTDevice]
+      type: object
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+info:
+  contact:
+    name: OneERP 개발팀
+  description: OneERP Iot 서비스 REST API
+  license:
+    name: Proprietary
+  title: OneERP Iot API
+  version: 0.1.0
+openapi: 3.1.0
+paths:
+  /api/v1/barcode-configurations:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: barcode_configuration_목록_api_v1_barcode_configurations_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_BarcodeConfiguration_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Barcode Configuration 목록
+      tags:
+      - 바코드 설정
+    post:
+      description: 엔티티를 생성한다.
+      operationId: barcode_configuration_생성_api_v1_barcode_configurations_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BarcodeConfigurationCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Barcode Configuration 생성 Api V1 Barcode Configurations
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Barcode Configuration 생성
+      tags:
+      - 바코드 설정
+  /api/v1/barcode-configurations/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: barcode_configuration_삭제_api_v1_barcode_configurations__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Barcode Configuration 삭제
+      tags:
+      - 바코드 설정
+    get:
+      description: 엔티티를 조회한다.
+      operationId: barcode_configuration_조회_api_v1_barcode_configurations__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Barcode Configuration 조회 Api V1 Barcode Configurations  Doc
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Barcode Configuration 조회
+      tags:
+      - 바코드 설정
+    put:
+      description: 엔티티를 수정한다.
+      operationId: barcode_configuration_수정_api_v1_barcode_configurations__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BarcodeConfigurationUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Barcode Configuration 수정 Api V1 Barcode Configurations  Doc
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Barcode Configuration 수정
+      tags:
+      - 바코드 설정
+  /api/v1/iot-alerts:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: iot_alert_목록_api_v1_iot_alerts_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_IoTAlert_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Iot Alert 목록
+      tags:
+      - IoT 알림
+    post:
+      description: 엔티티를 생성한다.
+      operationId: iot_alert_생성_api_v1_iot_alerts_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IoTAlertCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Iot Alert 생성 Api V1 Iot Alerts Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Iot Alert 생성
+      tags:
+      - IoT 알림
+  /api/v1/iot-alerts/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: iot_alert_삭제_api_v1_iot_alerts__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Iot Alert 삭제
+      tags:
+      - IoT 알림
+    get:
+      description: 엔티티를 조회한다.
+      operationId: iot_alert_조회_api_v1_iot_alerts__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Iot Alert 조회 Api V1 Iot Alerts  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Iot Alert 조회
+      tags:
+      - IoT 알림
+    put:
+      description: 엔티티를 수정한다.
+      operationId: iot_alert_수정_api_v1_iot_alerts__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IoTAlertUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Iot Alert 수정 Api V1 Iot Alerts  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Iot Alert 수정
+      tags:
+      - IoT 알림
+  /api/v1/iot-alerts/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: iot_alert_취소_api_v1_iot_alerts__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Iot Alert 취소 Api V1 Iot Alerts  Doc Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Iot Alert 취소
+      tags:
+      - IoT 알림
+  /api/v1/iot-alerts/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: iot_alert_제출_api_v1_iot_alerts__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Iot Alert 제출 Api V1 Iot Alerts  Doc Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Iot Alert 제출
+      tags:
+      - IoT 알림
+  /api/v1/iot-data-points:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: iot_data_point_목록_api_v1_iot_data_points_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_IoTDataPoint_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Iot Data Point 목록
+      tags:
+      - IoT 데이터 포인트
+    post:
+      description: 엔티티를 생성한다.
+      operationId: iot_data_point_생성_api_v1_iot_data_points_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IoTDataPointCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Iot Data Point 생성 Api V1 Iot Data Points Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Iot Data Point 생성
+      tags:
+      - IoT 데이터 포인트
+  /api/v1/iot-data-points/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: iot_data_point_삭제_api_v1_iot_data_points__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Iot Data Point 삭제
+      tags:
+      - IoT 데이터 포인트
+    get:
+      description: 엔티티를 조회한다.
+      operationId: iot_data_point_조회_api_v1_iot_data_points__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Iot Data Point 조회 Api V1 Iot Data Points  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Iot Data Point 조회
+      tags:
+      - IoT 데이터 포인트
+    put:
+      description: 엔티티를 수정한다.
+      operationId: iot_data_point_수정_api_v1_iot_data_points__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IoTDataPointUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Iot Data Point 수정 Api V1 Iot Data Points  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Iot Data Point 수정
+      tags:
+      - IoT 데이터 포인트
+  /api/v1/iot-data-points/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: iot_data_point_취소_api_v1_iot_data_points__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Iot Data Point 취소 Api V1 Iot Data Points  Doc Id  Cancel
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Iot Data Point 취소
+      tags:
+      - IoT 데이터 포인트
+  /api/v1/iot-data-points/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: iot_data_point_제출_api_v1_iot_data_points__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Iot Data Point 제출 Api V1 Iot Data Points  Doc Id  Submit
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Iot Data Point 제출
+      tags:
+      - IoT 데이터 포인트
+  /api/v1/iot-devices:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: iot_device_목록_api_v1_iot_devices_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_IoTDevice_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Iot Device 목록
+      tags:
+      - IoT 장치
+    post:
+      description: 엔티티를 생성한다.
+      operationId: iot_device_생성_api_v1_iot_devices_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IoTDeviceCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Iot Device 생성 Api V1 Iot Devices Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Iot Device 생성
+      tags:
+      - IoT 장치
+  /api/v1/iot-devices/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: iot_device_삭제_api_v1_iot_devices__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Iot Device 삭제
+      tags:
+      - IoT 장치
+    get:
+      description: 엔티티를 조회한다.
+      operationId: iot_device_조회_api_v1_iot_devices__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Iot Device 조회 Api V1 Iot Devices  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Iot Device 조회
+      tags:
+      - IoT 장치
+    put:
+      description: 엔티티를 수정한다.
+      operationId: iot_device_수정_api_v1_iot_devices__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IoTDeviceUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Iot Device 수정 Api V1 Iot Devices  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Iot Device 수정
+      tags:
+      - IoT 장치
+  /health:
+    get:
+      description: 서비스 상태를 확인한다 (하위 호환).
+      operationId: health_health_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Health Health Get
+                type: object
+          description: Successful Response
+      summary: Health
+      tags:
+      - health
+  /health/live:
+    get:
+      description: Liveness probe — 프로세스 생존 확인.
+      operationId: liveness_health_live_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Liveness Health Live Get
+                type: object
+          description: Successful Response
+      summary: Liveness
+      tags:
+      - health
+  /health/ready:
+    get:
+      description: Readiness probe — DB/NATS/Valkey 연결 포함 서비스 준비 상태 확인.
+      operationId: readiness_health_ready_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Readiness
+      tags:
+      - health
+  /health/startup:
+    get:
+      description: Startup probe — 서비스 초기화 완료 확인 (readiness와 동일).
+      operationId: startup_health_startup_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Startup
+      tags:
+      - health
+servers:
+- url: /iot
+- description: 현재 서버
+  url: /
+tags:
+- description: 바코드 설정 API
+  name: 바코드 설정
+- description: IoT 장치 API
+  name: IoT 장치
+- description: IoT 데이터 포인트 API
+  name: IoT 데이터 포인트
+- description: IoT 알림 API
+  name: IoT 알림

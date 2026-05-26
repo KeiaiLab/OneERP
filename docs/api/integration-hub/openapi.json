@@ -1,0 +1,2826 @@
+{
+  "components": {
+    "schemas": {
+      "Connector": {
+        "description": "커넥터 문서 — 외부 시스템 연동 설정 정보를 저장한다.",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "auth_config": {
+            "additionalProperties": true,
+            "default": {},
+            "title": "Auth Config",
+            "type": "object"
+          },
+          "auth_type": {
+            "default": "none",
+            "title": "Auth Type",
+            "type": "string"
+          },
+          "base_url": {
+            "default": "",
+            "title": "Base Url",
+            "type": "string"
+          },
+          "connector_name": {
+            "default": "",
+            "title": "Connector Name",
+            "type": "string"
+          },
+          "connector_type": {
+            "default": "rest_api",
+            "title": "Connector Type",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "headers": {
+            "additionalProperties": true,
+            "default": {},
+            "title": "Headers",
+            "type": "object"
+          },
+          "health_status": {
+            "default": "unknown",
+            "title": "Health Status",
+            "type": "string"
+          },
+          "is_active": {
+            "default": true,
+            "title": "Is Active",
+            "type": "boolean"
+          },
+          "last_health_check": {
+            "default": "",
+            "title": "Last Health Check",
+            "type": "string"
+          },
+          "retry_policy": {
+            "additionalProperties": true,
+            "default": {},
+            "title": "Retry Policy",
+            "type": "object"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          }
+        },
+        "title": "Connector",
+        "type": "object"
+      },
+      "ConnectorCreate": {
+        "description": "커넥터 생성 요청 스키마.",
+        "properties": {
+          "auth_config": {
+            "additionalProperties": true,
+            "default": {},
+            "title": "Auth Config",
+            "type": "object"
+          },
+          "auth_type": {
+            "default": "none",
+            "title": "Auth Type",
+            "type": "string"
+          },
+          "base_url": {
+            "default": "",
+            "title": "Base Url",
+            "type": "string"
+          },
+          "connector_name": {
+            "title": "Connector Name",
+            "type": "string"
+          },
+          "connector_type": {
+            "default": "rest_api",
+            "title": "Connector Type",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "headers": {
+            "additionalProperties": true,
+            "default": {},
+            "title": "Headers",
+            "type": "object"
+          },
+          "retry_policy": {
+            "additionalProperties": true,
+            "default": {},
+            "title": "Retry Policy",
+            "type": "object"
+          }
+        },
+        "required": [
+          "connector_name"
+        ],
+        "title": "ConnectorCreate",
+        "type": "object"
+      },
+      "ConnectorUpdate": {
+        "description": "커넥터 수정 요청 스키마.",
+        "properties": {
+          "auth_config": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Auth Config"
+          },
+          "auth_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Auth Type"
+          },
+          "base_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Base Url"
+          },
+          "connector_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Connector Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "headers": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Headers"
+          },
+          "is_active": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Is Active"
+          },
+          "retry_policy": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retry Policy"
+          }
+        },
+        "title": "ConnectorUpdate",
+        "type": "object"
+      },
+      "DataMapping": {
+        "description": "데이터 매핑 문서 — 시스템 간 필드 매핑 규칙을 저장한다.",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "field_mappings": {
+            "default": [],
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Field Mappings",
+            "type": "array"
+          },
+          "is_active": {
+            "default": true,
+            "title": "Is Active",
+            "type": "boolean"
+          },
+          "mapping_name": {
+            "default": "",
+            "title": "Mapping Name",
+            "type": "string"
+          },
+          "source_entity": {
+            "default": "",
+            "title": "Source Entity",
+            "type": "string"
+          },
+          "source_system": {
+            "default": "",
+            "title": "Source System",
+            "type": "string"
+          },
+          "target_entity": {
+            "default": "",
+            "title": "Target Entity",
+            "type": "string"
+          },
+          "target_system": {
+            "default": "",
+            "title": "Target System",
+            "type": "string"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          }
+        },
+        "title": "DataMapping",
+        "type": "object"
+      },
+      "DataMappingCreate": {
+        "description": "데이터 매핑 생성 요청 스키마.",
+        "properties": {
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "field_mappings": {
+            "default": [],
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Field Mappings",
+            "type": "array"
+          },
+          "mapping_name": {
+            "title": "Mapping Name",
+            "type": "string"
+          },
+          "source_entity": {
+            "default": "",
+            "title": "Source Entity",
+            "type": "string"
+          },
+          "source_system": {
+            "default": "",
+            "title": "Source System",
+            "type": "string"
+          },
+          "target_entity": {
+            "default": "",
+            "title": "Target Entity",
+            "type": "string"
+          },
+          "target_system": {
+            "default": "",
+            "title": "Target System",
+            "type": "string"
+          }
+        },
+        "required": [
+          "mapping_name"
+        ],
+        "title": "DataMappingCreate",
+        "type": "object"
+      },
+      "DataMappingUpdate": {
+        "description": "데이터 매핑 수정 요청 스키마.",
+        "properties": {
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "field_mappings": {
+            "anyOf": [
+              {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Field Mappings"
+          },
+          "is_active": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Is Active"
+          },
+          "mapping_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mapping Name"
+          }
+        },
+        "title": "DataMappingUpdate",
+        "type": "object"
+      },
+      "DocStatus": {
+        "description": "문서 상태 — ERPNext 호환.",
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "title": "DocStatus",
+        "type": "integer"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "IntegrationFlow": {
+        "description": "통합 플로우 문서 — 데이터 연동 파이프라인 정의를 저장한다.",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "flow_name": {
+            "default": "",
+            "title": "Flow Name",
+            "type": "string"
+          },
+          "flow_type": {
+            "default": "etl",
+            "title": "Flow Type",
+            "type": "string"
+          },
+          "is_active": {
+            "default": true,
+            "title": "Is Active",
+            "type": "boolean"
+          },
+          "last_run_at": {
+            "default": "",
+            "title": "Last Run At",
+            "type": "string"
+          },
+          "last_run_status": {
+            "default": "never",
+            "title": "Last Run Status",
+            "type": "string"
+          },
+          "mapping_id": {
+            "default": "",
+            "title": "Mapping Id",
+            "type": "string"
+          },
+          "schedule": {
+            "default": "",
+            "title": "Schedule",
+            "type": "string"
+          },
+          "source_connector_id": {
+            "default": "",
+            "title": "Source Connector Id",
+            "type": "string"
+          },
+          "steps": {
+            "default": [],
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Steps",
+            "type": "array"
+          },
+          "target_connector_id": {
+            "default": "",
+            "title": "Target Connector Id",
+            "type": "string"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          }
+        },
+        "title": "IntegrationFlow",
+        "type": "object"
+      },
+      "IntegrationFlowCreate": {
+        "description": "통합 플로우 생성 요청 스키마.",
+        "properties": {
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "flow_name": {
+            "title": "Flow Name",
+            "type": "string"
+          },
+          "flow_type": {
+            "default": "etl",
+            "title": "Flow Type",
+            "type": "string"
+          },
+          "mapping_id": {
+            "default": "",
+            "title": "Mapping Id",
+            "type": "string"
+          },
+          "schedule": {
+            "default": "",
+            "title": "Schedule",
+            "type": "string"
+          },
+          "source_connector_id": {
+            "default": "",
+            "title": "Source Connector Id",
+            "type": "string"
+          },
+          "steps": {
+            "default": [],
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Steps",
+            "type": "array"
+          },
+          "target_connector_id": {
+            "default": "",
+            "title": "Target Connector Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "flow_name"
+        ],
+        "title": "IntegrationFlowCreate",
+        "type": "object"
+      },
+      "IntegrationFlowUpdate": {
+        "description": "통합 플로우 수정 요청 스키마.",
+        "properties": {
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "flow_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Flow Name"
+          },
+          "is_active": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Is Active"
+          },
+          "schedule": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Schedule"
+          },
+          "steps": {
+            "anyOf": [
+              {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Steps"
+          }
+        },
+        "title": "IntegrationFlowUpdate",
+        "type": "object"
+      },
+      "IntegrationLog": {
+        "description": "통합 로그 문서 — 연동 실행 이력을 저장한다.",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "completed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed At"
+          },
+          "connector_id": {
+            "default": "",
+            "title": "Connector Id",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "direction": {
+            "default": "outbound",
+            "title": "Direction",
+            "type": "string"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "duration_ms": {
+            "default": 0,
+            "title": "Duration Ms",
+            "type": "integer"
+          },
+          "error_message": {
+            "default": "",
+            "title": "Error Message",
+            "type": "string"
+          },
+          "flow_id": {
+            "default": "",
+            "title": "Flow Id",
+            "type": "string"
+          },
+          "records_failed": {
+            "default": 0,
+            "title": "Records Failed",
+            "type": "integer"
+          },
+          "records_processed": {
+            "default": 0,
+            "title": "Records Processed",
+            "type": "integer"
+          },
+          "request_payload": {
+            "additionalProperties": true,
+            "default": {},
+            "title": "Request Payload",
+            "type": "object"
+          },
+          "response_payload": {
+            "additionalProperties": true,
+            "default": {},
+            "title": "Response Payload",
+            "type": "object"
+          },
+          "started_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Started At"
+          },
+          "status": {
+            "default": "started",
+            "title": "Status",
+            "type": "string"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          }
+        },
+        "title": "IntegrationLog",
+        "type": "object"
+      },
+      "IntegrationLogCreate": {
+        "description": "통합 로그 생성 요청 스키마.",
+        "properties": {
+          "connector_id": {
+            "default": "",
+            "title": "Connector Id",
+            "type": "string"
+          },
+          "direction": {
+            "default": "outbound",
+            "title": "Direction",
+            "type": "string"
+          },
+          "error_message": {
+            "default": "",
+            "title": "Error Message",
+            "type": "string"
+          },
+          "flow_id": {
+            "default": "",
+            "title": "Flow Id",
+            "type": "string"
+          },
+          "records_failed": {
+            "default": 0,
+            "title": "Records Failed",
+            "type": "integer"
+          },
+          "records_processed": {
+            "default": 0,
+            "title": "Records Processed",
+            "type": "integer"
+          },
+          "request_payload": {
+            "additionalProperties": true,
+            "default": {},
+            "title": "Request Payload",
+            "type": "object"
+          },
+          "response_payload": {
+            "additionalProperties": true,
+            "default": {},
+            "title": "Response Payload",
+            "type": "object"
+          },
+          "status": {
+            "default": "started",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "title": "IntegrationLogCreate",
+        "type": "object"
+      },
+      "IntegrationLogUpdate": {
+        "description": "통합 로그 수정 요청 스키마.",
+        "properties": {
+          "error_message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Message"
+          },
+          "records_failed": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Records Failed"
+          },
+          "records_processed": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Records Processed"
+          },
+          "response_payload": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Response Payload"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status"
+          }
+        },
+        "title": "IntegrationLogUpdate",
+        "type": "object"
+      },
+      "PaginatedResponse_Connector_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/Connector"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[Connector]",
+        "type": "object"
+      },
+      "PaginatedResponse_DataMapping_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/DataMapping"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[DataMapping]",
+        "type": "object"
+      },
+      "PaginatedResponse_IntegrationFlow_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/IntegrationFlow"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[IntegrationFlow]",
+        "type": "object"
+      },
+      "PaginatedResponse_IntegrationLog_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/IntegrationLog"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[IntegrationLog]",
+        "type": "object"
+      },
+      "PaginatedResponse_WebhookEndpoint_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/WebhookEndpoint"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[WebhookEndpoint]",
+        "type": "object"
+      },
+      "TransformRequest": {
+        "description": "데이터 변환 요청 스키마.",
+        "properties": {
+          "mapping_id": {
+            "title": "Mapping Id",
+            "type": "string"
+          },
+          "source_data": {
+            "default": [],
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Source Data",
+            "type": "array"
+          }
+        },
+        "required": [
+          "mapping_id"
+        ],
+        "title": "TransformRequest",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      },
+      "WebhookEndpoint": {
+        "description": "웹훅 엔드포인트 문서 — 웹훅 수신 설정 정보를 저장한다.",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "endpoint_name": {
+            "default": "",
+            "title": "Endpoint Name",
+            "type": "string"
+          },
+          "event_types": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Event Types",
+            "type": "array"
+          },
+          "is_active": {
+            "default": true,
+            "title": "Is Active",
+            "type": "boolean"
+          },
+          "last_received_at": {
+            "default": "",
+            "title": "Last Received At",
+            "type": "string"
+          },
+          "received_count": {
+            "default": 0,
+            "title": "Received Count",
+            "type": "integer"
+          },
+          "secret_key": {
+            "default": "",
+            "title": "Secret Key",
+            "type": "string"
+          },
+          "source_system": {
+            "default": "",
+            "title": "Source System",
+            "type": "string"
+          },
+          "target_flow_id": {
+            "default": "",
+            "title": "Target Flow Id",
+            "type": "string"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          }
+        },
+        "title": "WebhookEndpoint",
+        "type": "object"
+      },
+      "WebhookEndpointCreate": {
+        "description": "웹훅 엔드포인트 생성 요청 스키마.",
+        "properties": {
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "endpoint_name": {
+            "title": "Endpoint Name",
+            "type": "string"
+          },
+          "event_types": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Event Types",
+            "type": "array"
+          },
+          "secret_key": {
+            "default": "",
+            "title": "Secret Key",
+            "type": "string"
+          },
+          "source_system": {
+            "default": "",
+            "title": "Source System",
+            "type": "string"
+          },
+          "target_flow_id": {
+            "default": "",
+            "title": "Target Flow Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "endpoint_name"
+        ],
+        "title": "WebhookEndpointCreate",
+        "type": "object"
+      },
+      "WebhookEndpointUpdate": {
+        "description": "웹훅 엔드포인트 수정 요청 스키마.",
+        "properties": {
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "endpoint_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Endpoint Name"
+          },
+          "event_types": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Event Types"
+          },
+          "is_active": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Is Active"
+          },
+          "secret_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Secret Key"
+          },
+          "target_flow_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Flow Id"
+          }
+        },
+        "title": "WebhookEndpointUpdate",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "contact": {
+      "name": "OneERP 개발팀"
+    },
+    "description": "OneERP Integration-hub 서비스 REST API",
+    "license": {
+      "name": "Proprietary"
+    },
+    "title": "OneERP Integration-hub API",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/v1/integration/connectors": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "connector_목록_api_v1_integration_connectors_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_Connector_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Connector 목록",
+        "tags": [
+          "커넥터"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "connector_생성_api_v1_integration_connectors_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConnectorCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Connector 생성 Api V1 Integration Connectors Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Connector 생성",
+        "tags": [
+          "커넥터"
+        ]
+      }
+    },
+    "/api/v1/integration/connectors/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "connector_삭제_api_v1_integration_connectors__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Connector 삭제",
+        "tags": [
+          "커넥터"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "connector_조회_api_v1_integration_connectors__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Connector 조회 Api V1 Integration Connectors  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Connector 조회",
+        "tags": [
+          "커넥터"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "connector_수정_api_v1_integration_connectors__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConnectorUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Connector 수정 Api V1 Integration Connectors  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Connector 수정",
+        "tags": [
+          "커넥터"
+        ]
+      }
+    },
+    "/api/v1/integration/data-mappings": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "data_mapping_목록_api_v1_integration_data_mappings_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_DataMapping_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Data Mapping 목록",
+        "tags": [
+          "데이터매핑"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "data_mapping_생성_api_v1_integration_data_mappings_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataMappingCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data Mapping 생성 Api V1 Integration Data Mappings Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Data Mapping 생성",
+        "tags": [
+          "데이터매핑"
+        ]
+      }
+    },
+    "/api/v1/integration/data-mappings/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "data_mapping_삭제_api_v1_integration_data_mappings__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Data Mapping 삭제",
+        "tags": [
+          "데이터매핑"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "data_mapping_조회_api_v1_integration_data_mappings__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data Mapping 조회 Api V1 Integration Data Mappings  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Data Mapping 조회",
+        "tags": [
+          "데이터매핑"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "data_mapping_수정_api_v1_integration_data_mappings__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataMappingUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data Mapping 수정 Api V1 Integration Data Mappings  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Data Mapping 수정",
+        "tags": [
+          "데이터매핑"
+        ]
+      }
+    },
+    "/api/v1/integration/flows": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "integration_flow_목록_api_v1_integration_flows_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_IntegrationFlow_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Integration Flow 목록",
+        "tags": [
+          "통합플로우"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "integration_flow_생성_api_v1_integration_flows_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IntegrationFlowCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Integration Flow 생성 Api V1 Integration Flows Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Integration Flow 생성",
+        "tags": [
+          "통합플로우"
+        ]
+      }
+    },
+    "/api/v1/integration/flows/transform": {
+      "post": {
+        "description": "데이터 매핑 규칙으로 데이터를 변환한다.",
+        "operationId": "transform_data_api_v1_integration_flows_transform_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransformRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Transform Data Api V1 Integration Flows Transform Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Transform Data",
+        "tags": [
+          "통합플로우"
+        ]
+      }
+    },
+    "/api/v1/integration/flows/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "integration_flow_삭제_api_v1_integration_flows__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Integration Flow 삭제",
+        "tags": [
+          "통합플로우"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "integration_flow_조회_api_v1_integration_flows__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Integration Flow 조회 Api V1 Integration Flows  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Integration Flow 조회",
+        "tags": [
+          "통합플로우"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "integration_flow_수정_api_v1_integration_flows__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IntegrationFlowUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Integration Flow 수정 Api V1 Integration Flows  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Integration Flow 수정",
+        "tags": [
+          "통합플로우"
+        ]
+      }
+    },
+    "/api/v1/integration/flows/{flow_id}/execute": {
+      "post": {
+        "description": "통합 플로우를 실행한다.",
+        "operationId": "execute_flow_api_v1_integration_flows__flow_id__execute_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "flow_id",
+            "required": true,
+            "schema": {
+              "title": "Flow Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Execute Flow Api V1 Integration Flows  Flow Id  Execute Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Execute Flow",
+        "tags": [
+          "통합플로우"
+        ]
+      }
+    },
+    "/api/v1/integration/logs": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "integration_log_목록_api_v1_integration_logs_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_IntegrationLog_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Integration Log 목록",
+        "tags": [
+          "통합로그"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "integration_log_생성_api_v1_integration_logs_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IntegrationLogCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Integration Log 생성 Api V1 Integration Logs Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Integration Log 생성",
+        "tags": [
+          "통합로그"
+        ]
+      }
+    },
+    "/api/v1/integration/logs/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "integration_log_삭제_api_v1_integration_logs__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Integration Log 삭제",
+        "tags": [
+          "통합로그"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "integration_log_조회_api_v1_integration_logs__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Integration Log 조회 Api V1 Integration Logs  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Integration Log 조회",
+        "tags": [
+          "통합로그"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "integration_log_수정_api_v1_integration_logs__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IntegrationLogUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Integration Log 수정 Api V1 Integration Logs  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Integration Log 수정",
+        "tags": [
+          "통합로그"
+        ]
+      }
+    },
+    "/api/v1/integration/logs/{doc_id}/cancel": {
+      "post": {
+        "description": "문서를 취소한다 (제출 → 취소).",
+        "operationId": "integration_log_취소_api_v1_integration_logs__doc_id__cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Integration Log 취소 Api V1 Integration Logs  Doc Id  Cancel Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Integration Log 취소",
+        "tags": [
+          "통합로그"
+        ]
+      }
+    },
+    "/api/v1/integration/logs/{doc_id}/submit": {
+      "post": {
+        "description": "문서를 제출한다 (초안 → 제출).",
+        "operationId": "integration_log_제출_api_v1_integration_logs__doc_id__submit_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Integration Log 제출 Api V1 Integration Logs  Doc Id  Submit Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Integration Log 제출",
+        "tags": [
+          "통합로그"
+        ]
+      }
+    },
+    "/api/v1/integration/webhooks": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "webhook_endpoint_목록_api_v1_integration_webhooks_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_WebhookEndpoint_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Webhook Endpoint 목록",
+        "tags": [
+          "웹훅"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "webhook_endpoint_생성_api_v1_integration_webhooks_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookEndpointCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Webhook Endpoint 생성 Api V1 Integration Webhooks Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Webhook Endpoint 생성",
+        "tags": [
+          "웹훅"
+        ]
+      }
+    },
+    "/api/v1/integration/webhooks/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "webhook_endpoint_삭제_api_v1_integration_webhooks__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Webhook Endpoint 삭제",
+        "tags": [
+          "웹훅"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "webhook_endpoint_조회_api_v1_integration_webhooks__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Webhook Endpoint 조회 Api V1 Integration Webhooks  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Webhook Endpoint 조회",
+        "tags": [
+          "웹훅"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "webhook_endpoint_수정_api_v1_integration_webhooks__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookEndpointUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Webhook Endpoint 수정 Api V1 Integration Webhooks  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Webhook Endpoint 수정",
+        "tags": [
+          "웹훅"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "description": "서비스 상태를 확인한다 (하위 호환).",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Health Health Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/health/live": {
+      "get": {
+        "description": "Liveness probe — 프로세스 생존 확인.",
+        "operationId": "liveness_health_live_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Liveness Health Live Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Liveness",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "description": "Readiness probe — DB/NATS/Valkey 연결 포함 서비스 준비 상태 확인.",
+        "operationId": "readiness_health_ready_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Readiness",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/health/startup": {
+      "get": {
+        "description": "Startup probe — 서비스 초기화 완료 확인 (readiness와 동일).",
+        "operationId": "startup_health_startup_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Startup",
+        "tags": [
+          "health"
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/integration-hub"
+    },
+    {
+      "description": "현재 서버",
+      "url": "/"
+    }
+  ],
+  "tags": [
+    {
+      "description": "커넥터 API",
+      "name": "커넥터"
+    },
+    {
+      "description": "데이터매핑 API",
+      "name": "데이터매핑"
+    },
+    {
+      "description": "통합플로우 API",
+      "name": "통합플로우"
+    },
+    {
+      "description": "통합로그 API",
+      "name": "통합로그"
+    },
+    {
+      "description": "웹훅 API",
+      "name": "웹훅"
+    }
+  ]
+}

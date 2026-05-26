@@ -1,0 +1,6241 @@
+components:
+  schemas:
+    Announcement:
+      description: '공지사항 문서.
+
+
+        BR-PTL-004: 필수 공지사항은 닫기 버튼 없이 표시.
+
+        BR-PTL-005: 선택 공지는 ''오늘 하루 보지 않기'' 가능.
+
+        BR-PTL-006: 긴급 공지는 빨간 배너로 최상단 표시.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        content:
+          default: ''
+          title: Content
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        end_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: End Date
+        is_mandatory:
+          default: false
+          title: Is Mandatory
+          type: boolean
+        priority:
+          $ref: '#/components/schemas/AnnouncementPriority'
+          default: normal
+        published_by:
+          default: ''
+          title: Published By
+          type: string
+        read_count:
+          default: 0
+          title: Read Count
+          type: integer
+        start_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Start Date
+        status:
+          $ref: '#/components/schemas/AnnouncementStatus'
+          default: draft
+        target_departments:
+          items:
+            type: string
+          title: Target Departments
+          type: array
+        target_roles:
+          items:
+            type: string
+          title: Target Roles
+          type: array
+        tenant_id:
+          title: Tenant Id
+          type: string
+        title:
+          default: ''
+          title: Title
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: Announcement
+      type: object
+    AnnouncementCreate:
+      description: 공지사항 생성 요청 스키마.
+      properties:
+        content:
+          description: 내용
+          minLength: 1
+          title: Content
+          type: string
+        end_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: 게시 종료일
+          title: End Date
+        is_mandatory:
+          default: false
+          description: 필수 공지 여부 (BR-PTL-004)
+          title: Is Mandatory
+          type: boolean
+        priority:
+          $ref: '#/components/schemas/AnnouncementPriority'
+          default: normal
+          description: 우선순위
+        start_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: 게시 시작일
+          title: Start Date
+        target_departments:
+          description: 대상 부서 (빈 목록=전체)
+          items:
+            type: string
+          title: Target Departments
+          type: array
+        target_roles:
+          description: 대상 역할 (빈 목록=전체)
+          items:
+            type: string
+          title: Target Roles
+          type: array
+        title:
+          description: 제목
+          maxLength: 200
+          minLength: 1
+          title: Title
+          type: string
+      required:
+      - title
+      - content
+      title: AnnouncementCreate
+      type: object
+    AnnouncementPriority:
+      description: 공지사항 우선순위.
+      enum:
+      - low
+      - normal
+      - high
+      - urgent
+      title: AnnouncementPriority
+      type: string
+    AnnouncementRead:
+      description: '공지사항 읽음 문서.
+
+
+        BR-PTL-005: hide_until로 ''오늘 하루 보지 않기'' 구현.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        announcement_id:
+          default: ''
+          title: Announcement Id
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        hide_until:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Hide Until
+        read_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Read At
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        user_id:
+          default: ''
+          title: User Id
+          type: string
+      title: AnnouncementRead
+      type: object
+    AnnouncementReadCreate:
+      description: 공지사항 읽음 생성 요청 스키마.
+      properties:
+        announcement_id:
+          description: 공지사항 ID
+          title: Announcement Id
+          type: string
+        hide_until:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: 숨김 만료일 (오늘 하루 보지 않기)
+          title: Hide Until
+        user_id:
+          default: ''
+          description: 사용자 ID (서버에서 설정)
+          title: User Id
+          type: string
+      required:
+      - announcement_id
+      title: AnnouncementReadCreate
+      type: object
+    AnnouncementReadUpdate:
+      description: 공지사항 읽음 수정 요청 스키마.
+      properties:
+        hide_until:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Hide Until
+      title: AnnouncementReadUpdate
+      type: object
+    AnnouncementStatus:
+      description: 공지사항 상태.
+      enum:
+      - draft
+      - active
+      - expired
+      - archived
+      title: AnnouncementStatus
+      type: string
+    AnnouncementUpdate:
+      description: 공지사항 수정 요청 스키마.
+      properties:
+        content:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Content
+        end_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: End Date
+        is_mandatory:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Mandatory
+        priority:
+          anyOf:
+          - $ref: '#/components/schemas/AnnouncementPriority'
+          - type: 'null'
+        start_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Start Date
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/AnnouncementStatus'
+          - type: 'null'
+        target_departments:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Target Departments
+        target_roles:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Target Roles
+        title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Title
+      title: AnnouncementUpdate
+      type: object
+    Bookmark:
+      description: '북마크 문서.
+
+
+        BR-MSG-050 규칙을 따른다.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        channel_id:
+          default: ''
+          title: Channel Id
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        message_id:
+          default: ''
+          title: Message Id
+          type: string
+        note:
+          default: ''
+          title: Note
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        user_id:
+          default: ''
+          title: User Id
+          type: string
+      title: Bookmark
+      type: object
+    BookmarkCreate:
+      description: '북마크 생성 요청 스키마.
+
+
+        BR-MSG-050: 동일 메시지 중복 북마크 금지.'
+      properties:
+        channel_id:
+          title: Channel Id
+          type: string
+        message_id:
+          title: Message Id
+          type: string
+        note:
+          default: ''
+          title: Note
+          type: string
+        user_id:
+          title: User Id
+          type: string
+      required:
+      - user_id
+      - message_id
+      - channel_id
+      title: BookmarkCreate
+      type: object
+    BookmarkUpdate:
+      description: 북마크 수정 요청 스키마.
+      properties:
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+      title: BookmarkUpdate
+      type: object
+    ChannelCreate:
+      description: '채널 생성 요청 스키마.
+
+
+        BR-MSG-001: 채널명은 2~100자 이내.
+
+        BR-MSG-002: 채널 유형은 public/private/direct 중 하나.'
+      properties:
+        channel_name:
+          maxLength: 100
+          minLength: 2
+          title: Channel Name
+          type: string
+        channel_type:
+          $ref: '#/components/schemas/ChannelType'
+          default: public
+        description:
+          default: ''
+          title: Description
+          type: string
+        members:
+          items:
+            type: string
+          title: Members
+          type: array
+        owner_id:
+          default: ''
+          title: Owner Id
+          type: string
+      required:
+      - channel_name
+      title: ChannelCreate
+      type: object
+    ChannelStatus:
+      description: 채널 상태.
+      enum:
+      - active
+      - archived
+      title: ChannelStatus
+      type: string
+    ChannelType:
+      description: 채널 유형.
+      enum:
+      - public
+      - private
+      - direct
+      title: ChannelType
+      type: string
+    ChannelUpdate:
+      description: 채널 수정 요청 스키마.
+      properties:
+        channel_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Channel Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/ChannelStatus'
+          - type: 'null'
+      title: ChannelUpdate
+      type: object
+    DocStatus:
+      description: 문서 상태 — ERPNext 호환.
+      enum:
+      - 0
+      - 1
+      - 2
+      title: DocStatus
+      type: integer
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    LayoutScope:
+      description: 레이아웃 적용 범위.
+      enum:
+      - global
+      - department
+      - role
+      - personal
+      title: LayoutScope
+      type: string
+    MessageCreate:
+      description: '메시지 생성 요청 스키마.
+
+
+        BR-MSG-010: 메시지 본문은 1~10000자 이내.
+
+        BR-MSG-011: 메시지 유형은 text/file/system/reply 중 하나.
+
+        BR-MSG-012: reply 유형은 parent_message_id가 필수.'
+      properties:
+        channel_id:
+          title: Channel Id
+          type: string
+        content:
+          maxLength: 10000
+          minLength: 1
+          title: Content
+          type: string
+        file_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: File Name
+        file_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: File Url
+        mentions:
+          items:
+            type: string
+          title: Mentions
+          type: array
+        message_type:
+          $ref: '#/components/schemas/MessageType'
+          default: text
+        parent_message_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Parent Message Id
+        sender_id:
+          title: Sender Id
+          type: string
+      required:
+      - channel_id
+      - sender_id
+      - content
+      title: MessageCreate
+      type: object
+    MessageType:
+      description: 메시지 유형.
+      enum:
+      - text
+      - file
+      - system
+      - reply
+      title: MessageType
+      type: string
+    MessageUpdate:
+      description: 메시지 수정 요청 스키마.
+      properties:
+        content:
+          anyOf:
+          - maxLength: 10000
+            minLength: 1
+            type: string
+          - type: 'null'
+          title: Content
+      title: MessageUpdate
+      type: object
+    MobileLayoutConfig:
+      description: '모바일 레이아웃 설정.
+
+
+        BR-PTL-013: 모바일 자동 리플로우 설정.'
+      properties:
+        columns:
+          default: 1
+          description: 모바일 컬럼 수
+          maximum: 4.0
+          minimum: 1.0
+          title: Columns
+          type: integer
+        hide_widgets:
+          description: 모바일에서 숨길 위젯 ID 목록
+          items:
+            type: string
+          title: Hide Widgets
+          type: array
+        stack_order:
+          description: 위젯 스택 순서 (widget_id 목록)
+          items:
+            type: string
+          title: Stack Order
+          type: array
+      title: MobileLayoutConfig
+      type: object
+    NewsEvent:
+      description: 뉴스/이벤트 문서.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        content:
+          default: ''
+          title: Content
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        event_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Event Date
+        event_end_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Event End Date
+        event_type:
+          $ref: '#/components/schemas/NewsEventType'
+          default: news
+        published_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Published At
+        published_by:
+          default: ''
+          title: Published By
+          type: string
+        status:
+          $ref: '#/components/schemas/NewsEventStatus'
+          default: draft
+        summary:
+          default: ''
+          title: Summary
+          type: string
+        tags:
+          items:
+            type: string
+          title: Tags
+          type: array
+        target_departments:
+          items:
+            type: string
+          title: Target Departments
+          type: array
+        tenant_id:
+          title: Tenant Id
+          type: string
+        thumbnail_url:
+          default: ''
+          title: Thumbnail Url
+          type: string
+        title:
+          default: ''
+          title: Title
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        view_count:
+          default: 0
+          title: View Count
+          type: integer
+      title: NewsEvent
+      type: object
+    NewsEventCreate:
+      description: 뉴스/이벤트 생성 요청 스키마.
+      properties:
+        content:
+          description: 내용
+          minLength: 1
+          title: Content
+          type: string
+        event_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: 이벤트 일시
+          title: Event Date
+        event_end_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: 이벤트 종료 일시
+          title: Event End Date
+        event_type:
+          $ref: '#/components/schemas/NewsEventType'
+          default: news
+          description: 유형
+        summary:
+          default: ''
+          description: 요약
+          maxLength: 500
+          title: Summary
+          type: string
+        tags:
+          description: 태그
+          items:
+            type: string
+          title: Tags
+          type: array
+        target_departments:
+          description: 대상 부서 (빈 목록=전체)
+          items:
+            type: string
+          title: Target Departments
+          type: array
+        thumbnail_url:
+          default: ''
+          description: 썸네일 URL
+          title: Thumbnail Url
+          type: string
+        title:
+          description: 제목
+          maxLength: 200
+          minLength: 1
+          title: Title
+          type: string
+      required:
+      - title
+      - content
+      title: NewsEventCreate
+      type: object
+    NewsEventStatus:
+      description: 뉴스/이벤트 상태.
+      enum:
+      - draft
+      - published
+      - archived
+      title: NewsEventStatus
+      type: string
+    NewsEventType:
+      description: 뉴스/이벤트 유형.
+      enum:
+      - news
+      - event
+      - notice
+      title: NewsEventType
+      type: string
+    NewsEventUpdate:
+      description: 뉴스/이벤트 수정 요청 스키마.
+      properties:
+        content:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Content
+        event_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Event Date
+        event_end_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Event End Date
+        event_type:
+          anyOf:
+          - $ref: '#/components/schemas/NewsEventType'
+          - type: 'null'
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/NewsEventStatus'
+          - type: 'null'
+        summary:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Summary
+        tags:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Tags
+        target_departments:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Target Departments
+        thumbnail_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Thumbnail Url
+        title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Title
+      title: NewsEventUpdate
+      type: object
+    Notification:
+      description: '알림 문서.
+
+
+        BR-MSG-020, BR-MSG-021 규칙을 따른다.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        body:
+          default: ''
+          title: Body
+          type: string
+        channel_id:
+          default: ''
+          title: Channel Id
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        is_read:
+          default: false
+          title: Is Read
+          type: boolean
+        notification_type:
+          $ref: '#/components/schemas/NotificationType'
+          default: system
+        reference_id:
+          default: ''
+          title: Reference Id
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        title:
+          default: ''
+          title: Title
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        user_id:
+          default: ''
+          title: User Id
+          type: string
+      title: Notification
+      type: object
+    NotificationCreate:
+      description: '알림 생성 요청 스키마.
+
+
+        BR-MSG-020: 알림 유형은 mention/reply/channel_invite/system 중 하나.'
+      properties:
+        body:
+          default: ''
+          title: Body
+          type: string
+        channel_id:
+          default: ''
+          title: Channel Id
+          type: string
+        notification_type:
+          $ref: '#/components/schemas/NotificationType'
+        reference_id:
+          default: ''
+          title: Reference Id
+          type: string
+        title:
+          default: ''
+          title: Title
+          type: string
+        user_id:
+          title: User Id
+          type: string
+      required:
+      - user_id
+      - notification_type
+      title: NotificationCreate
+      type: object
+    NotificationType:
+      description: 알림 유형.
+      enum:
+      - mention
+      - reply
+      - channel_invite
+      - system
+      title: NotificationType
+      type: string
+    NotificationUpdate:
+      description: 알림 수정 요청 스키마.
+      properties:
+        is_read:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Read
+      title: NotificationUpdate
+      type: object
+    PaginatedResponse_AnnouncementRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/AnnouncementRead'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[AnnouncementRead]
+      type: object
+    PaginatedResponse_Announcement_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Announcement'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[Announcement]
+      type: object
+    PaginatedResponse_Bookmark_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Bookmark'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[Bookmark]
+      type: object
+    PaginatedResponse_NewsEvent_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/NewsEvent'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[NewsEvent]
+      type: object
+    PaginatedResponse_Notification_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Notification'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[Notification]
+      type: object
+    PaginatedResponse_PersonalDashboard_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/PersonalDashboard'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[PersonalDashboard]
+      type: object
+    PaginatedResponse_PortalLayout_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/PortalLayout'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[PortalLayout]
+      type: object
+    PaginatedResponse_SearchIndex_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/SearchIndex'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[SearchIndex]
+      type: object
+    PaginatedResponse_Shortcut_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Shortcut'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[Shortcut]
+      type: object
+    PaginatedResponse_Thread_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Thread'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[Thread]
+      type: object
+    PaginatedResponse_UserPresence_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/UserPresence'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[UserPresence]
+      type: object
+    PaginatedResponse_WidgetConfig_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/WidgetConfig'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[WidgetConfig]
+      type: object
+    PaginatedResponse_Widget_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Widget'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[Widget]
+      type: object
+    PersonalDashboard:
+      description: 개인 대시보드 문서.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        base_layout_id:
+          default: ''
+          title: Base Layout Id
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        dashboard_name:
+          default: 내 대시보드
+          title: Dashboard Name
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        preferences:
+          additionalProperties: true
+          title: Preferences
+          type: object
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        user_id:
+          default: ''
+          title: User Id
+          type: string
+        widgets:
+          items:
+            $ref: '#/components/schemas/WidgetPlacement'
+          title: Widgets
+          type: array
+      title: PersonalDashboard
+      type: object
+    PersonalDashboardCreate:
+      description: 개인 대시보드 생성 요청 스키마.
+      properties:
+        dashboard_name:
+          default: 내 대시보드
+          description: 대시보드 이름
+          maxLength: 100
+          title: Dashboard Name
+          type: string
+        preferences:
+          additionalProperties: true
+          description: 개인 설정
+          title: Preferences
+          type: object
+        user_id:
+          default: ''
+          description: 사용자 ID (서버에서 설정)
+          title: User Id
+          type: string
+        widgets:
+          description: 위젯 배치 목록
+          items:
+            $ref: '#/components/schemas/WidgetPlacement'
+          title: Widgets
+          type: array
+      title: PersonalDashboardCreate
+      type: object
+    PersonalDashboardUpdate:
+      description: 개인 대시보드 수정 요청 스키마.
+      properties:
+        dashboard_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Dashboard Name
+        preferences:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Preferences
+        widgets:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/WidgetPlacement'
+            type: array
+          - type: 'null'
+          title: Widgets
+      title: PersonalDashboardUpdate
+      type: object
+    PortalLayout:
+      description: '포털 레이아웃 문서.
+
+
+        BR-PTL-001: 4단계 상속 (글로벌→부서→역할→개인).
+
+        BR-PTL-002: 최대 50개 위젯.
+
+        BR-PTL-010: 잠금 시 수정 불가.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        grid_columns:
+          default: 12
+          title: Grid Columns
+          type: integer
+        grid_row_height:
+          default: 80
+          title: Grid Row Height
+          type: integer
+        is_locked:
+          default: false
+          title: Is Locked
+          type: boolean
+        layout_name:
+          default: ''
+          title: Layout Name
+          type: string
+        mobile_config:
+          $ref: '#/components/schemas/MobileLayoutConfig'
+        parent_layout_id:
+          default: ''
+          title: Parent Layout Id
+          type: string
+        scope:
+          $ref: '#/components/schemas/LayoutScope'
+          default: global
+        scope_value:
+          default: ''
+          title: Scope Value
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        theme:
+          $ref: '#/components/schemas/ThemeConfig'
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        widgets:
+          items:
+            $ref: '#/components/schemas/WidgetPlacement'
+          title: Widgets
+          type: array
+      title: PortalLayout
+      type: object
+    PortalLayoutCreate:
+      description: 포털 레이아웃 생성 요청 스키마.
+      properties:
+        grid_columns:
+          default: 12
+          description: 그리드 컬럼 수 (1~24)
+          maximum: 24.0
+          minimum: 1.0
+          title: Grid Columns
+          type: integer
+        grid_row_height:
+          default: 80
+          description: 그리드 행 높이 (40~200px)
+          maximum: 200.0
+          minimum: 40.0
+          title: Grid Row Height
+          type: integer
+        is_locked:
+          default: false
+          description: 레이아웃 잠금 여부
+          title: Is Locked
+          type: boolean
+        layout_name:
+          description: 레이아웃 이름
+          maxLength: 100
+          minLength: 1
+          title: Layout Name
+          type: string
+        mobile_config:
+          $ref: '#/components/schemas/MobileLayoutConfig'
+          description: 모바일 레이아웃 설정
+        parent_layout_id:
+          default: ''
+          description: 상위 레이아웃 ID (상속)
+          title: Parent Layout Id
+          type: string
+        scope:
+          $ref: '#/components/schemas/LayoutScope'
+          default: global
+          description: 적용 범위
+        scope_value:
+          default: ''
+          description: 범위 값 (부서 ID, 역할명 등)
+          title: Scope Value
+          type: string
+        theme:
+          $ref: '#/components/schemas/ThemeConfig'
+          description: 테마 설정
+        widgets:
+          description: 위젯 배치 목록
+          items:
+            $ref: '#/components/schemas/WidgetPlacement'
+          title: Widgets
+          type: array
+      required:
+      - layout_name
+      title: PortalLayoutCreate
+      type: object
+    PortalLayoutUpdate:
+      description: 포털 레이아웃 수정 요청 스키마.
+      properties:
+        grid_columns:
+          anyOf:
+          - maximum: 24.0
+            minimum: 1.0
+            type: integer
+          - type: 'null'
+          title: Grid Columns
+        grid_row_height:
+          anyOf:
+          - maximum: 200.0
+            minimum: 40.0
+            type: integer
+          - type: 'null'
+          title: Grid Row Height
+        is_locked:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Locked
+        layout_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Layout Name
+        mobile_config:
+          anyOf:
+          - $ref: '#/components/schemas/MobileLayoutConfig'
+          - type: 'null'
+        parent_layout_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Parent Layout Id
+        scope:
+          anyOf:
+          - $ref: '#/components/schemas/LayoutScope'
+          - type: 'null'
+        scope_value:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Scope Value
+        theme:
+          anyOf:
+          - $ref: '#/components/schemas/ThemeConfig'
+          - type: 'null'
+        widgets:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/WidgetPlacement'
+            type: array
+          - type: 'null'
+          title: Widgets
+      title: PortalLayoutUpdate
+      type: object
+    PresenceStatus:
+      description: 프레즌스 상태.
+      enum:
+      - online
+      - offline
+      - away
+      - dnd
+      title: PresenceStatus
+      type: string
+    SearchIndex:
+      description: '검색 인덱스 문서.
+
+
+        BR-PTL-009: 사용자 권한에 따라 검색 결과를 필터링한다.
+
+        BR-PTL-015: 2자 이상 입력 시 자동완성을 제공한다.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        content:
+          default: ''
+          title: Content
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        doc_id:
+          default: ''
+          title: Doc Id
+          type: string
+        doc_type:
+          default: ''
+          title: Doc Type
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        keywords:
+          items:
+            type: string
+          title: Keywords
+          type: array
+        module:
+          default: ''
+          title: Module
+          type: string
+        required_permission:
+          default: ''
+          title: Required Permission
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        title:
+          default: ''
+          title: Title
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        url:
+          default: ''
+          title: Url
+          type: string
+      title: SearchIndex
+      type: object
+    SearchIndexCreate:
+      description: 검색 인덱스 생성 요청 스키마.
+      properties:
+        content:
+          default: ''
+          description: 검색 내용
+          title: Content
+          type: string
+        doc_id:
+          description: 원본 문서 ID
+          title: Doc Id
+          type: string
+        doc_type:
+          description: '문서 유형 (예: sales_order, employee)'
+          title: Doc Type
+          type: string
+        keywords:
+          description: 검색 키워드
+          items:
+            type: string
+          title: Keywords
+          type: array
+        module:
+          default: ''
+          description: 소속 모듈
+          title: Module
+          type: string
+        required_permission:
+          default: ''
+          description: 필요 권한
+          title: Required Permission
+          type: string
+        title:
+          description: 검색 제목
+          title: Title
+          type: string
+        url:
+          default: ''
+          description: 이동 URL
+          title: Url
+          type: string
+      required:
+      - doc_type
+      - doc_id
+      - title
+      title: SearchIndexCreate
+      type: object
+    SearchIndexUpdate:
+      description: 검색 인덱스 수정 요청 스키마.
+      properties:
+        content:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Content
+        keywords:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Keywords
+        title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Title
+        url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Url
+      title: SearchIndexUpdate
+      type: object
+    Shortcut:
+      description: '바로가기 문서.
+
+
+        BR-PTL-003: 사용자당 최대 20개 제한.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        click_count:
+          default: 0
+          title: Click Count
+          type: integer
+        color:
+          default: '#1976D2'
+          title: Color
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        icon:
+          default: link
+          title: Icon
+          type: string
+        shortcut_name:
+          default: ''
+          title: Shortcut Name
+          type: string
+        sort_order:
+          default: 0
+          title: Sort Order
+          type: integer
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        url:
+          default: ''
+          title: Url
+          type: string
+        user_id:
+          default: ''
+          title: User Id
+          type: string
+      title: Shortcut
+      type: object
+    ShortcutCreate:
+      description: 바로가기 생성 요청 스키마.
+      properties:
+        color:
+          default: '#1976D2'
+          description: 아이콘 색상
+          title: Color
+          type: string
+        icon:
+          default: link
+          description: 아이콘 이름
+          title: Icon
+          type: string
+        shortcut_name:
+          description: 바로가기 이름
+          maxLength: 50
+          minLength: 1
+          title: Shortcut Name
+          type: string
+        sort_order:
+          default: 0
+          description: 정렬 순서
+          minimum: 0.0
+          title: Sort Order
+          type: integer
+        url:
+          description: 대상 URL
+          maxLength: 500
+          minLength: 1
+          title: Url
+          type: string
+        user_id:
+          default: ''
+          description: 사용자 ID (서버에서 설정)
+          title: User Id
+          type: string
+      required:
+      - shortcut_name
+      - url
+      title: ShortcutCreate
+      type: object
+    ShortcutUpdate:
+      description: 바로가기 수정 요청 스키마.
+      properties:
+        color:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Color
+        icon:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Icon
+        shortcut_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Shortcut Name
+        sort_order:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Sort Order
+        url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Url
+      title: ShortcutUpdate
+      type: object
+    ThemeConfig:
+      description: 테마 설정.
+      properties:
+        background_color:
+          default: '#FFFFFF'
+          description: 배경 색상
+          title: Background Color
+          type: string
+        dark_mode:
+          default: false
+          description: 다크 모드 여부
+          title: Dark Mode
+          type: boolean
+        font_family:
+          default: Pretendard
+          description: 폰트 패밀리
+          title: Font Family
+          type: string
+        primary_color:
+          default: '#1976D2'
+          description: 주 색상
+          title: Primary Color
+          type: string
+      title: ThemeConfig
+      type: object
+    Thread:
+      description: '스레드 문서.
+
+
+        BR-MSG-030, BR-MSG-031 규칙을 따른다.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        channel_id:
+          default: ''
+          title: Channel Id
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        last_reply_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Last Reply At
+        participants:
+          items:
+            type: string
+          title: Participants
+          type: array
+        reply_count:
+          default: 0
+          title: Reply Count
+          type: integer
+        root_message_id:
+          default: ''
+          title: Root Message Id
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: Thread
+      type: object
+    ThreadCreate:
+      description: '스레드 생성 요청 스키마.
+
+
+        BR-MSG-030: root_message_id는 필수.'
+      properties:
+        channel_id:
+          title: Channel Id
+          type: string
+        participants:
+          items:
+            type: string
+          title: Participants
+          type: array
+        root_message_id:
+          title: Root Message Id
+          type: string
+      required:
+      - channel_id
+      - root_message_id
+      title: ThreadCreate
+      type: object
+    ThreadUpdate:
+      description: 스레드 수정 요청 스키마.
+      properties:
+        participants:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Participants
+      title: ThreadUpdate
+      type: object
+    UserPresence:
+      description: '사용자 프레즌스 문서.
+
+
+        BR-MSG-040, BR-MSG-041 규칙을 따른다.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        last_seen_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Last Seen At
+        status:
+          $ref: '#/components/schemas/PresenceStatus'
+          default: offline
+        status_message:
+          default: ''
+          title: Status Message
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        user_id:
+          default: ''
+          title: User Id
+          type: string
+      title: UserPresence
+      type: object
+    UserPresenceCreate:
+      description: '프레즌스 생성 요청 스키마.
+
+
+        BR-MSG-040: 상태는 online/offline/away/dnd 중 하나.
+
+        BR-MSG-041: 상태 메시지는 200자 이내.'
+      properties:
+        status:
+          $ref: '#/components/schemas/PresenceStatus'
+          default: online
+        status_message:
+          default: ''
+          maxLength: 200
+          title: Status Message
+          type: string
+        user_id:
+          title: User Id
+          type: string
+      required:
+      - user_id
+      title: UserPresenceCreate
+      type: object
+    UserPresenceUpdate:
+      description: 프레즌스 수정 요청 스키마.
+      properties:
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/PresenceStatus'
+          - type: 'null'
+        status_message:
+          anyOf:
+          - maxLength: 200
+            type: string
+          - type: 'null'
+          title: Status Message
+      title: UserPresenceUpdate
+      type: object
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    Widget:
+      description: '위젯 문서.
+
+
+        BR-PTL-007: 모듈 의존성에 따라 위젯 활성화 여부 결정.
+
+        BR-PTL-008: 권한 기반 위젯 표시 필터링.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        data_source:
+          $ref: '#/components/schemas/WidgetDataSource'
+        description:
+          default: ''
+          title: Description
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        is_active:
+          default: true
+          title: Is Active
+          type: boolean
+        refresh_interval:
+          default: 300
+          title: Refresh Interval
+          type: integer
+        required_module:
+          default: ''
+          title: Required Module
+          type: string
+        required_permission:
+          default: ''
+          title: Required Permission
+          type: string
+        size:
+          $ref: '#/components/schemas/WidgetSize'
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        widget_code:
+          default: ''
+          title: Widget Code
+          type: string
+        widget_name:
+          default: ''
+          title: Widget Name
+          type: string
+        widget_type:
+          $ref: '#/components/schemas/WidgetType'
+          default: custom
+      title: Widget
+      type: object
+    WidgetConfig:
+      description: '위젯 설정 문서.
+
+
+        사용자별로 위젯의 개인화 설정을 관리한다.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        config_data:
+          additionalProperties: true
+          title: Config Data
+          type: object
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        custom_title:
+          default: ''
+          title: Custom Title
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        is_collapsed:
+          default: false
+          title: Is Collapsed
+          type: boolean
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        user_id:
+          default: ''
+          title: User Id
+          type: string
+        widget_id:
+          default: ''
+          title: Widget Id
+          type: string
+      title: WidgetConfig
+      type: object
+    WidgetConfigCreate:
+      description: 위젯 설정 생성 요청 스키마.
+      properties:
+        config_data:
+          additionalProperties: true
+          description: 커스텀 설정 데이터
+          title: Config Data
+          type: object
+        custom_title:
+          default: ''
+          description: 커스텀 제목
+          title: Custom Title
+          type: string
+        is_collapsed:
+          default: false
+          description: 접힘 여부
+          title: Is Collapsed
+          type: boolean
+        user_id:
+          description: 사용자 ID
+          title: User Id
+          type: string
+        widget_id:
+          description: 위젯 ID
+          title: Widget Id
+          type: string
+      required:
+      - widget_id
+      - user_id
+      title: WidgetConfigCreate
+      type: object
+    WidgetConfigUpdate:
+      description: 위젯 설정 수정 요청 스키마.
+      properties:
+        config_data:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Config Data
+        custom_title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Title
+        is_collapsed:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Collapsed
+      title: WidgetConfigUpdate
+      type: object
+    WidgetCreate:
+      description: 위젯 생성 요청 스키마.
+      properties:
+        data_source:
+          $ref: '#/components/schemas/WidgetDataSource'
+          description: 데이터 소스 설정
+        description:
+          default: ''
+          description: 위젯 설명
+          title: Description
+          type: string
+        is_active:
+          default: true
+          description: 활성 여부
+          title: Is Active
+          type: boolean
+        refresh_interval:
+          default: 300
+          description: 자동 갱신 주기 (30~3600초)
+          maximum: 3600.0
+          minimum: 30.0
+          title: Refresh Interval
+          type: integer
+        required_module:
+          default: ''
+          description: 필요 모듈
+          title: Required Module
+          type: string
+        required_permission:
+          default: ''
+          description: 필요 권한
+          title: Required Permission
+          type: string
+        size:
+          $ref: '#/components/schemas/WidgetSize'
+          description: 크기 설정
+        widget_code:
+          description: 위젯 코드 (WGT-XXX 패턴)
+          maxLength: 34
+          minLength: 7
+          title: Widget Code
+          type: string
+        widget_name:
+          description: 위젯 표시명
+          maxLength: 100
+          minLength: 1
+          title: Widget Name
+          type: string
+        widget_type:
+          $ref: '#/components/schemas/WidgetType'
+          default: custom
+          description: 위젯 유형
+      required:
+      - widget_code
+      - widget_name
+      title: WidgetCreate
+      type: object
+    WidgetDataSource:
+      description: 위젯 데이터 소스 설정.
+      properties:
+        endpoint:
+          default: ''
+          description: API 엔드포인트
+          title: Endpoint
+          type: string
+        method:
+          default: GET
+          description: HTTP 메서드
+          title: Method
+          type: string
+        module:
+          default: ''
+          description: 의존 모듈명
+          title: Module
+          type: string
+        params:
+          additionalProperties:
+            type: string
+          description: 요청 파라미터
+          title: Params
+          type: object
+        source_type:
+          default: api
+          description: 소스 유형 (api, query, static)
+          title: Source Type
+          type: string
+      title: WidgetDataSource
+      type: object
+    WidgetPlacement:
+      description: 위젯 배치 정보 — 그리드 내 위치와 크기.
+      properties:
+        grid_h:
+          default: 4
+          description: 그리드 높이
+          minimum: 1.0
+          title: Grid H
+          type: integer
+        grid_w:
+          default: 4
+          description: 그리드 너비 (1~24)
+          maximum: 24.0
+          minimum: 1.0
+          title: Grid W
+          type: integer
+        grid_x:
+          default: 0
+          description: 그리드 X 좌표
+          minimum: 0.0
+          title: Grid X
+          type: integer
+        grid_y:
+          default: 0
+          description: 그리드 Y 좌표
+          minimum: 0.0
+          title: Grid Y
+          type: integer
+        is_visible:
+          default: true
+          description: 표시 여부
+          title: Is Visible
+          type: boolean
+        widget_id:
+          description: 위젯 ID 참조
+          title: Widget Id
+          type: string
+      required:
+      - widget_id
+      title: WidgetPlacement
+      type: object
+    WidgetSize:
+      description: 위젯 기본 크기.
+      properties:
+        default_h:
+          default: 4
+          description: 기본 높이
+          minimum: 1.0
+          title: Default H
+          type: integer
+        default_w:
+          default: 4
+          description: 기본 너비
+          minimum: 1.0
+          title: Default W
+          type: integer
+        max_h:
+          default: 12
+          description: 최대 높이
+          minimum: 1.0
+          title: Max H
+          type: integer
+        max_w:
+          default: 24
+          description: 최대 너비
+          minimum: 1.0
+          title: Max W
+          type: integer
+        min_h:
+          default: 2
+          description: 최소 높이
+          minimum: 1.0
+          title: Min H
+          type: integer
+        min_w:
+          default: 2
+          description: 최소 너비
+          minimum: 1.0
+          title: Min W
+          type: integer
+      title: WidgetSize
+      type: object
+    WidgetType:
+      description: 위젯 유형.
+      enum:
+      - chart
+      - table
+      - kpi
+      - list
+      - calendar
+      - shortcut
+      - announcement
+      - custom
+      title: WidgetType
+      type: string
+    WidgetUpdate:
+      description: 위젯 수정 요청 스키마.
+      properties:
+        data_source:
+          anyOf:
+          - $ref: '#/components/schemas/WidgetDataSource'
+          - type: 'null'
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        is_active:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Active
+        refresh_interval:
+          anyOf:
+          - maximum: 3600.0
+            minimum: 30.0
+            type: integer
+          - type: 'null'
+          title: Refresh Interval
+        required_module:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Required Module
+        required_permission:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Required Permission
+        size:
+          anyOf:
+          - $ref: '#/components/schemas/WidgetSize'
+          - type: 'null'
+        widget_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Widget Name
+        widget_type:
+          anyOf:
+          - $ref: '#/components/schemas/WidgetType'
+          - type: 'null'
+      title: WidgetUpdate
+      type: object
+info:
+  contact:
+    name: OneERP 개발팀
+  description: OneERP Portal-core 서비스 REST API
+  license:
+    name: Proprietary
+  title: OneERP Portal-core API
+  version: 0.1.0
+openapi: 3.1.0
+paths:
+  /api/v1/announcement-reads:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: announcement_read_목록_api_v1_announcement_reads_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_AnnouncementRead_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Announcement Read 목록
+      tags:
+      - 공지사항 읽음
+    post:
+      description: 엔티티를 생성한다.
+      operationId: announcement_read_생성_api_v1_announcement_reads_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnnouncementReadCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Announcement Read 생성 Api V1 Announcement Reads Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Announcement Read 생성
+      tags:
+      - 공지사항 읽음
+  /api/v1/announcement-reads/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: announcement_read_삭제_api_v1_announcement_reads__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Announcement Read 삭제
+      tags:
+      - 공지사항 읽음
+    get:
+      description: 엔티티를 조회한다.
+      operationId: announcement_read_조회_api_v1_announcement_reads__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Announcement Read 조회 Api V1 Announcement Reads  Doc
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Announcement Read 조회
+      tags:
+      - 공지사항 읽음
+    put:
+      description: 엔티티를 수정한다.
+      operationId: announcement_read_수정_api_v1_announcement_reads__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnnouncementReadUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Announcement Read 수정 Api V1 Announcement Reads  Doc
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Announcement Read 수정
+      tags:
+      - 공지사항 읽음
+  /api/v1/announcement-reads/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: announcement_read_취소_api_v1_announcement_reads__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Announcement Read 취소 Api V1 Announcement Reads  Doc
+                  Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Announcement Read 취소
+      tags:
+      - 공지사항 읽음
+  /api/v1/announcement-reads/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: announcement_read_제출_api_v1_announcement_reads__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Announcement Read 제출 Api V1 Announcement Reads  Doc
+                  Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Announcement Read 제출
+      tags:
+      - 공지사항 읽음
+  /api/v1/announcements:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: announcement_목록_api_v1_announcements_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_Announcement_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Announcement 목록
+      tags:
+      - 공지사항
+    post:
+      description: 엔티티를 생성한다.
+      operationId: announcement_생성_api_v1_announcements_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnnouncementCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Announcement 생성 Api V1 Announcements Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Announcement 생성
+      tags:
+      - 공지사항
+  /api/v1/announcements/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: announcement_삭제_api_v1_announcements__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Announcement 삭제
+      tags:
+      - 공지사항
+    get:
+      description: 엔티티를 조회한다.
+      operationId: announcement_조회_api_v1_announcements__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Announcement 조회 Api V1 Announcements  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Announcement 조회
+      tags:
+      - 공지사항
+    put:
+      description: 엔티티를 수정한다.
+      operationId: announcement_수정_api_v1_announcements__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnnouncementUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Announcement 수정 Api V1 Announcements  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Announcement 수정
+      tags:
+      - 공지사항
+  /api/v1/announcements/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: announcement_취소_api_v1_announcements__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Announcement 취소 Api V1 Announcements  Doc Id  Cancel
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Announcement 취소
+      tags:
+      - 공지사항
+  /api/v1/announcements/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: announcement_제출_api_v1_announcements__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Announcement 제출 Api V1 Announcements  Doc Id  Submit
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Announcement 제출
+      tags:
+      - 공지사항
+  /api/v1/bookmarks:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: bookmark_목록_api_v1_bookmarks_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_Bookmark_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Bookmark 목록
+      tags:
+      - 북마크
+    post:
+      description: 엔티티를 생성한다.
+      operationId: bookmark_생성_api_v1_bookmarks_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookmarkCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Bookmark 생성 Api V1 Bookmarks Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Bookmark 생성
+      tags:
+      - 북마크
+  /api/v1/bookmarks/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: bookmark_삭제_api_v1_bookmarks__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Bookmark 삭제
+      tags:
+      - 북마크
+    get:
+      description: 엔티티를 조회한다.
+      operationId: bookmark_조회_api_v1_bookmarks__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Bookmark 조회 Api V1 Bookmarks  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Bookmark 조회
+      tags:
+      - 북마크
+    put:
+      description: 엔티티를 수정한다.
+      operationId: bookmark_수정_api_v1_bookmarks__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookmarkUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Bookmark 수정 Api V1 Bookmarks  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Bookmark 수정
+      tags:
+      - 북마크
+  /api/v1/bookmarks/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: bookmark_취소_api_v1_bookmarks__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Bookmark 취소 Api V1 Bookmarks  Doc Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Bookmark 취소
+      tags:
+      - 북마크
+  /api/v1/bookmarks/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: bookmark_제출_api_v1_bookmarks__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Bookmark 제출 Api V1 Bookmarks  Doc Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Bookmark 제출
+      tags:
+      - 북마크
+  /api/v1/channels/:
+    get:
+      description: 채널 목록을 페이지네이션으로 조회한다.
+      operationId: list_channels_api_v1_channels__get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response List Channels Api V1 Channels  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: List Channels
+      tags:
+      - 채널
+    post:
+      description: 채널을 생성한다.
+      operationId: create_channel_api_v1_channels__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChannelCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Create Channel Api V1 Channels  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create Channel
+      tags:
+      - 채널
+  /api/v1/channels/{doc_id}:
+    delete:
+      description: 채널을 삭제한다.
+      operationId: delete_channel_api_v1_channels__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Delete Channel Api V1 Channels  Doc Id  Delete
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Delete Channel
+      tags:
+      - 채널
+    get:
+      description: 채널 상세 정보를 조회한다.
+      operationId: get_channel_api_v1_channels__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Get Channel Api V1 Channels  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Channel
+      tags:
+      - 채널
+    put:
+      description: 채널을 수정한다.
+      operationId: update_channel_api_v1_channels__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChannelUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Update Channel Api V1 Channels  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Update Channel
+      tags:
+      - 채널
+  /api/v1/messages/:
+    get:
+      description: 메시지 목록을 페이지네이션으로 조회한다.
+      operationId: list_messages_api_v1_messages__get
+      parameters:
+      - in: query
+        name: channel_id
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Channel Id
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 50
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response List Messages Api V1 Messages  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: List Messages
+      tags:
+      - 메시지
+    post:
+      description: 메시지를 생성한다.
+      operationId: create_message_api_v1_messages__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Create Message Api V1 Messages  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create Message
+      tags:
+      - 메시지
+  /api/v1/messages/{doc_id}:
+    delete:
+      description: 메시지를 삭제한다.
+      operationId: delete_message_api_v1_messages__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Delete Message Api V1 Messages  Doc Id  Delete
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Delete Message
+      tags:
+      - 메시지
+    get:
+      description: 메시지 상세 정보를 조회한다.
+      operationId: get_message_api_v1_messages__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Get Message Api V1 Messages  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Message
+      tags:
+      - 메시지
+    put:
+      description: 메시지를 수정한다.
+      operationId: update_message_api_v1_messages__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Update Message Api V1 Messages  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Update Message
+      tags:
+      - 메시지
+  /api/v1/news-events:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: news_event_목록_api_v1_news_events_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_NewsEvent_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: News Event 목록
+      tags:
+      - 뉴스/이벤트
+    post:
+      description: 엔티티를 생성한다.
+      operationId: news_event_생성_api_v1_news_events_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewsEventCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response News Event 생성 Api V1 News Events Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: News Event 생성
+      tags:
+      - 뉴스/이벤트
+  /api/v1/news-events/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: news_event_삭제_api_v1_news_events__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: News Event 삭제
+      tags:
+      - 뉴스/이벤트
+    get:
+      description: 엔티티를 조회한다.
+      operationId: news_event_조회_api_v1_news_events__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response News Event 조회 Api V1 News Events  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: News Event 조회
+      tags:
+      - 뉴스/이벤트
+    put:
+      description: 엔티티를 수정한다.
+      operationId: news_event_수정_api_v1_news_events__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewsEventUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response News Event 수정 Api V1 News Events  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: News Event 수정
+      tags:
+      - 뉴스/이벤트
+  /api/v1/news-events/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: news_event_취소_api_v1_news_events__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response News Event 취소 Api V1 News Events  Doc Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: News Event 취소
+      tags:
+      - 뉴스/이벤트
+  /api/v1/news-events/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: news_event_제출_api_v1_news_events__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response News Event 제출 Api V1 News Events  Doc Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: News Event 제출
+      tags:
+      - 뉴스/이벤트
+  /api/v1/notifications:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: notification_목록_api_v1_notifications_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_Notification_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Notification 목록
+      tags:
+      - 알림
+    post:
+      description: 엔티티를 생성한다.
+      operationId: notification_생성_api_v1_notifications_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Notification 생성 Api V1 Notifications Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Notification 생성
+      tags:
+      - 알림
+  /api/v1/notifications/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: notification_삭제_api_v1_notifications__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Notification 삭제
+      tags:
+      - 알림
+    get:
+      description: 엔티티를 조회한다.
+      operationId: notification_조회_api_v1_notifications__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Notification 조회 Api V1 Notifications  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Notification 조회
+      tags:
+      - 알림
+    put:
+      description: 엔티티를 수정한다.
+      operationId: notification_수정_api_v1_notifications__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Notification 수정 Api V1 Notifications  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Notification 수정
+      tags:
+      - 알림
+  /api/v1/notifications/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: notification_취소_api_v1_notifications__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Notification 취소 Api V1 Notifications  Doc Id  Cancel
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Notification 취소
+      tags:
+      - 알림
+  /api/v1/notifications/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: notification_제출_api_v1_notifications__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Notification 제출 Api V1 Notifications  Doc Id  Submit
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Notification 제출
+      tags:
+      - 알림
+  /api/v1/personal-dashboards:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: personal_dashboard_목록_api_v1_personal_dashboards_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_PersonalDashboard_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Personal Dashboard 목록
+      tags:
+      - 개인 대시보드
+    post:
+      description: 엔티티를 생성한다.
+      operationId: personal_dashboard_생성_api_v1_personal_dashboards_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonalDashboardCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Personal Dashboard 생성 Api V1 Personal Dashboards Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Personal Dashboard 생성
+      tags:
+      - 개인 대시보드
+  /api/v1/personal-dashboards/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: personal_dashboard_삭제_api_v1_personal_dashboards__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Personal Dashboard 삭제
+      tags:
+      - 개인 대시보드
+    get:
+      description: 엔티티를 조회한다.
+      operationId: personal_dashboard_조회_api_v1_personal_dashboards__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Personal Dashboard 조회 Api V1 Personal Dashboards  Doc
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Personal Dashboard 조회
+      tags:
+      - 개인 대시보드
+    put:
+      description: 엔티티를 수정한다.
+      operationId: personal_dashboard_수정_api_v1_personal_dashboards__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonalDashboardUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Personal Dashboard 수정 Api V1 Personal Dashboards  Doc
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Personal Dashboard 수정
+      tags:
+      - 개인 대시보드
+  /api/v1/personal-dashboards/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: personal_dashboard_취소_api_v1_personal_dashboards__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Personal Dashboard 취소 Api V1 Personal Dashboards  Doc
+                  Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Personal Dashboard 취소
+      tags:
+      - 개인 대시보드
+  /api/v1/personal-dashboards/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: personal_dashboard_제출_api_v1_personal_dashboards__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Personal Dashboard 제출 Api V1 Personal Dashboards  Doc
+                  Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Personal Dashboard 제출
+      tags:
+      - 개인 대시보드
+  /api/v1/portal-layouts:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: portal_layout_목록_api_v1_portal_layouts_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_PortalLayout_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Portal Layout 목록
+      tags:
+      - 포털 레이아웃
+    post:
+      description: 엔티티를 생성한다.
+      operationId: portal_layout_생성_api_v1_portal_layouts_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PortalLayoutCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Portal Layout 생성 Api V1 Portal Layouts Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Portal Layout 생성
+      tags:
+      - 포털 레이아웃
+  /api/v1/portal-layouts/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: portal_layout_삭제_api_v1_portal_layouts__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Portal Layout 삭제
+      tags:
+      - 포털 레이아웃
+    get:
+      description: 엔티티를 조회한다.
+      operationId: portal_layout_조회_api_v1_portal_layouts__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Portal Layout 조회 Api V1 Portal Layouts  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Portal Layout 조회
+      tags:
+      - 포털 레이아웃
+    put:
+      description: 엔티티를 수정한다.
+      operationId: portal_layout_수정_api_v1_portal_layouts__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PortalLayoutUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Portal Layout 수정 Api V1 Portal Layouts  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Portal Layout 수정
+      tags:
+      - 포털 레이아웃
+  /api/v1/portal/admin/announcements:
+    post:
+      description: 공지사항을 생성한다.
+      operationId: create_announcement_api_v1_portal_admin_announcements_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: true
+              title: Body
+              type: object
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Create Announcement Api V1 Portal Admin Announcements
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create Announcement
+      tags:
+      - 사내 포털
+  /api/v1/portal/admin/announcements/{announcement_id}/archive:
+    post:
+      description: 공지사항을 보관 처리한다.
+      operationId: archive_announcement_api_v1_portal_admin_announcements__announcement_id__archive_post
+      parameters:
+      - in: path
+        name: announcement_id
+        required: true
+        schema:
+          title: Announcement Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Archive Announcement Api V1 Portal Admin Announcements  Announcement
+                  Id  Archive Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Archive Announcement
+      tags:
+      - 사내 포털
+  /api/v1/portal/admin/announcements/{announcement_id}/expire:
+    post:
+      description: 공지사항을 만료 처리한다.
+      operationId: expire_announcement_api_v1_portal_admin_announcements__announcement_id__expire_post
+      parameters:
+      - in: path
+        name: announcement_id
+        required: true
+        schema:
+          title: Announcement Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Expire Announcement Api V1 Portal Admin Announcements  Announcement
+                  Id  Expire Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Expire Announcement
+      tags:
+      - 사내 포털
+  /api/v1/portal/admin/announcements/{announcement_id}/publish:
+    post:
+      description: 공지사항을 활성화한다 (draft → active).
+      operationId: publish_announcement_api_v1_portal_admin_announcements__announcement_id__publish_post
+      parameters:
+      - in: path
+        name: announcement_id
+        required: true
+        schema:
+          title: Announcement Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Publish Announcement Api V1 Portal Admin Announcements  Announcement
+                  Id  Publish Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Publish Announcement
+      tags:
+      - 사내 포털
+  /api/v1/portal/admin/layouts:
+    get:
+      description: 관리자 레이아웃 목록을 조회한다.
+      operationId: list_layouts_api_v1_portal_admin_layouts_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response List Layouts Api V1 Portal Admin Layouts Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: List Layouts
+      tags:
+      - 사내 포털
+    post:
+      description: 관리자 레이아웃을 생성한다.
+      operationId: create_layout_api_v1_portal_admin_layouts_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: true
+              title: Body
+              type: object
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Create Layout Api V1 Portal Admin Layouts Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create Layout
+      tags:
+      - 사내 포털
+  /api/v1/portal/admin/layouts/{layout_id}:
+    delete:
+      description: 레이아웃을 삭제한다.
+      operationId: delete_layout_api_v1_portal_admin_layouts__layout_id__delete
+      parameters:
+      - in: path
+        name: layout_id
+        required: true
+        schema:
+          title: Layout Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Delete Layout
+      tags:
+      - 사내 포털
+    get:
+      description: 레이아웃 상세를 조회한다.
+      operationId: get_layout_api_v1_portal_admin_layouts__layout_id__get
+      parameters:
+      - in: path
+        name: layout_id
+        required: true
+        schema:
+          title: Layout Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Get Layout Api V1 Portal Admin Layouts  Layout Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Layout
+      tags:
+      - 사내 포털
+    put:
+      description: 레이아웃을 수정한다 (BR-PTL-010 잠금 확인).
+      operationId: update_layout_api_v1_portal_admin_layouts__layout_id__put
+      parameters:
+      - in: path
+        name: layout_id
+        required: true
+        schema:
+          title: Layout Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: true
+              title: Body
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Update Layout Api V1 Portal Admin Layouts  Layout
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Update Layout
+      tags:
+      - 사내 포털
+  /api/v1/portal/admin/news:
+    post:
+      description: 뉴스/이벤트를 생성한다.
+      operationId: create_news_api_v1_portal_admin_news_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: true
+              title: Body
+              type: object
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Create News Api V1 Portal Admin News Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create News
+      tags:
+      - 사내 포털
+  /api/v1/portal/admin/news/{news_id}/archive:
+    post:
+      description: 뉴스/이벤트를 보관 처리한다.
+      operationId: archive_news_api_v1_portal_admin_news__news_id__archive_post
+      parameters:
+      - in: path
+        name: news_id
+        required: true
+        schema:
+          title: News Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Archive News Api V1 Portal Admin News  News Id  Archive
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Archive News
+      tags:
+      - 사내 포털
+  /api/v1/portal/admin/news/{news_id}/publish:
+    post:
+      description: 뉴스/이벤트를 게시한다.
+      operationId: publish_news_api_v1_portal_admin_news__news_id__publish_post
+      parameters:
+      - in: path
+        name: news_id
+        required: true
+        schema:
+          title: News Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Publish News Api V1 Portal Admin News  News Id  Publish
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Publish News
+      tags:
+      - 사내 포털
+  /api/v1/portal/me/announcements:
+    get:
+      description: 사용자에게 표시할 활성 공지사항을 반환한다.
+      operationId: get_my_announcements_api_v1_portal_me_announcements_get
+      parameters:
+      - in: query
+        name: department
+        required: false
+        schema:
+          default: ''
+          title: Department
+          type: string
+      - in: query
+        name: role
+        required: false
+        schema:
+          default: ''
+          title: Role
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  additionalProperties: true
+                  type: object
+                title: Response Get My Announcements Api V1 Portal Me Announcements
+                  Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get My Announcements
+      tags:
+      - 사내 포털
+  /api/v1/portal/me/announcements/{announcement_id}/hide:
+    post:
+      description: 공지사항을 오늘 하루 보지 않기 (BR-PTL-005).
+      operationId: hide_announcement_today_api_v1_portal_me_announcements__announcement_id__hide_post
+      parameters:
+      - in: path
+        name: announcement_id
+        required: true
+        schema:
+          title: Announcement Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Hide Announcement Today Api V1 Portal Me Announcements  Announcement
+                  Id  Hide Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Hide Announcement Today
+      tags:
+      - 사내 포털
+  /api/v1/portal/me/announcements/{announcement_id}/read:
+    post:
+      description: 공지사항을 읽음 처리한다.
+      operationId: mark_announcement_read_api_v1_portal_me_announcements__announcement_id__read_post
+      parameters:
+      - in: path
+        name: announcement_id
+        required: true
+        schema:
+          title: Announcement Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mark Announcement Read Api V1 Portal Me Announcements  Announcement
+                  Id  Read Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mark Announcement Read
+      tags:
+      - 사내 포털
+  /api/v1/portal/me/layout:
+    get:
+      description: 현재 사용자의 최종 레이아웃을 반환한다 (BR-PTL-001 상속 해석).
+      operationId: get_my_layout_api_v1_portal_me_layout_get
+      parameters:
+      - in: query
+        name: department
+        required: false
+        schema:
+          default: ''
+          title: Department
+          type: string
+      - in: query
+        name: role
+        required: false
+        schema:
+          default: ''
+          title: Role
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Get My Layout Api V1 Portal Me Layout Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get My Layout
+      tags:
+      - 사내 포털
+  /api/v1/portal/me/shortcuts:
+    get:
+      description: 내 바로가기 목록을 조회한다.
+      operationId: get_my_shortcuts_api_v1_portal_me_shortcuts_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  additionalProperties: true
+                  type: object
+                title: Response Get My Shortcuts Api V1 Portal Me Shortcuts Get
+                type: array
+          description: Successful Response
+      summary: Get My Shortcuts
+      tags:
+      - 사내 포털
+    post:
+      description: '바로가기를 생성한다 (BR-PTL-003: 최대 20개).'
+      operationId: create_my_shortcut_api_v1_portal_me_shortcuts_post
+      parameters:
+      - description: 바로가기 이름
+        in: query
+        name: shortcut_name
+        required: true
+        schema:
+          description: 바로가기 이름
+          title: Shortcut Name
+          type: string
+      - description: 대상 URL
+        in: query
+        name: url
+        required: true
+        schema:
+          description: 대상 URL
+          title: Url
+          type: string
+      - in: query
+        name: icon
+        required: false
+        schema:
+          default: link
+          title: Icon
+          type: string
+      - in: query
+        name: color
+        required: false
+        schema:
+          default: '#1976D2'
+          title: Color
+          type: string
+      - in: query
+        name: sort_order
+        required: false
+        schema:
+          default: 0
+          title: Sort Order
+          type: integer
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Create My Shortcut Api V1 Portal Me Shortcuts Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create My Shortcut
+      tags:
+      - 사내 포털
+  /api/v1/portal/me/shortcuts/{shortcut_id}:
+    delete:
+      description: 바로가기를 삭제한다.
+      operationId: delete_my_shortcut_api_v1_portal_me_shortcuts__shortcut_id__delete
+      parameters:
+      - in: path
+        name: shortcut_id
+        required: true
+        schema:
+          title: Shortcut Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Delete My Shortcut
+      tags:
+      - 사내 포털
+  /api/v1/portal/me/shortcuts/{shortcut_id}/click:
+    post:
+      description: 바로가기 클릭을 추적한다.
+      operationId: track_shortcut_click_api_v1_portal_me_shortcuts__shortcut_id__click_post
+      parameters:
+      - in: path
+        name: shortcut_id
+        required: true
+        schema:
+          title: Shortcut Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Track Shortcut Click Api V1 Portal Me Shortcuts  Shortcut
+                  Id  Click Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Track Shortcut Click
+      tags:
+      - 사내 포털
+  /api/v1/portal/me/widgets:
+    get:
+      description: 사용자에게 사용 가능한 위젯 목록을 반환한다.
+      operationId: get_my_widgets_api_v1_portal_me_widgets_get
+      parameters:
+      - in: query
+        name: role
+        required: false
+        schema:
+          default: ''
+          title: Role
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  additionalProperties: true
+                  type: object
+                title: Response Get My Widgets Api V1 Portal Me Widgets Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get My Widgets
+      tags:
+      - 사내 포털
+  /api/v1/portal/news:
+    get:
+      description: 게시된 뉴스/이벤트 목록을 반환한다.
+      operationId: list_news_api_v1_portal_news_get
+      parameters:
+      - in: query
+        name: department
+        required: false
+        schema:
+          default: ''
+          title: Department
+          type: string
+      - in: query
+        name: event_type
+        required: false
+        schema:
+          default: ''
+          title: Event Type
+          type: string
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          minimum: 1
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  additionalProperties: true
+                  type: object
+                title: Response List News Api V1 Portal News Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: List News
+      tags:
+      - 사내 포털
+  /api/v1/portal/news/{news_id}/view:
+    post:
+      description: 뉴스/이벤트 조회 수를 증가시킨다.
+      operationId: view_news_api_v1_portal_news__news_id__view_post
+      parameters:
+      - in: path
+        name: news_id
+        required: true
+        schema:
+          title: News Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response View News Api V1 Portal News  News Id  View Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: View News
+      tags:
+      - 사내 포털
+  /api/v1/portal/search:
+    get:
+      description: 통합 검색을 수행한다 (BR-PTL-009 권한 필터링).
+      operationId: search_portal_api_v1_portal_search_get
+      parameters:
+      - description: 검색어
+        in: query
+        name: q
+        required: true
+        schema:
+          description: 검색어
+          title: Q
+          type: string
+      - description: 모듈 필터
+        in: query
+        name: module
+        required: false
+        schema:
+          default: ''
+          description: 모듈 필터
+          title: Module
+          type: string
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          maximum: 100
+          minimum: 1
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  additionalProperties: true
+                  type: object
+                title: Response Search Portal Api V1 Portal Search Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Search Portal
+      tags:
+      - 사내 포털
+  /api/v1/portal/search/autocomplete:
+    get:
+      description: '자동완성을 수행한다 (BR-PTL-015: 2자 이상).'
+      operationId: autocomplete_api_v1_portal_search_autocomplete_get
+      parameters:
+      - description: 입력 문자열
+        in: query
+        name: q
+        required: true
+        schema:
+          description: 입력 문자열
+          title: Q
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  additionalProperties: true
+                  type: object
+                title: Response Autocomplete Api V1 Portal Search Autocomplete Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Autocomplete
+      tags:
+      - 사내 포털
+  /api/v1/portal/widgets/{widget_id}/data:
+    get:
+      description: 위젯 데이터를 조회한다 (BR-PTL-014 역할별 스코프).
+      operationId: get_widget_data_api_v1_portal_widgets__widget_id__data_get
+      parameters:
+      - in: path
+        name: widget_id
+        required: true
+        schema:
+          title: Widget Id
+          type: string
+      - in: query
+        name: role
+        required: false
+        schema:
+          default: ''
+          title: Role
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Get Widget Data Api V1 Portal Widgets  Widget Id  Data
+                  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Widget Data
+      tags:
+      - 사내 포털
+  /api/v1/search-indices:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: search_index_목록_api_v1_search_indices_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_SearchIndex_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Search Index 목록
+      tags:
+      - 검색 인덱스
+    post:
+      description: 엔티티를 생성한다.
+      operationId: search_index_생성_api_v1_search_indices_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchIndexCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Search Index 생성 Api V1 Search Indices Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Search Index 생성
+      tags:
+      - 검색 인덱스
+  /api/v1/search-indices/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: search_index_삭제_api_v1_search_indices__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Search Index 삭제
+      tags:
+      - 검색 인덱스
+    get:
+      description: 엔티티를 조회한다.
+      operationId: search_index_조회_api_v1_search_indices__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Search Index 조회 Api V1 Search Indices  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Search Index 조회
+      tags:
+      - 검색 인덱스
+    put:
+      description: 엔티티를 수정한다.
+      operationId: search_index_수정_api_v1_search_indices__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchIndexUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Search Index 수정 Api V1 Search Indices  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Search Index 수정
+      tags:
+      - 검색 인덱스
+  /api/v1/search-indices/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: search_index_취소_api_v1_search_indices__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Search Index 취소 Api V1 Search Indices  Doc Id  Cancel
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Search Index 취소
+      tags:
+      - 검색 인덱스
+  /api/v1/search-indices/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: search_index_제출_api_v1_search_indices__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Search Index 제출 Api V1 Search Indices  Doc Id  Submit
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Search Index 제출
+      tags:
+      - 검색 인덱스
+  /api/v1/shortcuts:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: shortcut_목록_api_v1_shortcuts_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_Shortcut_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Shortcut 목록
+      tags:
+      - 바로가기
+    post:
+      description: 엔티티를 생성한다.
+      operationId: shortcut_생성_api_v1_shortcuts_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShortcutCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Shortcut 생성 Api V1 Shortcuts Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Shortcut 생성
+      tags:
+      - 바로가기
+  /api/v1/shortcuts/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: shortcut_삭제_api_v1_shortcuts__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Shortcut 삭제
+      tags:
+      - 바로가기
+    get:
+      description: 엔티티를 조회한다.
+      operationId: shortcut_조회_api_v1_shortcuts__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Shortcut 조회 Api V1 Shortcuts  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Shortcut 조회
+      tags:
+      - 바로가기
+    put:
+      description: 엔티티를 수정한다.
+      operationId: shortcut_수정_api_v1_shortcuts__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShortcutUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Shortcut 수정 Api V1 Shortcuts  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Shortcut 수정
+      tags:
+      - 바로가기
+  /api/v1/shortcuts/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: shortcut_취소_api_v1_shortcuts__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Shortcut 취소 Api V1 Shortcuts  Doc Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Shortcut 취소
+      tags:
+      - 바로가기
+  /api/v1/shortcuts/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: shortcut_제출_api_v1_shortcuts__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Shortcut 제출 Api V1 Shortcuts  Doc Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Shortcut 제출
+      tags:
+      - 바로가기
+  /api/v1/threads:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: thread_목록_api_v1_threads_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_Thread_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Thread 목록
+      tags:
+      - 스레드
+    post:
+      description: 엔티티를 생성한다.
+      operationId: thread_생성_api_v1_threads_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ThreadCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Thread 생성 Api V1 Threads Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Thread 생성
+      tags:
+      - 스레드
+  /api/v1/threads/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: thread_삭제_api_v1_threads__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Thread 삭제
+      tags:
+      - 스레드
+    get:
+      description: 엔티티를 조회한다.
+      operationId: thread_조회_api_v1_threads__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Thread 조회 Api V1 Threads  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Thread 조회
+      tags:
+      - 스레드
+    put:
+      description: 엔티티를 수정한다.
+      operationId: thread_수정_api_v1_threads__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ThreadUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Thread 수정 Api V1 Threads  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Thread 수정
+      tags:
+      - 스레드
+  /api/v1/threads/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: thread_취소_api_v1_threads__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Thread 취소 Api V1 Threads  Doc Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Thread 취소
+      tags:
+      - 스레드
+  /api/v1/threads/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: thread_제출_api_v1_threads__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Thread 제출 Api V1 Threads  Doc Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Thread 제출
+      tags:
+      - 스레드
+  /api/v1/user-presences:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: user_presence_목록_api_v1_user_presences_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_UserPresence_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: User Presence 목록
+      tags:
+      - 사용자프레즌스
+    post:
+      description: 엔티티를 생성한다.
+      operationId: user_presence_생성_api_v1_user_presences_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPresenceCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response User Presence 생성 Api V1 User Presences Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: User Presence 생성
+      tags:
+      - 사용자프레즌스
+  /api/v1/user-presences/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: user_presence_삭제_api_v1_user_presences__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: User Presence 삭제
+      tags:
+      - 사용자프레즌스
+    get:
+      description: 엔티티를 조회한다.
+      operationId: user_presence_조회_api_v1_user_presences__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response User Presence 조회 Api V1 User Presences  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: User Presence 조회
+      tags:
+      - 사용자프레즌스
+    put:
+      description: 엔티티를 수정한다.
+      operationId: user_presence_수정_api_v1_user_presences__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPresenceUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response User Presence 수정 Api V1 User Presences  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: User Presence 수정
+      tags:
+      - 사용자프레즌스
+  /api/v1/widget-configs:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: widget_config_목록_api_v1_widget_configs_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_WidgetConfig_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Widget Config 목록
+      tags:
+      - 위젯 설정
+    post:
+      description: 엔티티를 생성한다.
+      operationId: widget_config_생성_api_v1_widget_configs_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WidgetConfigCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Widget Config 생성 Api V1 Widget Configs Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Widget Config 생성
+      tags:
+      - 위젯 설정
+  /api/v1/widget-configs/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: widget_config_삭제_api_v1_widget_configs__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Widget Config 삭제
+      tags:
+      - 위젯 설정
+    get:
+      description: 엔티티를 조회한다.
+      operationId: widget_config_조회_api_v1_widget_configs__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Widget Config 조회 Api V1 Widget Configs  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Widget Config 조회
+      tags:
+      - 위젯 설정
+    put:
+      description: 엔티티를 수정한다.
+      operationId: widget_config_수정_api_v1_widget_configs__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WidgetConfigUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Widget Config 수정 Api V1 Widget Configs  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Widget Config 수정
+      tags:
+      - 위젯 설정
+  /api/v1/widget-configs/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: widget_config_취소_api_v1_widget_configs__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Widget Config 취소 Api V1 Widget Configs  Doc Id  Cancel
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Widget Config 취소
+      tags:
+      - 위젯 설정
+  /api/v1/widget-configs/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: widget_config_제출_api_v1_widget_configs__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Widget Config 제출 Api V1 Widget Configs  Doc Id  Submit
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Widget Config 제출
+      tags:
+      - 위젯 설정
+  /api/v1/widgets:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: widget_목록_api_v1_widgets_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_Widget_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Widget 목록
+      tags:
+      - 위젯
+    post:
+      description: 엔티티를 생성한다.
+      operationId: widget_생성_api_v1_widgets_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WidgetCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Widget 생성 Api V1 Widgets Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Widget 생성
+      tags:
+      - 위젯
+  /api/v1/widgets/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: widget_삭제_api_v1_widgets__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Widget 삭제
+      tags:
+      - 위젯
+    get:
+      description: 엔티티를 조회한다.
+      operationId: widget_조회_api_v1_widgets__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Widget 조회 Api V1 Widgets  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Widget 조회
+      tags:
+      - 위젯
+    put:
+      description: 엔티티를 수정한다.
+      operationId: widget_수정_api_v1_widgets__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WidgetUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Widget 수정 Api V1 Widgets  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Widget 수정
+      tags:
+      - 위젯
+  /health:
+    get:
+      description: 서비스 상태를 확인한다 (하위 호환).
+      operationId: health_health_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Health Health Get
+                type: object
+          description: Successful Response
+      summary: Health
+      tags:
+      - health
+  /health/live:
+    get:
+      description: Liveness probe — 프로세스 생존 확인.
+      operationId: liveness_health_live_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Liveness Health Live Get
+                type: object
+          description: Successful Response
+      summary: Liveness
+      tags:
+      - health
+  /health/ready:
+    get:
+      description: Readiness probe — DB/NATS/Valkey 연결 포함 서비스 준비 상태 확인.
+      operationId: readiness_health_ready_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Readiness
+      tags:
+      - health
+  /health/startup:
+    get:
+      description: Startup probe — 서비스 초기화 완료 확인 (readiness와 동일).
+      operationId: startup_health_startup_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Startup
+      tags:
+      - health
+servers:
+- url: /portal
+- description: 현재 서버
+  url: /
+tags:
+- description: 포털 레이아웃 API
+  name: 포털 레이아웃
+- description: 위젯 API
+  name: 위젯
+- description: 위젯 설정 API
+  name: 위젯 설정
+- description: 바로가기 API
+  name: 바로가기
+- description: 공지사항 API
+  name: 공지사항
+- description: 공지사항 읽음 API
+  name: 공지사항 읽음
+- description: 개인 대시보드 API
+  name: 개인 대시보드
+- description: 검색 인덱스 API
+  name: 검색 인덱스
+- description: 뉴스/이벤트 API
+  name: 뉴스/이벤트
+- description: 사용자프레즌스 API
+  name: 사용자프레즌스
+- description: 알림 API
+  name: 알림
+- description: 스레드 API
+  name: 스레드
+- description: 북마크 API
+  name: 북마크

@@ -1,0 +1,2912 @@
+components:
+  schemas:
+    BillingPeriod:
+      description: 청구 기간.
+      properties:
+        end:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: End
+        start:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Start
+      title: BillingPeriod
+      type: object
+    CancelRequest:
+      description: 구독 해지 요청 스키마.
+      properties:
+        reason:
+          default: ''
+          title: Reason
+          type: string
+      title: CancelRequest
+      type: object
+    DocStatus:
+      description: 문서 상태 — ERPNext 호환.
+      enum:
+      - 0
+      - 1
+      - 2
+      title: DocStatus
+      type: integer
+    DropShipItem-Input:
+      description: 드롭쉬핑 주문 품목.
+      properties:
+        item_code:
+          default: ''
+          title: Item Code
+          type: string
+        item_name:
+          default: ''
+          title: Item Name
+          type: string
+        price:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          default: '0'
+          title: Price
+        qty:
+          default: 0
+          title: Qty
+          type: integer
+      title: DropShipItem
+      type: object
+    DropShipItem-Output:
+      description: 드롭쉬핑 주문 품목.
+      properties:
+        item_code:
+          default: ''
+          title: Item Code
+          type: string
+        item_name:
+          default: ''
+          title: Item Name
+          type: string
+        price:
+          default: '0'
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Price
+          type: string
+        qty:
+          default: 0
+          title: Qty
+          type: integer
+      title: DropShipItem
+      type: object
+    DropShipOrder:
+      description: 드롭쉬핑 주문 문서 — 공급업체 직배송 주문 정보를 저장한다.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        items:
+          default: []
+          items:
+            $ref: '#/components/schemas/DropShipItem-Output'
+          title: Items
+          type: array
+        sales_order_id:
+          default: ''
+          title: Sales Order Id
+          type: string
+        shipping_address:
+          default: ''
+          title: Shipping Address
+          type: string
+        status:
+          default: draft
+          title: Status
+          type: string
+        supplier_id:
+          default: ''
+          title: Supplier Id
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        tracking_number:
+          default: ''
+          title: Tracking Number
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: DropShipOrder
+      type: object
+    DropShipOrderCreate:
+      description: 드롭쉬핑 주문 생성 요청 스키마.
+      properties:
+        items:
+          default: []
+          items:
+            $ref: '#/components/schemas/DropShipItem-Input'
+          title: Items
+          type: array
+        sales_order_id:
+          title: Sales Order Id
+          type: string
+        shipping_address:
+          default: ''
+          title: Shipping Address
+          type: string
+        status:
+          default: draft
+          title: Status
+          type: string
+        supplier_id:
+          title: Supplier Id
+          type: string
+      required:
+      - sales_order_id
+      - supplier_id
+      title: DropShipOrderCreate
+      type: object
+    DropShipOrderUpdate:
+      description: 드롭쉬핑 주문 수정 요청 스키마.
+      properties:
+        shipping_address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Shipping Address
+        status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+        tracking_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Tracking Number
+      title: DropShipOrderUpdate
+      type: object
+    ECommerceChannel:
+      description: 전자상거래 채널 문서 — 마켓플레이스 연동 채널 정보를 저장한다.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        channel_code:
+          default: ''
+          title: Channel Code
+          type: string
+        channel_name:
+          default: ''
+          title: Channel Name
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        is_active:
+          default: true
+          title: Is Active
+          type: boolean
+        platform:
+          default: ''
+          title: Platform
+          type: string
+        price_list_id:
+          default: ''
+          title: Price List Id
+          type: string
+        sync_frequency:
+          default: 1h
+          title: Sync Frequency
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        warehouse_id:
+          default: ''
+          title: Warehouse Id
+          type: string
+      title: ECommerceChannel
+      type: object
+    ECommerceChannelCreate:
+      description: 전자상거래 채널 생성 요청 스키마.
+      properties:
+        channel_code:
+          title: Channel Code
+          type: string
+        channel_name:
+          title: Channel Name
+          type: string
+        is_active:
+          default: true
+          title: Is Active
+          type: boolean
+        platform:
+          title: Platform
+          type: string
+        price_list_id:
+          default: ''
+          title: Price List Id
+          type: string
+        sync_frequency:
+          default: 1h
+          title: Sync Frequency
+          type: string
+        warehouse_id:
+          default: ''
+          title: Warehouse Id
+          type: string
+      required:
+      - channel_code
+      - channel_name
+      - platform
+      title: ECommerceChannelCreate
+      type: object
+    ECommerceChannelUpdate:
+      description: 전자상거래 채널 수정 요청 스키마.
+      properties:
+        channel_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Channel Name
+        is_active:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Active
+        platform:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Platform
+        price_list_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Price List Id
+        sync_frequency:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sync Frequency
+        warehouse_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Warehouse Id
+      title: ECommerceChannelUpdate
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    MarketplaceOrder:
+      description: 마켓플레이스 주문 문서 — 외부 플랫폼에서 동기화된 주문을 저장한다.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        channel_id:
+          default: ''
+          title: Channel Id
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        customer_name:
+          default: ''
+          title: Customer Name
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        external_order_id:
+          default: ''
+          title: External Order Id
+          type: string
+        items:
+          default: []
+          items:
+            $ref: '#/components/schemas/MarketplaceOrderItem-Output'
+          title: Items
+          type: array
+        sales_order_id:
+          default: ''
+          title: Sales Order Id
+          type: string
+        status:
+          default: synced
+          title: Status
+          type: string
+        synced_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Synced At
+        tenant_id:
+          title: Tenant Id
+          type: string
+        total_amount:
+          default: '0'
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Total Amount
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: MarketplaceOrder
+      type: object
+    MarketplaceOrderCreate:
+      description: 마켓플레이스 주문 생성 요청 스키마.
+      properties:
+        channel_id:
+          title: Channel Id
+          type: string
+        customer_name:
+          title: Customer Name
+          type: string
+        external_order_id:
+          title: External Order Id
+          type: string
+        items:
+          default: []
+          items:
+            $ref: '#/components/schemas/MarketplaceOrderItem-Input'
+          title: Items
+          type: array
+        status:
+          default: synced
+          title: Status
+          type: string
+        total_amount:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          default: '0'
+          title: Total Amount
+      required:
+      - channel_id
+      - external_order_id
+      - customer_name
+      title: MarketplaceOrderCreate
+      type: object
+    MarketplaceOrderItem-Input:
+      description: 마켓플레이스 주문 품목.
+      properties:
+        item_code:
+          default: ''
+          title: Item Code
+          type: string
+        item_name:
+          default: ''
+          title: Item Name
+          type: string
+        price:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          default: '0'
+          title: Price
+        qty:
+          default: 0
+          title: Qty
+          type: integer
+      title: MarketplaceOrderItem
+      type: object
+    MarketplaceOrderItem-Output:
+      description: 마켓플레이스 주문 품목.
+      properties:
+        item_code:
+          default: ''
+          title: Item Code
+          type: string
+        item_name:
+          default: ''
+          title: Item Name
+          type: string
+        price:
+          default: '0'
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Price
+          type: string
+        qty:
+          default: 0
+          title: Qty
+          type: integer
+      title: MarketplaceOrderItem
+      type: object
+    MarketplaceOrderUpdate:
+      description: 마켓플레이스 주문 수정 요청 스키마.
+      properties:
+        customer_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Customer Name
+        sales_order_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sales Order Id
+        status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+      title: MarketplaceOrderUpdate
+      type: object
+    PaginatedResponse_DropShipOrder_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/DropShipOrder'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[DropShipOrder]
+      type: object
+    PaginatedResponse_ECommerceChannel_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ECommerceChannel'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[ECommerceChannel]
+      type: object
+    PaginatedResponse_MarketplaceOrder_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/MarketplaceOrder'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[MarketplaceOrder]
+      type: object
+    PaginatedResponse_RecurringInvoice_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/RecurringInvoice'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[RecurringInvoice]
+      type: object
+    PaginatedResponse_SubscriptionInvoice_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/SubscriptionInvoice'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[SubscriptionInvoice]
+      type: object
+    PaginatedResponse_SubscriptionPlan_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/SubscriptionPlan'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[SubscriptionPlan]
+      type: object
+    PaginatedResponse_Subscription_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Subscription'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[Subscription]
+      type: object
+    RecurringInvoice:
+      description: 정기 청구 문서 — 반복 청구 정보를 저장한다.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        company:
+          default: ''
+          title: Company
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        customer_id:
+          default: ''
+          title: Customer Id
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        frequency:
+          default: monthly
+          title: Frequency
+          type: string
+        items:
+          default: []
+          items:
+            $ref: '#/components/schemas/RecurringInvoiceItem-Output'
+          title: Items
+          type: array
+        next_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Next Date
+        status:
+          default: draft
+          title: Status
+          type: string
+        template_invoice_id:
+          default: ''
+          title: Template Invoice Id
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: RecurringInvoice
+      type: object
+    RecurringInvoiceCreate:
+      description: 정기 청구 생성 요청 스키마.
+      properties:
+        company:
+          default: ''
+          title: Company
+          type: string
+        customer_id:
+          title: Customer Id
+          type: string
+        frequency:
+          default: monthly
+          title: Frequency
+          type: string
+        items:
+          default: []
+          items:
+            $ref: '#/components/schemas/RecurringInvoiceItem-Input'
+          title: Items
+          type: array
+        next_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Next Date
+      required:
+      - customer_id
+      title: RecurringInvoiceCreate
+      type: object
+    RecurringInvoiceItem-Input:
+      description: 정기 청구 품목.
+      properties:
+        item_code:
+          default: ''
+          title: Item Code
+          type: string
+        item_name:
+          default: ''
+          title: Item Name
+          type: string
+        qty:
+          default: 1
+          title: Qty
+          type: integer
+        rate:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          default: '0'
+          title: Rate
+      title: RecurringInvoiceItem
+      type: object
+    RecurringInvoiceItem-Output:
+      description: 정기 청구 품목.
+      properties:
+        item_code:
+          default: ''
+          title: Item Code
+          type: string
+        item_name:
+          default: ''
+          title: Item Name
+          type: string
+        qty:
+          default: 1
+          title: Qty
+          type: integer
+        rate:
+          default: '0'
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Rate
+          type: string
+      title: RecurringInvoiceItem
+      type: object
+    RecurringInvoiceUpdate:
+      description: 정기 청구 수정 요청 스키마.
+      properties:
+        frequency:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Frequency
+        items:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/RecurringInvoiceItem-Input'
+            type: array
+          - type: 'null'
+          title: Items
+        next_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Next Date
+        status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+      title: RecurringInvoiceUpdate
+      type: object
+    Subscription:
+      description: 구독 문서 — 고객 구독 상태를 저장한다.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        cancel_reason:
+          default: ''
+          title: Cancel Reason
+          type: string
+        company:
+          default: ''
+          title: Company
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        current_period_end:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Current Period End
+        current_period_start:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Current Period Start
+        customer_id:
+          default: ''
+          title: Customer Id
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        end_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: End Date
+        next_billing_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Next Billing Date
+        plan_id:
+          default: ''
+          title: Plan Id
+          type: string
+        start_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Start Date
+        status:
+          default: draft
+          title: Status
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: Subscription
+      type: object
+    SubscriptionCreate:
+      description: 구독 생성 요청 스키마.
+      properties:
+        company:
+          default: ''
+          title: Company
+          type: string
+        customer_id:
+          title: Customer Id
+          type: string
+        plan_id:
+          title: Plan Id
+          type: string
+        start_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Start Date
+      required:
+      - customer_id
+      - plan_id
+      title: SubscriptionCreate
+      type: object
+    SubscriptionInvoice:
+      description: 구독 청구 문서 — 구독 청구 정보를 저장한다.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        amount:
+          default: '0'
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Amount
+          type: string
+        billing_period:
+          anyOf:
+          - $ref: '#/components/schemas/BillingPeriod'
+          - type: 'null'
+        company:
+          default: ''
+          title: Company
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        sales_invoice_id:
+          default: ''
+          title: Sales Invoice Id
+          type: string
+        status:
+          default: draft
+          title: Status
+          type: string
+        subscription_id:
+          default: ''
+          title: Subscription Id
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: SubscriptionInvoice
+      type: object
+    SubscriptionInvoiceCreate:
+      description: 구독 청구 생성 요청 스키마.
+      properties:
+        amount:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          default: '0'
+          title: Amount
+        billing_period:
+          anyOf:
+          - $ref: '#/components/schemas/BillingPeriod'
+          - type: 'null'
+        company:
+          default: ''
+          title: Company
+          type: string
+        subscription_id:
+          title: Subscription Id
+          type: string
+      required:
+      - subscription_id
+      title: SubscriptionInvoiceCreate
+      type: object
+    SubscriptionInvoiceUpdate:
+      description: 구독 청구 수정 요청 스키마.
+      properties:
+        amount:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Amount
+        sales_invoice_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sales Invoice Id
+        status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+      title: SubscriptionInvoiceUpdate
+      type: object
+    SubscriptionPlan:
+      description: 구독 플랜 문서 — 플랜 정보를 저장한다.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        billing_interval:
+          default: monthly
+          title: Billing Interval
+          type: string
+        company:
+          default: ''
+          title: Company
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        currency:
+          default: KRW
+          title: Currency
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        features:
+          default: []
+          items:
+            type: string
+          title: Features
+          type: array
+        is_active:
+          default: true
+          title: Is Active
+          type: boolean
+        plan_name:
+          default: ''
+          title: Plan Name
+          type: string
+        price:
+          default: '0'
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Price
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        trial_days:
+          default: 0
+          title: Trial Days
+          type: integer
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: SubscriptionPlan
+      type: object
+    SubscriptionPlanCreate:
+      description: 구독 플랜 생성 요청 스키마.
+      properties:
+        billing_interval:
+          title: Billing Interval
+          type: string
+        company:
+          default: ''
+          title: Company
+          type: string
+        currency:
+          default: KRW
+          title: Currency
+          type: string
+        features:
+          default: []
+          items:
+            type: string
+          title: Features
+          type: array
+        is_active:
+          default: true
+          title: Is Active
+          type: boolean
+        plan_name:
+          title: Plan Name
+          type: string
+        price:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          default: '0'
+          title: Price
+        trial_days:
+          default: 0
+          title: Trial Days
+          type: integer
+      required:
+      - plan_name
+      - billing_interval
+      title: SubscriptionPlanCreate
+      type: object
+    SubscriptionPlanUpdate:
+      description: 구독 플랜 수정 요청 스키마.
+      properties:
+        billing_interval:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Billing Interval
+        currency:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Currency
+        features:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Features
+        is_active:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Active
+        plan_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Plan Name
+        price:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Price
+        trial_days:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Trial Days
+      title: SubscriptionPlanUpdate
+      type: object
+    SubscriptionUpdate:
+      description: 구독 수정 요청 스키마.
+      properties:
+        cancel_reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Cancel Reason
+        end_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: End Date
+        plan_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Plan Id
+        status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+      title: SubscriptionUpdate
+      type: object
+    SyncRequest:
+      description: 주문 동기화 요청 스키마.
+      properties:
+        channel_id:
+          title: Channel Id
+          type: string
+        external_orders:
+          default: []
+          items:
+            additionalProperties: true
+            type: object
+          title: External Orders
+          type: array
+      required:
+      - channel_id
+      title: SyncRequest
+      type: object
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+info:
+  contact:
+    name: OneERP 개발팀
+  description: OneERP Commerce 서비스 REST API
+  license:
+    name: Proprietary
+  title: OneERP Commerce API
+  version: 0.1.0
+openapi: 3.1.0
+paths:
+  /api/v1/ecommerce/channels:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: ecommerce_channel_목록_api_v1_ecommerce_channels_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_ECommerceChannel_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Ecommerce Channel 목록
+      tags:
+      - 전자상거래 채널
+    post:
+      description: 엔티티를 생성한다.
+      operationId: ecommerce_channel_생성_api_v1_ecommerce_channels_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ECommerceChannelCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Ecommerce Channel 생성 Api V1 Ecommerce Channels Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Ecommerce Channel 생성
+      tags:
+      - 전자상거래 채널
+  /api/v1/ecommerce/channels/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: ecommerce_channel_삭제_api_v1_ecommerce_channels__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Ecommerce Channel 삭제
+      tags:
+      - 전자상거래 채널
+    get:
+      description: 엔티티를 조회한다.
+      operationId: ecommerce_channel_조회_api_v1_ecommerce_channels__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Ecommerce Channel 조회 Api V1 Ecommerce Channels  Doc
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Ecommerce Channel 조회
+      tags:
+      - 전자상거래 채널
+    put:
+      description: 엔티티를 수정한다.
+      operationId: ecommerce_channel_수정_api_v1_ecommerce_channels__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ECommerceChannelUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Ecommerce Channel 수정 Api V1 Ecommerce Channels  Doc
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Ecommerce Channel 수정
+      tags:
+      - 전자상거래 채널
+  /api/v1/ecommerce/drop-ship-orders:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: drop_ship_order_목록_api_v1_ecommerce_drop_ship_orders_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_DropShipOrder_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Drop Ship Order 목록
+      tags:
+      - 드롭쉬핑 주문
+    post:
+      description: 엔티티를 생성한다.
+      operationId: drop_ship_order_생성_api_v1_ecommerce_drop_ship_orders_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DropShipOrderCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Drop Ship Order 생성 Api V1 Ecommerce Drop Ship Orders
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Drop Ship Order 생성
+      tags:
+      - 드롭쉬핑 주문
+  /api/v1/ecommerce/drop-ship-orders/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: drop_ship_order_삭제_api_v1_ecommerce_drop_ship_orders__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Drop Ship Order 삭제
+      tags:
+      - 드롭쉬핑 주문
+    get:
+      description: 엔티티를 조회한다.
+      operationId: drop_ship_order_조회_api_v1_ecommerce_drop_ship_orders__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Drop Ship Order 조회 Api V1 Ecommerce Drop Ship Orders  Doc
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Drop Ship Order 조회
+      tags:
+      - 드롭쉬핑 주문
+    put:
+      description: 엔티티를 수정한다.
+      operationId: drop_ship_order_수정_api_v1_ecommerce_drop_ship_orders__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DropShipOrderUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Drop Ship Order 수정 Api V1 Ecommerce Drop Ship Orders  Doc
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Drop Ship Order 수정
+      tags:
+      - 드롭쉬핑 주문
+  /api/v1/ecommerce/drop-ship-orders/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: drop_ship_order_취소_api_v1_ecommerce_drop_ship_orders__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Drop Ship Order 취소 Api V1 Ecommerce Drop Ship Orders  Doc
+                  Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Drop Ship Order 취소
+      tags:
+      - 드롭쉬핑 주문
+  /api/v1/ecommerce/drop-ship-orders/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: drop_ship_order_제출_api_v1_ecommerce_drop_ship_orders__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Drop Ship Order 제출 Api V1 Ecommerce Drop Ship Orders  Doc
+                  Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Drop Ship Order 제출
+      tags:
+      - 드롭쉬핑 주문
+  /api/v1/ecommerce/marketplace-orders:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: marketplace_order_목록_api_v1_ecommerce_marketplace_orders_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_MarketplaceOrder_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Marketplace Order 목록
+      tags:
+      - 마켓플레이스 주문
+    post:
+      description: 엔티티를 생성한다.
+      operationId: marketplace_order_생성_api_v1_ecommerce_marketplace_orders_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MarketplaceOrderCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Marketplace Order 생성 Api V1 Ecommerce Marketplace
+                  Orders Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Marketplace Order 생성
+      tags:
+      - 마켓플레이스 주문
+  /api/v1/ecommerce/marketplace-orders/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: marketplace_order_삭제_api_v1_ecommerce_marketplace_orders__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Marketplace Order 삭제
+      tags:
+      - 마켓플레이스 주문
+    get:
+      description: 엔티티를 조회한다.
+      operationId: marketplace_order_조회_api_v1_ecommerce_marketplace_orders__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Marketplace Order 조회 Api V1 Ecommerce Marketplace
+                  Orders  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Marketplace Order 조회
+      tags:
+      - 마켓플레이스 주문
+    put:
+      description: 엔티티를 수정한다.
+      operationId: marketplace_order_수정_api_v1_ecommerce_marketplace_orders__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MarketplaceOrderUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Marketplace Order 수정 Api V1 Ecommerce Marketplace
+                  Orders  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Marketplace Order 수정
+      tags:
+      - 마켓플레이스 주문
+  /api/v1/ecommerce/marketplace-orders/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: marketplace_order_취소_api_v1_ecommerce_marketplace_orders__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Marketplace Order 취소 Api V1 Ecommerce Marketplace
+                  Orders  Doc Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Marketplace Order 취소
+      tags:
+      - 마켓플레이스 주문
+  /api/v1/ecommerce/marketplace-orders/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: marketplace_order_제출_api_v1_ecommerce_marketplace_orders__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Marketplace Order 제출 Api V1 Ecommerce Marketplace
+                  Orders  Doc Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Marketplace Order 제출
+      tags:
+      - 마켓플레이스 주문
+  /api/v1/ecommerce/orders/sync:
+    post:
+      description: 외부 마켓플레이스 주문을 동기화한다.
+      operationId: sync_marketplace_orders_api_v1_ecommerce_orders_sync_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SyncRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Sync Marketplace Orders Api V1 Ecommerce Orders Sync
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Sync Marketplace Orders
+      tags:
+      - 전자상거래 주문
+  /api/v1/ecommerce/orders/{order_id}/confirm:
+    post:
+      description: 마켓플레이스 주문을 확인 상태로 변경한다.
+      operationId: confirm_marketplace_order_api_v1_ecommerce_orders__order_id__confirm_post
+      parameters:
+      - in: path
+        name: order_id
+        required: true
+        schema:
+          title: Order Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Confirm Marketplace Order Api V1 Ecommerce Orders  Order
+                  Id  Confirm Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Confirm Marketplace Order
+      tags:
+      - 전자상거래 주문
+  /api/v1/subscriptions/invoices:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: subscription_invoice_목록_api_v1_subscriptions_invoices_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_SubscriptionInvoice_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Subscription Invoice 목록
+      tags:
+      - 구독 청구
+    post:
+      description: 엔티티를 생성한다.
+      operationId: subscription_invoice_생성_api_v1_subscriptions_invoices_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionInvoiceCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Subscription Invoice 생성 Api V1 Subscriptions Invoices
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Subscription Invoice 생성
+      tags:
+      - 구독 청구
+  /api/v1/subscriptions/invoices/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: subscription_invoice_삭제_api_v1_subscriptions_invoices__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Subscription Invoice 삭제
+      tags:
+      - 구독 청구
+    get:
+      description: 엔티티를 조회한다.
+      operationId: subscription_invoice_조회_api_v1_subscriptions_invoices__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Subscription Invoice 조회 Api V1 Subscriptions Invoices  Doc
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Subscription Invoice 조회
+      tags:
+      - 구독 청구
+    put:
+      description: 엔티티를 수정한다.
+      operationId: subscription_invoice_수정_api_v1_subscriptions_invoices__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionInvoiceUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Subscription Invoice 수정 Api V1 Subscriptions Invoices  Doc
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Subscription Invoice 수정
+      tags:
+      - 구독 청구
+  /api/v1/subscriptions/invoices/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: subscription_invoice_취소_api_v1_subscriptions_invoices__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Subscription Invoice 취소 Api V1 Subscriptions Invoices  Doc
+                  Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Subscription Invoice 취소
+      tags:
+      - 구독 청구
+  /api/v1/subscriptions/invoices/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: subscription_invoice_제출_api_v1_subscriptions_invoices__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Subscription Invoice 제출 Api V1 Subscriptions Invoices  Doc
+                  Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Subscription Invoice 제출
+      tags:
+      - 구독 청구
+  /api/v1/subscriptions/items:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: subscription_목록_api_v1_subscriptions_items_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_Subscription_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Subscription 목록
+      tags:
+      - 구독
+    post:
+      description: 엔티티를 생성한다.
+      operationId: subscription_생성_api_v1_subscriptions_items_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Subscription 생성 Api V1 Subscriptions Items Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Subscription 생성
+      tags:
+      - 구독
+  /api/v1/subscriptions/items/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: subscription_삭제_api_v1_subscriptions_items__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Subscription 삭제
+      tags:
+      - 구독
+    get:
+      description: 엔티티를 조회한다.
+      operationId: subscription_조회_api_v1_subscriptions_items__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Subscription 조회 Api V1 Subscriptions Items  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Subscription 조회
+      tags:
+      - 구독
+    put:
+      description: 엔티티를 수정한다.
+      operationId: subscription_수정_api_v1_subscriptions_items__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Subscription 수정 Api V1 Subscriptions Items  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Subscription 수정
+      tags:
+      - 구독
+  /api/v1/subscriptions/items/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: subscription_취소_api_v1_subscriptions_items__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Subscription 취소 Api V1 Subscriptions Items  Doc Id  Cancel
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Subscription 취소
+      tags:
+      - 구독
+  /api/v1/subscriptions/items/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: subscription_제출_api_v1_subscriptions_items__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Subscription 제출 Api V1 Subscriptions Items  Doc Id  Submit
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Subscription 제출
+      tags:
+      - 구독
+  /api/v1/subscriptions/plans:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: subscription_plan_목록_api_v1_subscriptions_plans_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_SubscriptionPlan_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Subscription Plan 목록
+      tags:
+      - 구독 플랜
+    post:
+      description: 엔티티를 생성한다.
+      operationId: subscription_plan_생성_api_v1_subscriptions_plans_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionPlanCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Subscription Plan 생성 Api V1 Subscriptions Plans Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Subscription Plan 생성
+      tags:
+      - 구독 플랜
+  /api/v1/subscriptions/plans/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: subscription_plan_삭제_api_v1_subscriptions_plans__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Subscription Plan 삭제
+      tags:
+      - 구독 플랜
+    get:
+      description: 엔티티를 조회한다.
+      operationId: subscription_plan_조회_api_v1_subscriptions_plans__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Subscription Plan 조회 Api V1 Subscriptions Plans  Doc
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Subscription Plan 조회
+      tags:
+      - 구독 플랜
+    put:
+      description: 엔티티를 수정한다.
+      operationId: subscription_plan_수정_api_v1_subscriptions_plans__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionPlanUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Subscription Plan 수정 Api V1 Subscriptions Plans  Doc
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Subscription Plan 수정
+      tags:
+      - 구독 플랜
+  /api/v1/subscriptions/recurring-invoices:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: recurring_invoice_목록_api_v1_subscriptions_recurring_invoices_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_RecurringInvoice_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Recurring Invoice 목록
+      tags:
+      - 정기 청구
+    post:
+      description: 엔티티를 생성한다.
+      operationId: recurring_invoice_생성_api_v1_subscriptions_recurring_invoices_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecurringInvoiceCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Recurring Invoice 생성 Api V1 Subscriptions Recurring
+                  Invoices Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Recurring Invoice 생성
+      tags:
+      - 정기 청구
+  /api/v1/subscriptions/recurring-invoices/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: recurring_invoice_삭제_api_v1_subscriptions_recurring_invoices__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Recurring Invoice 삭제
+      tags:
+      - 정기 청구
+    get:
+      description: 엔티티를 조회한다.
+      operationId: recurring_invoice_조회_api_v1_subscriptions_recurring_invoices__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Recurring Invoice 조회 Api V1 Subscriptions Recurring
+                  Invoices  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Recurring Invoice 조회
+      tags:
+      - 정기 청구
+    put:
+      description: 엔티티를 수정한다.
+      operationId: recurring_invoice_수정_api_v1_subscriptions_recurring_invoices__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecurringInvoiceUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Recurring Invoice 수정 Api V1 Subscriptions Recurring
+                  Invoices  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Recurring Invoice 수정
+      tags:
+      - 정기 청구
+  /api/v1/subscriptions/recurring-invoices/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: recurring_invoice_취소_api_v1_subscriptions_recurring_invoices__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Recurring Invoice 취소 Api V1 Subscriptions Recurring
+                  Invoices  Doc Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Recurring Invoice 취소
+      tags:
+      - 정기 청구
+  /api/v1/subscriptions/recurring-invoices/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: recurring_invoice_제출_api_v1_subscriptions_recurring_invoices__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Recurring Invoice 제출 Api V1 Subscriptions Recurring
+                  Invoices  Doc Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Recurring Invoice 제출
+      tags:
+      - 정기 청구
+  /api/v1/subscriptions/{sub_id}/activate:
+    post:
+      description: 구독을 활성화한다.
+      operationId: activate_subscription_api_v1_subscriptions__sub_id__activate_post
+      parameters:
+      - in: path
+        name: sub_id
+        required: true
+        schema:
+          title: Sub Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Activate Subscription Api V1 Subscriptions  Sub Id  Activate
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Activate Subscription
+      tags:
+      - 구독 관리
+  /api/v1/subscriptions/{sub_id}/cancel:
+    post:
+      description: 구독을 해지한다.
+      operationId: cancel_subscription_api_v1_subscriptions__sub_id__cancel_post
+      parameters:
+      - in: path
+        name: sub_id
+        required: true
+        schema:
+          title: Sub Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Cancel Subscription Api V1 Subscriptions  Sub Id  Cancel
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Cancel Subscription
+      tags:
+      - 구독 관리
+  /api/v1/subscriptions/{sub_id}/generate-invoice:
+    post:
+      description: 구독 청구서를 생성한다.
+      operationId: generate_subscription_invoice_api_v1_subscriptions__sub_id__generate_invoice_post
+      parameters:
+      - in: path
+        name: sub_id
+        required: true
+        schema:
+          title: Sub Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Generate Subscription Invoice Api V1 Subscriptions  Sub
+                  Id  Generate Invoice Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Generate Subscription Invoice
+      tags:
+      - 구독 관리
+  /api/v1/subscriptions/{sub_id}/pause:
+    post:
+      description: 구독을 일시정지한다.
+      operationId: pause_subscription_api_v1_subscriptions__sub_id__pause_post
+      parameters:
+      - in: path
+        name: sub_id
+        required: true
+        schema:
+          title: Sub Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Pause Subscription Api V1 Subscriptions  Sub Id  Pause
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Pause Subscription
+      tags:
+      - 구독 관리
+  /api/v1/subscriptions/{sub_id}/resume:
+    post:
+      description: 구독을 재개한다.
+      operationId: resume_subscription_api_v1_subscriptions__sub_id__resume_post
+      parameters:
+      - in: path
+        name: sub_id
+        required: true
+        schema:
+          title: Sub Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Resume Subscription Api V1 Subscriptions  Sub Id  Resume
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Resume Subscription
+      tags:
+      - 구독 관리
+  /health:
+    get:
+      description: 서비스 상태를 확인한다 (하위 호환).
+      operationId: health_health_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Health Health Get
+                type: object
+          description: Successful Response
+      summary: Health
+      tags:
+      - health
+  /health/live:
+    get:
+      description: Liveness probe — 프로세스 생존 확인.
+      operationId: liveness_health_live_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Liveness Health Live Get
+                type: object
+          description: Successful Response
+      summary: Liveness
+      tags:
+      - health
+  /health/ready:
+    get:
+      description: Readiness probe — DB/NATS/Valkey 연결 포함 서비스 준비 상태 확인.
+      operationId: readiness_health_ready_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Readiness
+      tags:
+      - health
+  /health/startup:
+    get:
+      description: Startup probe — 서비스 초기화 완료 확인 (readiness와 동일).
+      operationId: startup_health_startup_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Startup
+      tags:
+      - health
+servers:
+- url: /commerce
+- description: 현재 서버
+  url: /
+tags:
+- description: 구독 플랜 API
+  name: 구독 플랜
+- description: 구독 API
+  name: 구독
+- description: 구독 청구 API
+  name: 구독 청구
+- description: 정기 청구 API
+  name: 정기 청구
+- description: 전자상거래 채널 API
+  name: 전자상거래 채널
+- description: 마켓플레이스 주문 API
+  name: 마켓플레이스 주문
+- description: 드롭쉬핑 주문 API
+  name: 드롭쉬핑 주문

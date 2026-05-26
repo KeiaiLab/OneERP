@@ -1,0 +1,15 @@
+apiVersion: chaosmesh.org/v1alpha1
+kind: PodChaos
+metadata:
+  name: gateway-pod-kill
+  namespace: staging
+spec:
+  action: pod-kill
+  mode: one
+  duration: "30s"
+  selector:
+    labelSelectors:
+      app: gateway
+    namespaces: ["staging"]
+  scheduler:
+    cron: "@every 5m"

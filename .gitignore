@@ -1,0 +1,158 @@
+# macOS
+.DS_Store
+Icon?
+.Spotlight-V100
+.Trashes
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+.ty_cache/
+.tox/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+htmlcov/
+.hypothesis/
+
+# Python 빌드 산출물
+*.egg-info/
+*.egg
+dist/
+build/
+!scripts/build/
+pip-wheel-metadata/
+.eggs/
+
+# Virtualenvs
+.venv/
+
+# Node
+node_modules/
+.next/
+.turbo/
+.pnpm-store/
+*.tsbuildinfo
+.eslintcache
+
+# Playwright / E2E
+.playwright/
+.playwright-mcp/
+playwright-report/
+test-results/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 로그
+*.log
+logs/
+
+# Worktrees / local artifacts
+.worktrees/
+worktrees/
+/.graphify_*
+/graphify-out/
+/output/
+/*-artif.txt
+
+# Commercial Grade v2 실행 증빙
+# 새 실행 산출물은 로컬/CI artifact로 보관하고 source commit에는 포함하지 않는다.
+# 이미 추적 중인 historical baseline은 gitignore의 영향을 받지 않는다.
+artifacts/**
+!artifacts/README.md
+!artifacts/**/.gitkeep
+artifacts/playwright/**/trace-*.zip
+artifacts/playwright/**/screenshots/**/*.png
+artifacts/playwright/**/report-*.html
+artifacts/e2e-logs/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Remember plugin runtime artifacts
+# remember 플러그인의 save-session.sh가 glob 실패 시 에러 로그를 반복 덤프하므로
+# autonomous 로그·tmp PID 파일은 전부 untrack (2026-04-12 cleanup으로 12,345개 제거)
+.remember/logs/autonomous/*
+!.remember/logs/autonomous/.keep
+.remember/tmp/
+*.pid
+
+
+# Claude Code 세션 artifacts — 커밋 방지
+.claude/scheduled_tasks.lock
+.claude/ralph-loop.local.md
+.claude/settings.local.json
+/2026-*-local-command-caveatcaveat-*.txt
+
+# 중요: lockfile은 커밋 대상 — ignore 금지
+# - uv.lock / pnpm-lock.yaml / package-lock.json 등은 반드시 커밋
+# - 재현가능 빌드·CI 일관성·보안 업데이트 추적을 위해 필수
+
+.sisyphus/
+
+# === 오픈소스 공개 제외 ===
+
+# 시크릿 정의 (ExternalSecret)
+deploy/secrets/
+
+# 내부 전략/PMO
+.planning/strategy/
+.planning/program/
+.planning/seeds/
+.planning/notes/
+.planning/phases/
+
+# 승인 서명 증거
+artifacts/T3/
+
+# 레거시 내부 GH Actions (ADR-0019: 공개 OSS용 ci.yml은 허용)
+.github/workflows/backup-drill.yml
+.github/workflows/chaos-test.yml
+.github/workflows/dep-audit-gateway.yml
+.github/workflows/governance-check.yml
+.github/workflows/load-test.yml
+.github/workflows/rollback-drill.yml
+.github/workflows/ruff-ratchet.yml
+.github/workflows/staging-deploy.yml
+.github/workflows/standard-gate.yml
+
+# 내부 작업 문서
+HANDOFF.md
+.remember/
+
+# prod values — 인프라 주소 포함
+deploy/charts/*/values-prod.yaml
+
+# 내부 인프라 설정
+deploy/infra/
+
+# 전체 배포 설정 (charts, apps, staging, monitoring, edge-router)
+deploy/charts/
+deploy/apps/
+deploy/catalog/
+deploy/staging/
+deploy/monitoring/
+deploy/edge-router/
+
+# services/ 하위 배포 설정도 동일하게 비공개
+services/deploy/
+
+# 내부 인프라 인벤토리 (내부 URL/IP 포함)
+docs/infra/inventory/
+
+# 내부 운영 드릴 로그
+docs/ops/drills/
+
+# 인프라 계약 테스트 (deploy/secrets, deploy/charts, docs/infra/inventory에 의존)
+tests/security/

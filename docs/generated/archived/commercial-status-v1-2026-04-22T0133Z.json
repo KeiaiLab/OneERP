@@ -1,0 +1,5698 @@
+{
+  "summary": {
+    "passed": 307,
+    "total": 1081,
+    "total_judgments": 1081,
+    "commercial_ready_modules": 0,
+    "overall_complete": false
+  },
+  "reports": [
+    {
+      "module": "accounting",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-accounting.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/accounting/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "86 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "pass",
+          "evidence": "3 configs (e.g. accounting-dimensions)"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no accounting section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for accounting"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/finance/accounting/oneerp_accounting_app/routes/accounting_periods.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/finance/accounting/oneerp_accounting_app/routes/accounting_periods.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/finance/accounting/tests/unit/test_dunnings.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in accounting"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for accounting"
+        },
+        {
+          "id": "G4-3",
+          "status": "pass",
+          "evidence": "runbook + drill: docs/ops/drills/G4-3/2026-04-21-accounting.md"
+        },
+        {
+          "id": "G4-4",
+          "status": "pass",
+          "evidence": "rollback.md + drill: docs/ops/drills/G4-4/2026-04-21-accounting.md"
+        },
+        {
+          "id": "G4-5",
+          "status": "pass",
+          "evidence": "runbook + drill: docs/ops/drills/G4-5/2026-04-21-accounting.md"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/accounting.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/accounting.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/accounting.md"
+        }
+      ]
+    },
+    {
+      "module": "advanced-planning",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-advanced-planning.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/advanced-planning/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "fail",
+          "evidence": "no unit tests"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for advanced-planning"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no advanced-planning section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for advanced-planning"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "fail",
+          "evidence": "no auth import pattern"
+        },
+        {
+          "id": "G3-2",
+          "status": "fail",
+          "evidence": "no permission check pattern in module"
+        },
+        {
+          "id": "G3-3",
+          "status": "fail",
+          "evidence": "no tenant_id pattern"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in advanced-planning"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for advanced-planning"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for advanced-planning within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for advanced-planning within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for advanced-planning within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/advanced-planning.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/advanced-planning.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/advanced-planning.md"
+        }
+      ]
+    },
+    {
+      "module": "analytics",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-analytics.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/analytics/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "10 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for analytics"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no analytics section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for analytics"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "fail",
+          "evidence": "no auth import pattern"
+        },
+        {
+          "id": "G3-2",
+          "status": "fail",
+          "evidence": "no permission check pattern in module"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/platform/analytics/oneerp_analytics_app/services/report_builder_service.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in analytics"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for analytics"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for analytics within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for analytics within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for analytics within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/analytics.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/analytics.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/analytics.md"
+        }
+      ]
+    },
+    {
+      "module": "assets",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-assets.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/assets/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "20 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "pass",
+          "evidence": "1 configs (e.g. assets)"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no assets section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for assets"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/assets/assets/oneerp_assets_app/routes/asset_disposals.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/assets/assets/oneerp_assets_app/routes/asset_disposals.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/assets/assets/tests/unit/test_fleet_service.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in assets"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for assets"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for assets within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for assets within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for assets within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/assets.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/assets.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/assets.md"
+        }
+      ]
+    },
+    {
+      "module": "board",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-board.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/board/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "15 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for board"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no board section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for board"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "fail",
+          "evidence": "no auth import pattern"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/collab/board/oneerp_board_app/models/board_permission.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/collab/board/oneerp_board_app/events/handlers.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "pass",
+          "evidence": "audit pattern: services/collab/board/oneerp_board_app/entities.py"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in board"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for board"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for board within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for board within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for board within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/board.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/board.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/board.md"
+        }
+      ]
+    },
+    {
+      "module": "buying",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-buying.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/buying/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "46 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for buying"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no buying section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for buying"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/scm/buying/oneerp_buying_app/routes/request_for_quotations.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/scm/buying/oneerp_buying_app/routes/request_for_quotations.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/scm/buying/tests/unit/test_buyer_approval_service.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in buying"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for buying"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for buying within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for buying within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for buying within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/buying.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/buying.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/buying.md"
+        }
+      ]
+    },
+    {
+      "module": "calendar",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-calendar.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/calendar/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "10 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for calendar"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no calendar section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for calendar"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/collab/calendar/oneerp_calendar_app/routes/calendar_events.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/collab/calendar/oneerp_calendar_app/routes/calendar_events.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/collab/calendar/oneerp_calendar_app/events/handlers.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in calendar"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for calendar"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for calendar within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for calendar within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for calendar within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/calendar.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/calendar.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/calendar.md"
+        }
+      ]
+    },
+    {
+      "module": "clm",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-clm.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/compliance/openapi.yaml (via compliance)"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "fail",
+          "evidence": "no unit tests"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for clm"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no clm section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for clm"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "fail",
+          "evidence": "no auth import pattern"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/compliance/compliance/oneerp_compliance_app/compliance_mod/routes/risk_matrix.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/compliance/compliance/oneerp_compliance_app/compliance_mod/routes/risk_matrix.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in compliance"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for clm"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for clm within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for clm within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for clm within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/clm.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/clm.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/clm.md"
+        }
+      ]
+    },
+    {
+      "module": "compliance",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-compliance.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/compliance/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "1 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "pass",
+          "evidence": "2 configs (e.g. compliance-checklists)"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no compliance section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for compliance"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "fail",
+          "evidence": "no auth import pattern"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/compliance/compliance/oneerp_compliance_app/compliance_mod/routes/risk_matrix.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/compliance/compliance/oneerp_compliance_app/compliance_mod/routes/risk_matrix.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in compliance"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for compliance"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for compliance within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for compliance within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for compliance within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/compliance.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/compliance.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/compliance.md"
+        }
+      ]
+    },
+    {
+      "module": "consolidation",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-consolidation.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/finance-extra/openapi.yaml (via finance-extra)"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "fail",
+          "evidence": "no unit tests"
+        },
+        {
+          "id": "G1-5",
+          "status": "pass",
+          "evidence": "2 configs (e.g. consolidation-entries)"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no consolidation section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for consolidation"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/finance/finance_extra/oneerp_finance_extra_app/consolidation/routes/consolidation_routes.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "fail",
+          "evidence": "no permission check pattern in module"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/finance/finance_extra/oneerp_finance_extra_app/consolidation/routes/consolidation_routes.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in finance-extra"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for consolidation"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for consolidation within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for consolidation within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for consolidation within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/consolidation.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/consolidation.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/consolidation.md"
+        }
+      ]
+    },
+    {
+      "module": "crm",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-crm.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/crm/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "36 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for crm"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no crm section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for crm"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/sales/crm/oneerp_crm_app/routes/issues.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/sales/crm/oneerp_crm_app/routes/activities.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/sales/crm/oneerp_crm_app/routes/issues.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in crm"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for crm"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for crm within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for crm within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for crm within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/crm.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/crm.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/crm.md"
+        }
+      ]
+    },
+    {
+      "module": "directory",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-directory.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/comms/openapi.yaml (via comms)"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "fail",
+          "evidence": "no unit tests"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for directory"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no directory section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for directory"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "fail",
+          "evidence": "no auth import pattern"
+        },
+        {
+          "id": "G3-2",
+          "status": "fail",
+          "evidence": "no permission check pattern in module"
+        },
+        {
+          "id": "G3-3",
+          "status": "fail",
+          "evidence": "no tenant_id pattern"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in comms"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for directory"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for directory within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for directory within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for directory within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/directory.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/directory.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/directory.md"
+        }
+      ]
+    },
+    {
+      "module": "documents",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-documents.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/documents/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "14 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "pass",
+          "evidence": "1 configs (e.g. documents)"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no documents section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for documents"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/collab/documents/oneerp_documents_app/routes/document_routes.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/collab/documents/oneerp_documents_app/models/document_share.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/collab/documents/oneerp_documents_app/routes/document_routes.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "pass",
+          "evidence": "audit pattern: services/collab/documents/oneerp_documents_app/entities.py"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in documents"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for documents"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for documents within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for documents within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for documents within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/documents.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/documents.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/documents.md"
+        }
+      ]
+    },
+    {
+      "module": "ecommerce",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-ecommerce.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/commerce/openapi.yaml (via commerce)"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "fail",
+          "evidence": "no unit tests"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for ecommerce"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no ecommerce section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for ecommerce"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/sales/commerce/oneerp_commerce_app/subscriptions/routes/subscriptions.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/sales/commerce/oneerp_commerce_app/subscriptions/routes/subscriptions.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/sales/commerce/oneerp_commerce_app/subscriptions/routes/subscriptions.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in commerce"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for ecommerce"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for ecommerce within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for ecommerce within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for ecommerce within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/ecommerce.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/ecommerce.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/ecommerce.md"
+        }
+      ]
+    },
+    {
+      "module": "ehs",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-ehs.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/ehs/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "6 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for ehs"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no ehs section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for ehs"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "fail",
+          "evidence": "no auth import pattern"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/ehs/ehs/oneerp_ehs_app/routes/incident_stats.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/ehs/ehs/oneerp_ehs_app/routes/incident_stats.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in ehs"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for ehs"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for ehs within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for ehs within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for ehs within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/ehs.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/ehs.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/ehs.md"
+        }
+      ]
+    },
+    {
+      "module": "esg",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-esg.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/finance-extra/openapi.yaml (via finance-extra)"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "fail",
+          "evidence": "no unit tests"
+        },
+        {
+          "id": "G1-5",
+          "status": "pass",
+          "evidence": "2 configs (e.g. esg-metrics)"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no esg section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for esg"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/finance/finance_extra/oneerp_finance_extra_app/consolidation/routes/consolidation_routes.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "fail",
+          "evidence": "no permission check pattern in module"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/finance/finance_extra/oneerp_finance_extra_app/consolidation/routes/consolidation_routes.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in finance-extra"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for esg"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for esg within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for esg within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for esg within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/esg.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/esg.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/esg.md"
+        }
+      ]
+    },
+    {
+      "module": "expenses",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-expenses.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/expenses/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "22 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for expenses"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no expenses section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for expenses"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/finance/expenses/oneerp_expenses_app/routes/expense_claims.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/finance/expenses/oneerp_expenses_app/routes/expense_claims.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/finance/expenses/oneerp_expenses_app/events/handlers.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in expenses"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for expenses"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for expenses within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for expenses within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for expenses within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/expenses.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/expenses.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/expenses.md"
+        }
+      ]
+    },
+    {
+      "module": "fleet",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-fleet.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/logistics/openapi.yaml (via logistics)"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "fail",
+          "evidence": "no unit tests"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for fleet"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no fleet section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for fleet"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/logistics/logistics/oneerp_logistics_app/tms/routes/delivery_orders.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/logistics/logistics/oneerp_logistics_app/fleet/routes/vehicle_tco.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/logistics/logistics/tests/fleet/unit/test_m3_dispatch_pilot.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in logistics"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for fleet"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for fleet within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for fleet within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for fleet within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/fleet.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/fleet.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/fleet.md"
+        }
+      ]
+    },
+    {
+      "module": "gateway",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-gateway.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/gateway/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "68 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for gateway"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no gateway section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for gateway"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/platform/gateway/oneerp_gateway_app/routes/approval_actions.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/platform/gateway/oneerp_gateway_app/models/role_permission.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/platform/gateway/oneerp_gateway_app/models/approval_queries.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in gateway"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for gateway"
+        },
+        {
+          "id": "G4-3",
+          "status": "pass",
+          "evidence": "runbook + drill: docs/ops/drills/G4-3/2026-04-21-gateway.md"
+        },
+        {
+          "id": "G4-4",
+          "status": "pass",
+          "evidence": "rollback.md + drill: docs/ops/drills/G4-4/2026-04-21-gateway.md"
+        },
+        {
+          "id": "G4-5",
+          "status": "pass",
+          "evidence": "runbook + drill: docs/ops/drills/G4-5/2026-04-21-gateway.md"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/gateway.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/gateway.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/gateway.md"
+        }
+      ]
+    },
+    {
+      "module": "gtm",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-gtm.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/gtm/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "6 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for gtm"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no gtm section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for gtm"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/marketing/gtm/oneerp_gtm_app/routes/compliance.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/marketing/gtm/oneerp_gtm_app/routes/compliance.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/marketing/gtm/tests/unit/test_m3_gtm_campaign_pilot.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in gtm"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for gtm"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for gtm within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for gtm within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for gtm within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/gtm.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/gtm.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/gtm.md"
+        }
+      ]
+    },
+    {
+      "module": "hr",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-hr.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/hr/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "48 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for hr"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no hr section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for hr"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/hr/hr/oneerp_hr_app/routes/leave_types.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/hr/hr/oneerp_hr_app/routes/leave_types.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/hr/hr/tests/unit/test_attendance_service.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in hr"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for hr"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for hr within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for hr within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for hr within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/hr.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/hr.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/hr.md"
+        }
+      ]
+    },
+    {
+      "module": "integration-hub",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-integration-hub.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/integration-hub/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "fail",
+          "evidence": "no unit tests"
+        },
+        {
+          "id": "G1-5",
+          "status": "pass",
+          "evidence": "2 configs (e.g. integration-connectors)"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no integration-hub section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for integration-hub"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "fail",
+          "evidence": "no auth import pattern"
+        },
+        {
+          "id": "G3-2",
+          "status": "fail",
+          "evidence": "no permission check pattern in module"
+        },
+        {
+          "id": "G3-3",
+          "status": "fail",
+          "evidence": "no tenant_id pattern"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in integration-hub"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for integration-hub"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for integration-hub within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for integration-hub within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for integration-hub within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/integration-hub.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/integration-hub.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/integration-hub.md"
+        }
+      ]
+    },
+    {
+      "module": "iot",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-iot.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/iot/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "10 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "pass",
+          "evidence": "3 configs (e.g. iot-data-points)"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no iot section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for iot"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "fail",
+          "evidence": "no auth import pattern"
+        },
+        {
+          "id": "G3-2",
+          "status": "fail",
+          "evidence": "no permission check pattern in module"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/platform/iot/tests/unit/test_m3_sensor_stream.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in iot"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for iot"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for iot within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for iot within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for iot within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/iot.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/iot.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/iot.md"
+        }
+      ]
+    },
+    {
+      "module": "knowledge",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-knowledge.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/knowledge/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "8 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "pass",
+          "evidence": "3 configs (e.g. knowledge-categories)"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no knowledge section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for knowledge"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/collab/knowledge/oneerp_knowledge_app/routes/article_actions.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/collab/knowledge/oneerp_knowledge_app/routes/article_actions.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/collab/knowledge/tests/unit/test_article_service.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in knowledge"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for knowledge"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for knowledge within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for knowledge within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for knowledge within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/knowledge.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/knowledge.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/knowledge.md"
+        }
+      ]
+    },
+    {
+      "module": "lms",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-lms.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/learning/openapi.yaml (via learning)"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "1 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for lms"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no lms section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for lms"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/hr/learning/oneerp_learning_app/workreport/routes/work_report_comments.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/hr/learning/oneerp_learning_app/workreport/routes/work_report_comments.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/hr/learning/oneerp_learning_app/workreport/events/handlers.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in learning"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for lms"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for lms within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for lms within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for lms within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/lms.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/lms.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/lms.md"
+        }
+      ]
+    },
+    {
+      "module": "mail",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-mail.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/comms/openapi.yaml (via comms)"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "fail",
+          "evidence": "no unit tests"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for mail"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no mail section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for mail"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "fail",
+          "evidence": "no auth import pattern"
+        },
+        {
+          "id": "G3-2",
+          "status": "fail",
+          "evidence": "no permission check pattern in module"
+        },
+        {
+          "id": "G3-3",
+          "status": "fail",
+          "evidence": "no tenant_id pattern"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in comms"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for mail"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for mail within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for mail within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for mail within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/mail.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/mail.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/mail.md"
+        }
+      ]
+    },
+    {
+      "module": "maintenance",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-maintenance.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/qm/openapi.yaml (via qm)"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "fail",
+          "evidence": "no unit tests"
+        },
+        {
+          "id": "G1-5",
+          "status": "pass",
+          "evidence": "4 configs (e.g. maintenance-logs)"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no maintenance section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for maintenance"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/scm/qm/oneerp_qm_app/quality/routes/quality_inspections.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/scm/qm/oneerp_qm_app/quality/routes/quality_inspections.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/scm/qm/oneerp_qm_app/maintenance/services/cbm_threshold_service.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in qm"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for maintenance"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for maintenance within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for maintenance within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for maintenance within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/maintenance.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/maintenance.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/maintenance.md"
+        }
+      ]
+    },
+    {
+      "module": "manufacturing",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-manufacturing.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/manufacturing/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "30 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for manufacturing"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no manufacturing section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for manufacturing"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/scm/manufacturing/oneerp_manufacturing_app/routes/production_plans.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/scm/manufacturing/oneerp_manufacturing_app/routes/production_plans.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/scm/manufacturing/oneerp_manufacturing_app/routes/production_plans.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in manufacturing"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for manufacturing"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for manufacturing within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for manufacturing within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for manufacturing within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/manufacturing.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/manufacturing.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/manufacturing.md"
+        }
+      ]
+    },
+    {
+      "module": "marketing",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-marketing.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/marketing/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "4 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "pass",
+          "evidence": "2 configs (e.g. marketing-lists)"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no marketing section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for marketing"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/marketing/marketing/oneerp_marketing_app/routes/campaigns.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/marketing/marketing/oneerp_marketing_app/routes/campaigns.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/marketing/marketing/oneerp_marketing_app/routes/campaigns.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in marketing"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for marketing"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for marketing within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for marketing within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for marketing within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/marketing.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/marketing.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/marketing.md"
+        }
+      ]
+    },
+    {
+      "module": "marketing-automation",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-marketing-automation.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/marketing-automation/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "fail",
+          "evidence": "no unit tests"
+        },
+        {
+          "id": "G1-5",
+          "status": "pass",
+          "evidence": "2 configs (e.g. marketing-lists)"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no marketing-automation section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for marketing-automation"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "fail",
+          "evidence": "no auth import pattern"
+        },
+        {
+          "id": "G3-2",
+          "status": "fail",
+          "evidence": "no permission check pattern in module"
+        },
+        {
+          "id": "G3-3",
+          "status": "fail",
+          "evidence": "no tenant_id pattern"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in marketing-automation"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for marketing-automation"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for marketing-automation within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for marketing-automation within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for marketing-automation within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/marketing-automation.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/marketing-automation.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/marketing-automation.md"
+        }
+      ]
+    },
+    {
+      "module": "messenger",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-messenger.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/portal/openapi.yaml (via portal)"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "fail",
+          "evidence": "no unit tests"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for messenger"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no messenger section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for messenger"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "fail",
+          "evidence": "no auth import pattern"
+        },
+        {
+          "id": "G3-2",
+          "status": "fail",
+          "evidence": "no permission check pattern in module"
+        },
+        {
+          "id": "G3-3",
+          "status": "fail",
+          "evidence": "no tenant_id pattern"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in portal"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for messenger"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for messenger within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for messenger within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for messenger within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/messenger.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/messenger.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/messenger.md"
+        }
+      ]
+    },
+    {
+      "module": "payroll",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-payroll.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/payroll/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "28 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "pass",
+          "evidence": "2 configs (e.g. payroll-entries)"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no payroll section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for payroll"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/finance/payroll/tests/unit/test_payroll_entries.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/finance/payroll/oneerp_payroll_app/routes/salary_slips.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/finance/payroll/tests/unit/test_payroll_entries.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in payroll"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for payroll"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for payroll within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for payroll within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for payroll within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/payroll.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/payroll.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/payroll.md"
+        }
+      ]
+    },
+    {
+      "module": "plm",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-plm.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/plm/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "12 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for plm"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no plm section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for plm"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/assets/plm/oneerp_plm_app/routes/products.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/assets/plm/oneerp_plm_app/routes/products.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/assets/plm/oneerp_plm_app/routes/products.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in plm"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for plm"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for plm within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for plm within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for plm within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/plm.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/plm.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/plm.md"
+        }
+      ]
+    },
+    {
+      "module": "portal",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-portal.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/portal/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "fail",
+          "evidence": "no unit tests"
+        },
+        {
+          "id": "G1-5",
+          "status": "pass",
+          "evidence": "1 configs (e.g. portal-users)"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no portal section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for portal"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "fail",
+          "evidence": "no auth import pattern"
+        },
+        {
+          "id": "G3-2",
+          "status": "fail",
+          "evidence": "no permission check pattern in module"
+        },
+        {
+          "id": "G3-3",
+          "status": "fail",
+          "evidence": "no tenant_id pattern"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in portal"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for portal"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for portal within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for portal within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for portal within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/portal.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/portal.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/portal.md"
+        }
+      ]
+    },
+    {
+      "module": "pos",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-pos.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/pos/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "4 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "pass",
+          "evidence": "5 configs (e.g. pos-transactions)"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no pos section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for pos"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "fail",
+          "evidence": "no auth import pattern"
+        },
+        {
+          "id": "G3-2",
+          "status": "fail",
+          "evidence": "no permission check pattern in module"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/sales/pos/tests/unit/test_m3_pos_receipt_pilot.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in pos"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for pos"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for pos within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for pos within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for pos within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/pos.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/pos.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/pos.md"
+        }
+      ]
+    },
+    {
+      "module": "projects",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-projects.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/projects/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "20 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "pass",
+          "evidence": "1 configs (e.g. projects)"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no projects section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for projects"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/collab/projects/tests/unit/test_activity_types.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/collab/projects/oneerp_projects_app/routes/tasks.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/collab/projects/tests/unit/test_timesheet_service.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in projects"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for projects"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for projects within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for projects within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for projects within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/projects.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/projects.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/projects.md"
+        }
+      ]
+    },
+    {
+      "module": "quality",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-quality.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/qm/openapi.yaml (via qm)"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "fail",
+          "evidence": "no unit tests"
+        },
+        {
+          "id": "G1-5",
+          "status": "pass",
+          "evidence": "8 configs (e.g. quality-inspections)"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no quality section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for quality"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/scm/qm/oneerp_qm_app/quality/routes/quality_inspections.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/scm/qm/oneerp_qm_app/quality/routes/quality_inspections.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/scm/qm/oneerp_qm_app/maintenance/services/cbm_threshold_service.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in qm"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for quality"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for quality within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for quality within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for quality within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/quality.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/quality.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/quality.md"
+        }
+      ]
+    },
+    {
+      "module": "rental",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-rental.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/reservation/openapi.yaml (via reservation)"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "1 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "pass",
+          "evidence": "3 configs (e.g. rental-orders)"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no rental section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for rental"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "fail",
+          "evidence": "no auth import pattern"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/sales/reservation/oneerp_reservation_app/reservation/routes/reservation_policies.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/sales/reservation/oneerp_reservation_app/reservation/events/handlers.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in reservation"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for rental"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for rental within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for rental within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for rental within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/rental.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/rental.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/rental.md"
+        }
+      ]
+    },
+    {
+      "module": "reservation",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-reservation.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/reservation/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "2 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for reservation"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no reservation section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for reservation"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "fail",
+          "evidence": "no auth import pattern"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/sales/reservation/oneerp_reservation_app/reservation/routes/reservation_policies.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/sales/reservation/oneerp_reservation_app/reservation/events/handlers.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in reservation"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for reservation"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for reservation within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for reservation within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for reservation within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/reservation.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/reservation.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/reservation.md"
+        }
+      ]
+    },
+    {
+      "module": "rpa",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-rpa.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/rpa/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "14 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for rpa"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no rpa section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for rpa"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/platform/rpa/oneerp_rpa_app/routes/rpa_tasks.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/platform/rpa/oneerp_rpa_app/routes/rpa_tasks.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/platform/rpa/oneerp_rpa_app/routes/rpa_tasks.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in rpa"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for rpa"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for rpa within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for rpa within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for rpa within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/rpa.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/rpa.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/rpa.md"
+        }
+      ]
+    },
+    {
+      "module": "selling",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-selling.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/selling/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "56 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for selling"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no selling section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for selling"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/sales/selling/oneerp_selling_app/routes/quotations.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/sales/selling/oneerp_selling_app/routes/quotations.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/sales/selling/tests/unit/test_quotation_conversion.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in selling"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for selling"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for selling within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for selling within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for selling within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/selling.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/selling.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/selling.md"
+        }
+      ]
+    },
+    {
+      "module": "stock",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-stock.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/stock/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "50 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "pass",
+          "evidence": "4 configs (e.g. stock-entries)"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no stock section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for stock"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/scm/stock/oneerp_stock_app/routes/item_prices.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/scm/stock/oneerp_stock_app/routes/item_prices.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/scm/stock/oneerp_stock_app/models/serial_batch_bundle.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in stock"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for stock"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for stock within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for stock within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for stock within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/stock.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/stock.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/stock.md"
+        }
+      ]
+    },
+    {
+      "module": "subscriptions",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-subscriptions.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/commerce/openapi.yaml (via commerce)"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "fail",
+          "evidence": "no unit tests"
+        },
+        {
+          "id": "G1-5",
+          "status": "pass",
+          "evidence": "1 configs (e.g. subscriptions)"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no subscriptions section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for subscriptions"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/sales/commerce/oneerp_commerce_app/subscriptions/routes/subscriptions.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/sales/commerce/oneerp_commerce_app/subscriptions/routes/subscriptions.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/sales/commerce/oneerp_commerce_app/subscriptions/routes/subscriptions.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in commerce"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for subscriptions"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for subscriptions within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for subscriptions within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for subscriptions within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/subscriptions.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/subscriptions.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/subscriptions.md"
+        }
+      ]
+    },
+    {
+      "module": "survey",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-survey.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/survey/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "6 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "pass",
+          "evidence": "1 configs (e.g. survey-responses)"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no survey section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for survey"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/collab/survey/oneerp_survey_app/routes/survey_routes.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/collab/survey/oneerp_survey_app/routes/survey_routes.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/collab/survey/oneerp_survey_app/routes/survey_routes.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in survey"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for survey"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for survey within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for survey within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for survey within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/survey.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/survey.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/survey.md"
+        }
+      ]
+    },
+    {
+      "module": "tms",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-tms.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/logistics/openapi.yaml (via logistics)"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "fail",
+          "evidence": "no unit tests"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for tms"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no tms section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for tms"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/logistics/logistics/oneerp_logistics_app/tms/routes/delivery_orders.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/logistics/logistics/oneerp_logistics_app/fleet/routes/vehicle_tco.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/logistics/logistics/tests/fleet/unit/test_m3_dispatch_pilot.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in logistics"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for tms"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for tms within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for tms within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for tms within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/tms.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/tms.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/tms.md"
+        }
+      ]
+    },
+    {
+      "module": "wiki",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-wiki.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/wiki/openapi.yaml"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "10 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for wiki"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no wiki section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for wiki"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/collab/wiki/oneerp_wiki_app/routes/wiki_pages.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/collab/wiki/oneerp_wiki_app/routes/wiki_pages.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/collab/wiki/tests/unit/test_wiki_search_service.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in wiki"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for wiki"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for wiki within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for wiki within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for wiki within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/wiki.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/wiki.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/wiki.md"
+        }
+      ]
+    },
+    {
+      "module": "workreport",
+      "label": "alpha",
+      "gates": [
+        {
+          "id": "G1-1",
+          "status": "pass",
+          "evidence": "docs/generated/erd-workreport.md"
+        },
+        {
+          "id": "G1-2",
+          "status": "pass",
+          "evidence": "docs/api/learning/openapi.yaml (via learning)"
+        },
+        {
+          "id": "G1-3",
+          "status": "fail",
+          "evidence": "no integration tests"
+        },
+        {
+          "id": "G1-4",
+          "status": "pass",
+          "evidence": "1 unit test files"
+        },
+        {
+          "id": "G1-5",
+          "status": "fail",
+          "evidence": "no EntityConfig for workreport"
+        },
+        {
+          "id": "G2-1",
+          "status": "fail",
+          "evidence": "no workreport section in slo.md"
+        },
+        {
+          "id": "G2-2",
+          "status": "fail",
+          "evidence": "no load test artifact"
+        },
+        {
+          "id": "G2-3",
+          "status": "fail",
+          "evidence": "no scripts/perf/regression.py"
+        },
+        {
+          "id": "G2-4",
+          "status": "fail",
+          "evidence": "no chaos report for workreport"
+        },
+        {
+          "id": "G2-5",
+          "status": "fail",
+          "evidence": "no i18n infra (apps/web/messages etc.)"
+        },
+        {
+          "id": "G3-1",
+          "status": "pass",
+          "evidence": "auth import: services/hr/learning/oneerp_learning_app/workreport/routes/work_report_comments.py"
+        },
+        {
+          "id": "G3-2",
+          "status": "pass",
+          "evidence": "permission check: services/hr/learning/oneerp_learning_app/workreport/routes/work_report_comments.py"
+        },
+        {
+          "id": "G3-3",
+          "status": "pass",
+          "evidence": "tenancy pattern: services/hr/learning/oneerp_learning_app/workreport/events/handlers.py"
+        },
+        {
+          "id": "G3-4",
+          "status": "fail",
+          "evidence": "no audit log pattern"
+        },
+        {
+          "id": "G3-5",
+          "status": "fail",
+          "evidence": "no pip-audit/npm audit in CI"
+        },
+        {
+          "id": "G4-1",
+          "status": "pass",
+          "evidence": "/health found in learning"
+        },
+        {
+          "id": "G4-2",
+          "status": "fail",
+          "evidence": "no module/host runbook for workreport"
+        },
+        {
+          "id": "G4-3",
+          "status": "not_implemented",
+          "evidence": "no drill for workreport within 90d under docs/ops/drills/G4-3/"
+        },
+        {
+          "id": "G4-4",
+          "status": "not_implemented",
+          "evidence": "no drill for workreport within 90d under docs/ops/drills/G4-4/"
+        },
+        {
+          "id": "G4-5",
+          "status": "not_implemented",
+          "evidence": "no drill for workreport within 90d under docs/ops/drills/G4-5/"
+        },
+        {
+          "id": "G5-1",
+          "status": "fail",
+          "evidence": "no user-manual/workreport.md"
+        },
+        {
+          "id": "G5-2",
+          "status": "fail",
+          "evidence": "no tutorials/workreport.md"
+        },
+        {
+          "id": "G5-3",
+          "status": "fail",
+          "evidence": "no governance/commercial/workreport.md"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+# 로컬 개발/테스트 전용 오버라이드
+# E2E pytest 가 호스트에서 직접 FerretDB·NATS에 접근할 수 있도록 포트를 노출한다.
+# 이 파일은 프로덕션/배포에 포함되지 않는다.
+services:
+  ferretdb:
+    ports:
+      - "${ONEERP_FERRETDB_HOST_PORT:-27017}:27017"
+  nats:
+    ports:
+      - "${ONEERP_NATS_HOST_PORT:-4222}:4222"
+      - "${ONEERP_NATS_MONITOR_HOST_PORT:-8222}:8222"
+  valkey:
+    ports:
+      - "${ONEERP_VALKEY_HOST_PORT:-6379}:6379"
+  seed-data:
+    image: ghcr.io/astral-sh/uv:python3.14-bookworm-slim
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    environment:
+      ONEERP_FERRETDB_URI: mongodb://ferretdb:27017
+      ONEERP_DATABASE_NAME: oneerp
+      ONEERP_DEV_ADMIN_USERNAME: ${ONEERP_DEV_ADMIN_USERNAME:-demo}
+      ONEERP_DEV_ADMIN_PASSWORD: ${ONEERP_DEV_ADMIN_PASSWORD:-demo1234}
+    command:
+      - bash
+      - -lc
+      - ./scripts/dev/seed-data.sh
+    depends_on:
+      ferretdb:
+        condition: service_healthy
+    restart: "no"

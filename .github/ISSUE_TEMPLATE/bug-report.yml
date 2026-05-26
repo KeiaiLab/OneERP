@@ -1,0 +1,53 @@
+name: Bug Report
+description: 버그를 신고합니다
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: 버그 설명
+      description: 무엇이 잘못되었나요?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 재현 단계
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 기대 동작
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 실제 동작
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: OneERP 버전
+      placeholder: v0.1.0
+  - type: dropdown
+    id: module
+    attributes:
+      label: 관련 모듈
+      options:
+        - core
+        - web (프론트엔드)
+        - finance (회계)
+        - hr (인사)
+        - sales (판매)
+        - scm (공급망)
+        - logistics (물류)
+        - portal (포털)
+        - 기타

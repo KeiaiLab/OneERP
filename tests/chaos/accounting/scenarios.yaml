@@ -1,0 +1,37 @@
+# chaos-mesh 시나리오 · staging 배포 후 실행
+# accounting 모듈 · PodChaos + NetworkChaos 조합
+apiVersion: chaosmesh.org/v1alpha1
+kind: PodChaos
+metadata:
+  name: accounting-pod-kill
+  namespace: staging
+spec:
+  action: pod-kill
+  mode: one
+  duration: "30s"
+  selector:
+    labelSelectors:
+      app: accounting
+    namespaces: ["staging"]
+  scheduler:
+    cron: "@every 5m"
+---
+apiVersion: chaosmesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: accounting-network-delay
+  namespace: staging
+spec:
+  action: delay
+  mode: one
+  duration: "60s"
+  selector:
+    labelSelectors:
+      app: accounting
+    namespaces: ["staging"]
+  delay:
+    latency: "200ms"
+    correlation: "50"
+    jitter: "50ms"
+  scheduler:
+    cron: "@every 10m"

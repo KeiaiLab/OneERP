@@ -1,0 +1,30 @@
+OneERP
+Copyright 2024-2026 Keiailab Co., Ltd.
+
+This product is licensed under the GNU Affero General Public License v3.0.
+See the LICENSE file for the full license text.
+
+This product includes software developed by third parties.
+See the dependency license reports in artifacts/dep-audit/ for details.
+
+---
+
+Third-party components and their licenses:
+
+FastAPI — MIT License
+  Copyright (c) 2018 Sebastián Ramírez
+
+Pydantic — MIT License
+  Copyright (c) 2017 Samuel Colvin
+
+Next.js — MIT License
+  Copyright (c) 2024 Vercel, Inc.
+
+Tailwind CSS — MIT License
+  Copyright (c) Tailwind Labs, Inc.
+
+FerretDB — Apache License 2.0
+  Copyright (c) 2021 FerretDB Inc.
+
+For the complete list of dependencies and their licenses,
+run: ./scripts/oss/audit-licenses.sh

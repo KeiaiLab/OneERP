@@ -1,0 +1,19 @@
+[project]
+name = "oneerp-plane-worker"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "oneerp-core",
+    "oneerp-plane-shared",
+    "nats-py>=2.14.0",
+    # worker plane 도 create_service_app() 으로 FastAPI 앱을 노출하며 Dockerfile CMD 가
+    # uvicorn 으로 구동한다. --no-dev 빌드 시 누락되어 컨테이너 기동 실패하지 않도록 런타임 dep 로 명시.
+    "uvicorn[standard]>=0.34.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["plane_worker"]

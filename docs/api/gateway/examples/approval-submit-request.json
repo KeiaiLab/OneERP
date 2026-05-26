@@ -1,0 +1,21 @@
+{
+  "document_type": "purchase_order",
+  "document_id": "PO-2026-0042",
+  "requester": "user-001",
+  "approval_lines": [
+    {
+      "step": 1,
+      "approver": "user-002",
+      "approver_role": "팀장",
+      "approval_type": "single",
+      "pre_approval_roles": ["임원"]
+    },
+    {
+      "step": 2,
+      "approver": "user-003",
+      "approver_role": "임원",
+      "approval_type": "single",
+      "pre_approval_roles": []
+    }
+  ]
+}

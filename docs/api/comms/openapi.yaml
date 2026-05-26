@@ -1,0 +1,5056 @@
+components:
+  schemas:
+    Attachment:
+      description: 첨부파일 정보.
+      properties:
+        file_name:
+          title: File Name
+          type: string
+        file_size:
+          default: 0
+          title: File Size
+          type: integer
+        file_url:
+          title: File Url
+          type: string
+        mime_type:
+          default: ''
+          title: Mime Type
+          type: string
+      required:
+      - file_name
+      - file_url
+      title: Attachment
+      type: object
+    BatchRegisterRequest:
+      description: 인명부 배치 등록 요청 스키마.
+      properties:
+        entries:
+          items:
+            additionalProperties: true
+            type: object
+          title: Entries
+          type: array
+      required:
+      - entries
+      title: BatchRegisterRequest
+      type: object
+    DirectoryEntryStatus:
+      description: 인명부 엔트리 상태.
+      enum:
+      - active
+      - on_leave
+      - transferred
+      - resigned
+      title: DirectoryEntryStatus
+      type: string
+    DocStatus:
+      description: 문서 상태 — ERPNext 호환.
+      enum:
+      - 0
+      - 1
+      - 2
+      title: DocStatus
+      type: integer
+    EmployeeDirectory:
+      description: '인명부 엔트리 — 직원의 조직 소속 정보.
+
+
+        naming prefix: EDIR
+
+        BR-DIR-008, BR-DIR-009, BR-DIR-010'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        designation:
+          default: ''
+          description: 직책
+          title: Designation
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        effective_from:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          description: 발효일
+          title: Effective From
+        email:
+          default: ''
+          description: 이메일
+          title: Email
+          type: string
+        employee_id:
+          default: ''
+          description: 직원 ID
+          title: Employee Id
+          type: string
+        employee_name:
+          default: ''
+          description: 직원명
+          title: Employee Name
+          type: string
+        is_primary:
+          default: true
+          description: 주 소속 여부
+          title: Is Primary
+          type: boolean
+        mobile:
+          default: ''
+          description: 휴대전화
+          title: Mobile
+          type: string
+        office_location:
+          default: ''
+          description: 근무지
+          title: Office Location
+          type: string
+        org_id:
+          default: ''
+          description: 소속 조직 ID
+          title: Org Id
+          type: string
+        org_unit_id:
+          default: ''
+          description: 소속 조직 단위 ID
+          title: Org Unit Id
+          type: string
+        phone:
+          default: ''
+          description: 전화번호
+          title: Phone
+          type: string
+        position_id:
+          default: ''
+          description: 직위 ID
+          title: Position Id
+          type: string
+        status:
+          $ref: '#/components/schemas/DirectoryEntryStatus'
+          default: active
+          description: 상태
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: EmployeeDirectory
+      type: object
+    EmployeeDirectoryCreate:
+      description: '인명부 엔트리 생성 요청 스키마.
+
+
+        BR-DIR-008: employee_id와 org_unit_id는 필수이다.'
+      properties:
+        designation:
+          default: ''
+          title: Designation
+          type: string
+        effective_from:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Effective From
+        email:
+          default: ''
+          title: Email
+          type: string
+        employee_id:
+          title: Employee Id
+          type: string
+        employee_name:
+          title: Employee Name
+          type: string
+        is_primary:
+          default: true
+          title: Is Primary
+          type: boolean
+        mobile:
+          default: ''
+          title: Mobile
+          type: string
+        office_location:
+          default: ''
+          title: Office Location
+          type: string
+        org_id:
+          default: ''
+          title: Org Id
+          type: string
+        org_unit_id:
+          title: Org Unit Id
+          type: string
+        phone:
+          default: ''
+          title: Phone
+          type: string
+        position_id:
+          default: ''
+          title: Position Id
+          type: string
+      required:
+      - employee_id
+      - employee_name
+      - org_unit_id
+      title: EmployeeDirectoryCreate
+      type: object
+    EmployeeDirectoryUpdate:
+      description: 인명부 엔트리 수정 요청 스키마.
+      properties:
+        designation:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Designation
+        effective_from:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Effective From
+        email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Email
+        employee_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Employee Name
+        is_primary:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Primary
+        mobile:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Mobile
+        office_location:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Office Location
+        org_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Org Id
+        org_unit_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Org Unit Id
+        phone:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone
+        position_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Position Id
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/DirectoryEntryStatus'
+          - type: 'null'
+      title: EmployeeDirectoryUpdate
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    MailAutoRule:
+      description: '메일 자동 분류 규칙 문서.
+
+
+        BR-MAIL-050 ~ BR-MAIL-051 비즈니스 규칙을 적용한다.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        actions:
+          default: []
+          items:
+            $ref: '#/components/schemas/RuleAction'
+          title: Actions
+          type: array
+        applied_count:
+          default: 0
+          title: Applied Count
+          type: integer
+        conditions:
+          default: []
+          items:
+            $ref: '#/components/schemas/RuleCondition'
+          title: Conditions
+          type: array
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        description:
+          default: ''
+          title: Description
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        is_active:
+          default: true
+          title: Is Active
+          type: boolean
+        owner_id:
+          default: ''
+          title: Owner Id
+          type: string
+        priority_order:
+          default: 0
+          title: Priority Order
+          type: integer
+        rule_name:
+          default: ''
+          title: Rule Name
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: MailAutoRule
+      type: object
+    MailAutoRuleCreate:
+      description: 메일 자동 분류 규칙 생성 요청 스키마.
+      properties:
+        actions:
+          default: []
+          items:
+            $ref: '#/components/schemas/RuleAction'
+          title: Actions
+          type: array
+        conditions:
+          default: []
+          items:
+            $ref: '#/components/schemas/RuleCondition'
+          title: Conditions
+          type: array
+        description:
+          default: ''
+          title: Description
+          type: string
+        is_active:
+          default: true
+          title: Is Active
+          type: boolean
+        owner_id:
+          default: ''
+          title: Owner Id
+          type: string
+        priority_order:
+          default: 0
+          title: Priority Order
+          type: integer
+        rule_name:
+          maxLength: 200
+          minLength: 1
+          title: Rule Name
+          type: string
+      required:
+      - rule_name
+      title: MailAutoRuleCreate
+      type: object
+    MailAutoRuleUpdate:
+      description: 메일 자동 분류 규칙 수정 요청 스키마.
+      properties:
+        actions:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/RuleAction'
+            type: array
+          - type: 'null'
+          title: Actions
+        conditions:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/RuleCondition'
+            type: array
+          - type: 'null'
+          title: Conditions
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        is_active:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Active
+        priority_order:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Priority Order
+        rule_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Rule Name
+      title: MailAutoRuleUpdate
+      type: object
+    MailDistributionList:
+      description: '메일 배포 목록 문서.
+
+
+        BR-MAIL-040 ~ BR-MAIL-041 비즈니스 규칙을 적용한다.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        description:
+          default: ''
+          title: Description
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        is_active:
+          default: true
+          title: Is Active
+          type: boolean
+        list_name:
+          default: ''
+          title: List Name
+          type: string
+        member_count:
+          default: 0
+          title: Member Count
+          type: integer
+        members:
+          default: []
+          items:
+            type: string
+          title: Members
+          type: array
+        owner_id:
+          default: ''
+          title: Owner Id
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: MailDistributionList
+      type: object
+    MailDistributionListCreate:
+      description: 메일 배포 목록 생성 요청 스키마.
+      properties:
+        description:
+          default: ''
+          title: Description
+          type: string
+        is_active:
+          default: true
+          title: Is Active
+          type: boolean
+        list_name:
+          maxLength: 200
+          minLength: 1
+          title: List Name
+          type: string
+        members:
+          default: []
+          items:
+            type: string
+          title: Members
+          type: array
+        owner_id:
+          default: ''
+          title: Owner Id
+          type: string
+      required:
+      - list_name
+      title: MailDistributionListCreate
+      type: object
+    MailDistributionListUpdate:
+      description: 메일 배포 목록 수정 요청 스키마.
+      properties:
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        is_active:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Active
+        list_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: List Name
+        members:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Members
+      title: MailDistributionListUpdate
+      type: object
+    MailFolder:
+      description: '사내 메일 폴더 문서.
+
+
+        BR-MAIL-010 ~ BR-MAIL-012 비즈니스 규칙을 적용한다.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        color:
+          default: ''
+          title: Color
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        depth:
+          default: 0
+          title: Depth
+          type: integer
+        description:
+          default: ''
+          title: Description
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        is_system:
+          default: false
+          title: Is System
+          type: boolean
+        message_count:
+          default: 0
+          title: Message Count
+          type: integer
+        name:
+          default: ''
+          title: Name
+          type: string
+        owner_id:
+          default: ''
+          title: Owner Id
+          type: string
+        parent_folder_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Parent Folder Id
+        tenant_id:
+          title: Tenant Id
+          type: string
+        unread_count:
+          default: 0
+          title: Unread Count
+          type: integer
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: MailFolder
+      type: object
+    MailFolderCreate:
+      description: '메일 폴더 생성 요청 스키마.
+
+
+        BR-MAIL-011: 폴더명 중복 검증은 서비스에서 처리.
+
+        BR-MAIL-012: depth 최대 3.'
+      properties:
+        color:
+          default: ''
+          title: Color
+          type: string
+        depth:
+          default: 0
+          title: Depth
+          type: integer
+        description:
+          default: ''
+          title: Description
+          type: string
+        name:
+          maxLength: 100
+          minLength: 1
+          title: Name
+          type: string
+        owner_id:
+          default: ''
+          title: Owner Id
+          type: string
+        parent_folder_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Parent Folder Id
+      required:
+      - name
+      title: MailFolderCreate
+      type: object
+    MailFolderUpdate:
+      description: 메일 폴더 수정 요청 스키마.
+      properties:
+        color:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Color
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+      title: MailFolderUpdate
+      type: object
+    MailMessage:
+      description: '사내 메일 메시지 문서.
+
+
+        BR-MAIL-001 ~ BR-MAIL-004 비즈니스 규칙을 적용한다.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        attachments:
+          default: []
+          items:
+            $ref: '#/components/schemas/Attachment'
+          title: Attachments
+          type: array
+        bcc:
+          default: []
+          items:
+            type: string
+          title: Bcc
+          type: array
+        body:
+          default: ''
+          title: Body
+          type: string
+        body_html:
+          default: ''
+          title: Body Html
+          type: string
+        cc:
+          default: []
+          items:
+            type: string
+          title: Cc
+          type: array
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        folder:
+          default: inbox
+          title: Folder
+          type: string
+        is_archived:
+          default: false
+          title: Is Archived
+          type: boolean
+        is_deleted:
+          default: false
+          title: Is Deleted
+          type: boolean
+        is_forward:
+          default: false
+          title: Is Forward
+          type: boolean
+        is_read:
+          default: false
+          title: Is Read
+          type: boolean
+        is_reply:
+          default: false
+          title: Is Reply
+          type: boolean
+        is_starred:
+          default: false
+          title: Is Starred
+          type: boolean
+        parent_message_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Parent Message Id
+        priority:
+          $ref: '#/components/schemas/MailPriority'
+          default: normal
+        read_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Read At
+        recipients:
+          default: []
+          items:
+            $ref: '#/components/schemas/Recipient'
+          title: Recipients
+          type: array
+        sender_id:
+          default: ''
+          title: Sender Id
+          type: string
+        sent_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sent At
+        status:
+          $ref: '#/components/schemas/MailStatus'
+          default: draft
+        subject:
+          default: ''
+          title: Subject
+          type: string
+        tags:
+          default: []
+          items:
+            type: string
+          title: Tags
+          type: array
+        tenant_id:
+          title: Tenant Id
+          type: string
+        thread_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Thread Id
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: MailMessage
+      type: object
+    MailMessageCreate:
+      description: '메일 메시지 생성 요청 스키마.
+
+
+        BR-MAIL-001: 수신자가 하나 이상 필요하다.
+
+        BR-MAIL-002: 제목은 비어있을 수 없다.'
+      properties:
+        attachments:
+          default: []
+          items:
+            $ref: '#/components/schemas/Attachment'
+          title: Attachments
+          type: array
+        bcc:
+          default: []
+          items:
+            type: string
+          title: Bcc
+          type: array
+        body:
+          default: ''
+          title: Body
+          type: string
+        body_html:
+          default: ''
+          title: Body Html
+          type: string
+        cc:
+          default: []
+          items:
+            type: string
+          title: Cc
+          type: array
+        folder:
+          default: inbox
+          title: Folder
+          type: string
+        is_forward:
+          default: false
+          title: Is Forward
+          type: boolean
+        is_reply:
+          default: false
+          title: Is Reply
+          type: boolean
+        parent_message_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Parent Message Id
+        priority:
+          $ref: '#/components/schemas/MailPriority'
+          default: normal
+        recipients:
+          default: []
+          items:
+            $ref: '#/components/schemas/Recipient'
+          title: Recipients
+          type: array
+        sender_id:
+          default: ''
+          title: Sender Id
+          type: string
+        subject:
+          maxLength: 500
+          minLength: 1
+          title: Subject
+          type: string
+        tags:
+          default: []
+          items:
+            type: string
+          title: Tags
+          type: array
+        thread_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Thread Id
+      required:
+      - subject
+      title: MailMessageCreate
+      type: object
+    MailMessageUpdate:
+      description: '메일 메시지 수정 요청 스키마.
+
+
+        BR-MAIL-003: 전송된 메시지는 수정 불가하므로 draft 상태에서만 수정 가능.'
+      properties:
+        attachments:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/Attachment'
+            type: array
+          - type: 'null'
+          title: Attachments
+        bcc:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Bcc
+        body:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Body
+        body_html:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Body Html
+        cc:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Cc
+        folder:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Folder
+        priority:
+          anyOf:
+          - $ref: '#/components/schemas/MailPriority'
+          - type: 'null'
+        recipients:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/Recipient'
+            type: array
+          - type: 'null'
+          title: Recipients
+        subject:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Subject
+        tags:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Tags
+      title: MailMessageUpdate
+      type: object
+    MailPriority:
+      description: 메일 우선순위.
+      enum:
+      - low
+      - normal
+      - high
+      - urgent
+      title: MailPriority
+      type: string
+    MailRecipientStatus:
+      description: '수신자별 메일 상태 문서.
+
+
+        BR-MAIL-030 ~ BR-MAIL-031 비즈니스 규칙을 적용한다.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        deleted_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deleted At
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        folder:
+          default: inbox
+          title: Folder
+          type: string
+        is_deleted:
+          default: false
+          title: Is Deleted
+          type: boolean
+        is_starred:
+          default: false
+          title: Is Starred
+          type: boolean
+        message_id:
+          default: ''
+          title: Message Id
+          type: string
+        read_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Read At
+        status:
+          $ref: '#/components/schemas/RecipientMailStatus'
+          default: unread
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        user_id:
+          default: ''
+          title: User Id
+          type: string
+      title: MailRecipientStatus
+      type: object
+    MailRecipientStatusCreate:
+      description: 수신자별 메일 상태 생성 요청 스키마.
+      properties:
+        folder:
+          default: inbox
+          title: Folder
+          type: string
+        is_starred:
+          default: false
+          title: Is Starred
+          type: boolean
+        message_id:
+          title: Message Id
+          type: string
+        status:
+          $ref: '#/components/schemas/RecipientMailStatus'
+          default: unread
+        user_id:
+          title: User Id
+          type: string
+      required:
+      - message_id
+      - user_id
+      title: MailRecipientStatusCreate
+      type: object
+    MailRecipientStatusUpdate:
+      description: 수신자별 메일 상태 수정 요청 스키마.
+      properties:
+        folder:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Folder
+        is_starred:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Starred
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/RecipientMailStatus'
+          - type: 'null'
+      title: MailRecipientStatusUpdate
+      type: object
+    MailStatus:
+      description: 메일 상태.
+      enum:
+      - draft
+      - sent
+      - cancelled
+      title: MailStatus
+      type: string
+    MailTemplate:
+      description: '사내 메일 템플릿 문서.
+
+
+        BR-MAIL-020 ~ BR-MAIL-021 비즈니스 규칙을 적용한다.'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        body_html_template:
+          default: ''
+          title: Body Html Template
+          type: string
+        body_template:
+          default: ''
+          title: Body Template
+          type: string
+        category:
+          default: ''
+          title: Category
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        description:
+          default: ''
+          title: Description
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        is_active:
+          default: true
+          title: Is Active
+          type: boolean
+        subject_template:
+          default: ''
+          title: Subject Template
+          type: string
+        template_name:
+          default: ''
+          title: Template Name
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        usage_count:
+          default: 0
+          title: Usage Count
+          type: integer
+        variables:
+          default: []
+          items:
+            type: string
+          title: Variables
+          type: array
+      title: MailTemplate
+      type: object
+    MailTemplateCreate:
+      description: 메일 템플릿 생성 요청 스키마.
+      properties:
+        body_html_template:
+          default: ''
+          title: Body Html Template
+          type: string
+        body_template:
+          default: ''
+          title: Body Template
+          type: string
+        category:
+          default: ''
+          title: Category
+          type: string
+        description:
+          default: ''
+          title: Description
+          type: string
+        is_active:
+          default: true
+          title: Is Active
+          type: boolean
+        subject_template:
+          default: ''
+          title: Subject Template
+          type: string
+        template_name:
+          maxLength: 200
+          minLength: 1
+          title: Template Name
+          type: string
+        variables:
+          default: []
+          items:
+            type: string
+          title: Variables
+          type: array
+      required:
+      - template_name
+      title: MailTemplateCreate
+      type: object
+    MailTemplateUpdate:
+      description: 메일 템플릿 수정 요청 스키마.
+      properties:
+        body_html_template:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Body Html Template
+        body_template:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Body Template
+        category:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Category
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        is_active:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Active
+        subject_template:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Subject Template
+        template_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Template Name
+        variables:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Variables
+      title: MailTemplateUpdate
+      type: object
+    OrgChartSnapshot:
+      description: '조직도 스냅샷 — 특정 시점의 조직 구조 보존.
+
+
+        naming prefix: SNAP
+
+        BR-DIR-011, BR-DIR-012'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        description:
+          default: ''
+          description: 설명
+          title: Description
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        org_id:
+          default: ''
+          description: 조직 ID
+          title: Org Id
+          type: string
+        snapshot_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          description: 스냅샷 일자
+          title: Snapshot Date
+        tenant_id:
+          title: Tenant Id
+          type: string
+        total_employees:
+          default: 0
+          description: 총 인원 수
+          title: Total Employees
+          type: integer
+        total_units:
+          default: 0
+          description: 총 조직 단위 수
+          title: Total Units
+          type: integer
+        tree_data:
+          description: 조직 트리 데이터
+          items:
+            additionalProperties: true
+            type: object
+          title: Tree Data
+          type: array
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: OrgChartSnapshot
+      type: object
+    OrgChartSnapshotCreate:
+      description: '조직도 스냅샷 생성 요청 스키마.
+
+
+        BR-DIR-011: org_id와 snapshot_date는 필수이다.'
+      properties:
+        description:
+          default: ''
+          title: Description
+          type: string
+        org_id:
+          title: Org Id
+          type: string
+        snapshot_date:
+          format: date
+          title: Snapshot Date
+          type: string
+      required:
+      - org_id
+      - snapshot_date
+      title: OrgChartSnapshotCreate
+      type: object
+    OrgChartSnapshotUpdate:
+      description: 조직도 스냅샷 수정 요청 스키마.
+      properties:
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+      title: OrgChartSnapshotUpdate
+      type: object
+    OrgStatus:
+      description: 조직 상태.
+      enum:
+      - active
+      - inactive
+      title: OrgStatus
+      type: string
+    OrgUnit:
+      description: '조직 단위 마스터 — 부서/팀/실/본부 등 계층형 단위.
+
+
+        naming prefix: UNIT
+
+        BR-DIR-003, BR-DIR-004, BR-DIR-005'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        cost_center:
+          default: ''
+          description: 코스트센터
+          title: Cost Center
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        head_employee_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: 조직장 직원 ID
+          title: Head Employee Id
+        org_id:
+          default: ''
+          description: 소속 조직 ID
+          title: Org Id
+          type: string
+        parent_unit_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: 상위 조직 단위 ID
+          title: Parent Unit Id
+        sort_order:
+          default: 0
+          description: 정렬 순서
+          title: Sort Order
+          type: integer
+        status:
+          $ref: '#/components/schemas/UnitStatus'
+          default: active
+          description: 상태
+        tenant_id:
+          title: Tenant Id
+          type: string
+        unit_code:
+          default: ''
+          description: 조직 단위 코드
+          title: Unit Code
+          type: string
+        unit_name:
+          default: ''
+          description: 조직 단위 명칭
+          title: Unit Name
+          type: string
+        unit_name_en:
+          default: ''
+          description: 조직 단위 영문 명칭
+          title: Unit Name En
+          type: string
+        unit_type:
+          $ref: '#/components/schemas/UnitType'
+          default: department
+          description: 단위 유형
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: OrgUnit
+      type: object
+    OrgUnitCreate:
+      description: '조직 단위 생성 요청 스키마.
+
+
+        BR-DIR-003: org_id는 필수이다.
+
+        BR-DIR-004: unit_code는 필수이다.'
+      properties:
+        cost_center:
+          default: ''
+          title: Cost Center
+          type: string
+        head_employee_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Head Employee Id
+        org_id:
+          title: Org Id
+          type: string
+        parent_unit_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Parent Unit Id
+        sort_order:
+          default: 0
+          title: Sort Order
+          type: integer
+        unit_code:
+          title: Unit Code
+          type: string
+        unit_name:
+          title: Unit Name
+          type: string
+        unit_name_en:
+          default: ''
+          title: Unit Name En
+          type: string
+        unit_type:
+          $ref: '#/components/schemas/UnitType'
+          default: department
+      required:
+      - org_id
+      - unit_code
+      - unit_name
+      title: OrgUnitCreate
+      type: object
+    OrgUnitUpdate:
+      description: 조직 단위 수정 요청 스키마.
+      properties:
+        cost_center:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Cost Center
+        head_employee_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Head Employee Id
+        parent_unit_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Parent Unit Id
+        sort_order:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Sort Order
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/UnitStatus'
+          - type: 'null'
+        unit_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Unit Code
+        unit_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Unit Name
+        unit_name_en:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Unit Name En
+        unit_type:
+          anyOf:
+          - $ref: '#/components/schemas/UnitType'
+          - type: 'null'
+      title: OrgUnitUpdate
+      type: object
+    Organization:
+      description: '법인/조직 마스터 — 최상위 조직 단위.
+
+
+        naming prefix: ORG
+
+        BR-DIR-001, BR-DIR-002'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        address:
+          default: ''
+          description: 주소
+          title: Address
+          type: string
+        business_number:
+          default: ''
+          description: 사업자 번호
+          title: Business Number
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        industry:
+          default: ''
+          description: 업종
+          title: Industry
+          type: string
+        org_code:
+          default: ''
+          description: 조직 고유 코드
+          title: Org Code
+          type: string
+        org_name:
+          default: ''
+          description: 조직 명칭
+          title: Org Name
+          type: string
+        org_name_en:
+          default: ''
+          description: 조직 영문 명칭
+          title: Org Name En
+          type: string
+        parent_org_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: 상위 조직 ID
+          title: Parent Org Id
+        phone:
+          default: ''
+          description: 전화번호
+          title: Phone
+          type: string
+        representative:
+          default: ''
+          description: 대표자
+          title: Representative
+          type: string
+        status:
+          $ref: '#/components/schemas/OrgStatus'
+          default: active
+          description: 상태
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: Organization
+      type: object
+    OrganizationCreate:
+      description: '조직 생성 요청 스키마.
+
+
+        BR-DIR-001: org_code와 org_name은 필수이다.'
+      properties:
+        address:
+          default: ''
+          title: Address
+          type: string
+        business_number:
+          default: ''
+          title: Business Number
+          type: string
+        industry:
+          default: ''
+          title: Industry
+          type: string
+        org_code:
+          title: Org Code
+          type: string
+        org_name:
+          title: Org Name
+          type: string
+        org_name_en:
+          default: ''
+          title: Org Name En
+          type: string
+        parent_org_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Parent Org Id
+        phone:
+          default: ''
+          title: Phone
+          type: string
+        representative:
+          default: ''
+          title: Representative
+          type: string
+      required:
+      - org_code
+      - org_name
+      title: OrganizationCreate
+      type: object
+    OrganizationUpdate:
+      description: 조직 수정 요청 스키마.
+      properties:
+        address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address
+        business_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Business Number
+        industry:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Industry
+        org_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Org Code
+        org_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Org Name
+        org_name_en:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Org Name En
+        parent_org_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Parent Org Id
+        phone:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone
+        representative:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Representative
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/OrgStatus'
+          - type: 'null'
+      title: OrganizationUpdate
+      type: object
+    PaginatedResponse_EmployeeDirectory_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/EmployeeDirectory'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[EmployeeDirectory]
+      type: object
+    PaginatedResponse_MailAutoRule_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/MailAutoRule'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[MailAutoRule]
+      type: object
+    PaginatedResponse_MailDistributionList_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/MailDistributionList'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[MailDistributionList]
+      type: object
+    PaginatedResponse_MailFolder_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/MailFolder'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[MailFolder]
+      type: object
+    PaginatedResponse_MailMessage_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/MailMessage'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[MailMessage]
+      type: object
+    PaginatedResponse_MailRecipientStatus_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/MailRecipientStatus'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[MailRecipientStatus]
+      type: object
+    PaginatedResponse_MailTemplate_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/MailTemplate'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[MailTemplate]
+      type: object
+    PaginatedResponse_OrgChartSnapshot_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/OrgChartSnapshot'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[OrgChartSnapshot]
+      type: object
+    PaginatedResponse_OrgUnit_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/OrgUnit'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[OrgUnit]
+      type: object
+    PaginatedResponse_Organization_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Organization'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[Organization]
+      type: object
+    PaginatedResponse_Position_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Position'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[Position]
+      type: object
+    Position:
+      description: '직위/보직 마스터 — 조직 단위 내 직위 정의.
+
+
+        naming prefix: POS
+
+        BR-DIR-006, BR-DIR-007'
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        filled_count:
+          default: 0
+          description: 현 충원 인원
+          title: Filled Count
+          type: integer
+        grade:
+          default: ''
+          description: 직급
+          title: Grade
+          type: string
+        headcount:
+          default: 1
+          description: 정원
+          title: Headcount
+          type: integer
+        job_description:
+          default: ''
+          description: 직무 기술서
+          title: Job Description
+          type: string
+        org_unit_id:
+          default: ''
+          description: 소속 조직 단위 ID
+          title: Org Unit Id
+          type: string
+        position_code:
+          default: ''
+          description: 직위 코드
+          title: Position Code
+          type: string
+        position_title:
+          default: ''
+          description: 직위명
+          title: Position Title
+          type: string
+        position_title_en:
+          default: ''
+          description: 직위 영문명
+          title: Position Title En
+          type: string
+        status:
+          $ref: '#/components/schemas/PositionStatus'
+          default: open
+          description: 상태
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: Position
+      type: object
+    PositionCreate:
+      description: '직위 생성 요청 스키마.
+
+
+        BR-DIR-006: org_unit_id는 필수이다.'
+      properties:
+        grade:
+          default: ''
+          title: Grade
+          type: string
+        headcount:
+          default: 1
+          title: Headcount
+          type: integer
+        job_description:
+          default: ''
+          title: Job Description
+          type: string
+        org_unit_id:
+          title: Org Unit Id
+          type: string
+        position_code:
+          title: Position Code
+          type: string
+        position_title:
+          title: Position Title
+          type: string
+        position_title_en:
+          default: ''
+          title: Position Title En
+          type: string
+      required:
+      - org_unit_id
+      - position_code
+      - position_title
+      title: PositionCreate
+      type: object
+    PositionStatus:
+      description: 직위 상태.
+      enum:
+      - open
+      - filled
+      - frozen
+      title: PositionStatus
+      type: string
+    PositionUpdate:
+      description: 직위 수정 요청 스키마.
+      properties:
+        grade:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Grade
+        headcount:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Headcount
+        job_description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Job Description
+        position_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Position Code
+        position_title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Position Title
+        position_title_en:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Position Title En
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/PositionStatus'
+          - type: 'null'
+      title: PositionUpdate
+      type: object
+    Recipient:
+      description: 수신자 정보.
+      properties:
+        recipient_type:
+          default: to
+          title: Recipient Type
+          type: string
+        user_id:
+          title: User Id
+          type: string
+      required:
+      - user_id
+      title: Recipient
+      type: object
+    RecipientMailStatus:
+      description: 수신자별 메일 상태.
+      enum:
+      - unread
+      - read
+      - archived
+      - deleted
+      title: RecipientMailStatus
+      type: string
+    RuleAction:
+      description: 자동 분류 규칙 동작.
+      properties:
+        action_type:
+          $ref: '#/components/schemas/RuleActionType'
+        value:
+          default: ''
+          title: Value
+          type: string
+      required:
+      - action_type
+      title: RuleAction
+      type: object
+    RuleActionType:
+      description: 규칙 동작 유형.
+      enum:
+      - move_to_folder
+      - add_tag
+      - mark_as_read
+      - star
+      - delete
+      - forward
+      title: RuleActionType
+      type: string
+    RuleCondition:
+      description: 자동 분류 규칙 조건.
+      properties:
+        condition_type:
+          $ref: '#/components/schemas/RuleConditionType'
+        value:
+          default: ''
+          title: Value
+          type: string
+      required:
+      - condition_type
+      title: RuleCondition
+      type: object
+    RuleConditionType:
+      description: 규칙 조건 유형.
+      enum:
+      - sender
+      - subject_contains
+      - body_contains
+      - has_attachment
+      - priority
+      title: RuleConditionType
+      type: string
+    UnitStatus:
+      description: 조직 단위 상태.
+      enum:
+      - active
+      - inactive
+      - merged
+      title: UnitStatus
+      type: string
+    UnitType:
+      description: 조직 단위 유형.
+      enum:
+      - division
+      - department
+      - team
+      - group
+      - center
+      - branch
+      title: UnitType
+      type: string
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+info:
+  contact:
+    name: OneERP 개발팀
+  description: OneERP Portal-comms 서비스 REST API
+  license:
+    name: Proprietary
+  title: OneERP Portal-comms API
+  version: 0.1.0
+openapi: 3.1.0
+paths:
+  /api/v1/directory-search:
+    get:
+      description: 인명부를 검색한다.
+      operationId: search_directory_api_v1_directory_search_get
+      parameters:
+      - in: query
+        name: keyword
+        required: false
+        schema:
+          default: ''
+          title: Keyword
+          type: string
+      - in: query
+        name: org_unit_id
+        required: false
+        schema:
+          default: ''
+          title: Org Unit Id
+          type: string
+      - in: query
+        name: designation
+        required: false
+        schema:
+          default: ''
+          title: Designation
+          type: string
+      - in: query
+        name: status
+        required: false
+        schema:
+          default: active
+          title: Status
+          type: string
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Search Directory Api V1 Directory Search Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Search Directory
+      tags:
+      - 인명부검색
+  /api/v1/directory-search/batch:
+    post:
+      description: 인명부를 배치로 등록한다.
+      operationId: batch_register_api_v1_directory_search_batch_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchRegisterRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Batch Register Api V1 Directory Search Batch Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Batch Register
+      tags:
+      - 인명부검색
+  /api/v1/directory-search/units/{org_unit_id}/members:
+    get:
+      description: 조직 단위의 소속 직원 목��을 ��회한다.
+      operationId: get_unit_members_api_v1_directory_search_units__org_unit_id__members_get
+      parameters:
+      - in: path
+        name: org_unit_id
+        required: true
+        schema:
+          title: Org Unit Id
+          type: string
+      - in: query
+        name: include_sub_units
+        required: false
+        schema:
+          default: ''
+          title: Include Sub Units
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  additionalProperties: true
+                  type: object
+                title: Response Get Unit Members Api V1 Directory Search Units  Org
+                  Unit Id  Members Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Unit Members
+      tags:
+      - 인명부검색
+  /api/v1/employee-directories:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: employee_directory_목록_api_v1_employee_directories_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_EmployeeDirectory_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Employee Directory 목록
+      tags:
+      - 인명부
+    post:
+      description: 엔티티를 생성한다.
+      operationId: employee_directory_생성_api_v1_employee_directories_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeDirectoryCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Employee Directory 생성 Api V1 Employee Directories
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Employee Directory 생성
+      tags:
+      - 인명부
+  /api/v1/employee-directories/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: employee_directory_삭제_api_v1_employee_directories__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Employee Directory 삭제
+      tags:
+      - 인명부
+    get:
+      description: 엔티티를 조회한다.
+      operationId: employee_directory_조회_api_v1_employee_directories__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Employee Directory 조회 Api V1 Employee Directories  Doc
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Employee Directory 조회
+      tags:
+      - 인명부
+    put:
+      description: 엔티티를 수정한다.
+      operationId: employee_directory_수정_api_v1_employee_directories__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeDirectoryUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Employee Directory 수정 Api V1 Employee Directories  Doc
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Employee Directory 수정
+      tags:
+      - 인명부
+  /api/v1/employee-directories/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: employee_directory_취소_api_v1_employee_directories__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Employee Directory 취소 Api V1 Employee Directories  Doc
+                  Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Employee Directory 취소
+      tags:
+      - 인명부
+  /api/v1/employee-directories/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: employee_directory_제출_api_v1_employee_directories__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Employee Directory 제출 Api V1 Employee Directories  Doc
+                  Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Employee Directory 제출
+      tags:
+      - 인명부
+  /api/v1/mail-auto-rules:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: mail_auto_rule_목록_api_v1_mail_auto_rules_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_MailAutoRule_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Auto Rule 목록
+      tags:
+      - 메일 자동 분류 규칙
+    post:
+      description: 엔티티를 생성한다.
+      operationId: mail_auto_rule_생성_api_v1_mail_auto_rules_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailAutoRuleCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mail Auto Rule 생성 Api V1 Mail Auto Rules Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Auto Rule 생성
+      tags:
+      - 메일 자동 분류 규칙
+  /api/v1/mail-auto-rules/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: mail_auto_rule_삭제_api_v1_mail_auto_rules__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Auto Rule 삭제
+      tags:
+      - 메일 자동 분류 규칙
+    get:
+      description: 엔티티를 조회한다.
+      operationId: mail_auto_rule_조회_api_v1_mail_auto_rules__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mail Auto Rule 조회 Api V1 Mail Auto Rules  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Auto Rule 조회
+      tags:
+      - 메일 자동 분류 규칙
+    put:
+      description: 엔티티를 수정한다.
+      operationId: mail_auto_rule_수정_api_v1_mail_auto_rules__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailAutoRuleUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mail Auto Rule 수정 Api V1 Mail Auto Rules  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Auto Rule 수정
+      tags:
+      - 메일 자동 분류 규칙
+  /api/v1/mail-distribution-lists:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: mail_distribution_list_목록_api_v1_mail_distribution_lists_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_MailDistributionList_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Distribution List 목록
+      tags:
+      - 메일 배포 목록
+    post:
+      description: 엔티티를 생성한다.
+      operationId: mail_distribution_list_생성_api_v1_mail_distribution_lists_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailDistributionListCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mail Distribution List 생성 Api V1 Mail Distribution
+                  Lists Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Distribution List 생성
+      tags:
+      - 메일 배포 목록
+  /api/v1/mail-distribution-lists/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: mail_distribution_list_삭제_api_v1_mail_distribution_lists__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Distribution List 삭제
+      tags:
+      - 메일 배포 목록
+    get:
+      description: 엔티티를 조회한다.
+      operationId: mail_distribution_list_조회_api_v1_mail_distribution_lists__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mail Distribution List 조회 Api V1 Mail Distribution
+                  Lists  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Distribution List 조회
+      tags:
+      - 메일 배포 목록
+    put:
+      description: 엔티티를 수정한다.
+      operationId: mail_distribution_list_수정_api_v1_mail_distribution_lists__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailDistributionListUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mail Distribution List 수정 Api V1 Mail Distribution
+                  Lists  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Distribution List 수정
+      tags:
+      - 메일 배포 목록
+  /api/v1/mail-folders:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: mail_folder_목록_api_v1_mail_folders_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_MailFolder_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Folder 목록
+      tags:
+      - 메일 폴더
+    post:
+      description: 엔티티를 생성한다.
+      operationId: mail_folder_생성_api_v1_mail_folders_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailFolderCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mail Folder 생성 Api V1 Mail Folders Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Folder 생성
+      tags:
+      - 메일 폴더
+  /api/v1/mail-folders/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: mail_folder_삭제_api_v1_mail_folders__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Folder 삭제
+      tags:
+      - 메일 폴더
+    get:
+      description: 엔티티를 조회한다.
+      operationId: mail_folder_조회_api_v1_mail_folders__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mail Folder 조회 Api V1 Mail Folders  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Folder 조회
+      tags:
+      - 메일 폴더
+    put:
+      description: 엔티티를 수정한다.
+      operationId: mail_folder_수정_api_v1_mail_folders__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailFolderUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mail Folder 수정 Api V1 Mail Folders  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Folder 수정
+      tags:
+      - 메일 폴더
+  /api/v1/mail-messages:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: mail_message_목록_api_v1_mail_messages_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_MailMessage_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Message 목록
+      tags:
+      - 메일 메시지
+    post:
+      description: 엔티티를 생성한다.
+      operationId: mail_message_생성_api_v1_mail_messages_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailMessageCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mail Message 생성 Api V1 Mail Messages Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Message 생성
+      tags:
+      - 메일 메시지
+  /api/v1/mail-messages/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: mail_message_삭제_api_v1_mail_messages__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Message 삭제
+      tags:
+      - 메일 메시지
+    get:
+      description: 엔티티를 조회한다.
+      operationId: mail_message_조회_api_v1_mail_messages__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mail Message 조회 Api V1 Mail Messages  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Message 조회
+      tags:
+      - 메일 메시지
+    put:
+      description: 엔티티를 수정한다.
+      operationId: mail_message_수정_api_v1_mail_messages__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailMessageUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mail Message 수정 Api V1 Mail Messages  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Message 수정
+      tags:
+      - 메일 메시지
+  /api/v1/mail-messages/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: mail_message_취소_api_v1_mail_messages__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mail Message 취소 Api V1 Mail Messages  Doc Id  Cancel
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Message 취소
+      tags:
+      - 메일 메시지
+  /api/v1/mail-messages/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: mail_message_제출_api_v1_mail_messages__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mail Message 제출 Api V1 Mail Messages  Doc Id  Submit
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Message 제출
+      tags:
+      - 메일 메시지
+  /api/v1/mail-recipient-statuses:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: mail_recipient_status_목록_api_v1_mail_recipient_statuses_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_MailRecipientStatus_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Recipient Status 목록
+      tags:
+      - 수신자 메일 상태
+    post:
+      description: 엔티티를 생성한다.
+      operationId: mail_recipient_status_생성_api_v1_mail_recipient_statuses_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailRecipientStatusCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mail Recipient Status 생성 Api V1 Mail Recipient Statuses
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Recipient Status 생성
+      tags:
+      - 수신자 메일 상태
+  /api/v1/mail-recipient-statuses/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: mail_recipient_status_삭제_api_v1_mail_recipient_statuses__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Recipient Status 삭제
+      tags:
+      - 수신자 메일 상태
+    get:
+      description: 엔티티를 조회한다.
+      operationId: mail_recipient_status_조회_api_v1_mail_recipient_statuses__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mail Recipient Status 조회 Api V1 Mail Recipient Statuses  Doc
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Recipient Status 조회
+      tags:
+      - 수신자 메일 상태
+    put:
+      description: 엔티티를 수정한다.
+      operationId: mail_recipient_status_수정_api_v1_mail_recipient_statuses__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailRecipientStatusUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mail Recipient Status 수정 Api V1 Mail Recipient Statuses  Doc
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Recipient Status 수정
+      tags:
+      - 수신자 메일 상태
+  /api/v1/mail-recipient-statuses/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: mail_recipient_status_취소_api_v1_mail_recipient_statuses__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mail Recipient Status 취소 Api V1 Mail Recipient Statuses  Doc
+                  Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Recipient Status 취소
+      tags:
+      - 수신자 메일 상태
+  /api/v1/mail-recipient-statuses/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: mail_recipient_status_제출_api_v1_mail_recipient_statuses__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mail Recipient Status 제출 Api V1 Mail Recipient Statuses  Doc
+                  Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Recipient Status 제출
+      tags:
+      - 수신자 메일 상태
+  /api/v1/mail-templates:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: mail_template_목록_api_v1_mail_templates_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_MailTemplate_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Template 목록
+      tags:
+      - 메일 템플릿
+    post:
+      description: 엔티티를 생성한다.
+      operationId: mail_template_생성_api_v1_mail_templates_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailTemplateCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mail Template 생성 Api V1 Mail Templates Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Template 생성
+      tags:
+      - 메일 템플릿
+  /api/v1/mail-templates/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: mail_template_삭제_api_v1_mail_templates__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Template 삭제
+      tags:
+      - 메일 템플릿
+    get:
+      description: 엔티티를 조회한다.
+      operationId: mail_template_조회_api_v1_mail_templates__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mail Template 조회 Api V1 Mail Templates  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Template 조회
+      tags:
+      - 메일 템플릿
+    put:
+      description: 엔티티를 수정한다.
+      operationId: mail_template_수정_api_v1_mail_templates__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailTemplateUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Mail Template 수정 Api V1 Mail Templates  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mail Template 수정
+      tags:
+      - 메일 템플릿
+  /api/v1/mail/folders/create:
+    post:
+      description: '사용자 폴더를 생성한다.
+
+
+        BR-MAIL-011, BR-MAIL-012 적용.'
+      operationId: create_folder_api_v1_mail_folders_create_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: true
+              title: Body
+              type: object
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Create Folder Api V1 Mail Folders Create Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create Folder
+      tags:
+      - 사내 메일
+  /api/v1/mail/folders/{folder_id}:
+    delete:
+      description: '사용자 폴더를 삭제한다.
+
+
+        BR-MAIL-010 적용.'
+      operationId: delete_folder_api_v1_mail_folders__folder_id__delete
+      parameters:
+      - in: path
+        name: folder_id
+        required: true
+        schema:
+          title: Folder Id
+          type: string
+      - in: query
+        name: owner_id
+        required: true
+        schema:
+          title: Owner Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Delete Folder Api V1 Mail Folders  Folder Id  Delete
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Delete Folder
+      tags:
+      - 사내 메일
+  /api/v1/mail/forward:
+    post:
+      description: '메일을 전달한다.
+
+
+        BR-MAIL-007 적용.'
+      operationId: forward_mail_api_v1_mail_forward_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: true
+              title: Body
+              type: object
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Forward Mail Api V1 Mail Forward Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Forward Mail
+      tags:
+      - 사내 메일
+  /api/v1/mail/inbox:
+    get:
+      description: 받은편지함 또는 특정 폴더의 메시지를 조회한다.
+      operationId: get_inbox_api_v1_mail_inbox_get
+      parameters:
+      - in: query
+        name: user_id
+        required: true
+        schema:
+          title: User Id
+          type: string
+      - in: query
+        name: folder
+        required: false
+        schema:
+          default: inbox
+          title: Folder
+          type: string
+      - in: query
+        name: skip
+        required: false
+        schema:
+          default: 0
+          minimum: 0
+          title: Skip
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          minimum: 1
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  additionalProperties: true
+                  type: object
+                title: Response Get Inbox Api V1 Mail Inbox Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Inbox
+      tags:
+      - 사내 메일
+  /api/v1/mail/message/{message_id}:
+    delete:
+      description: '메일을 삭제(소프트)한다.
+
+
+        BR-MAIL-031 적용.'
+      operationId: delete_mail_api_v1_mail_message__message_id__delete
+      parameters:
+      - in: path
+        name: message_id
+        required: true
+        schema:
+          title: Message Id
+          type: string
+      - in: query
+        name: user_id
+        required: true
+        schema:
+          title: User Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Delete Mail Api V1 Mail Message  Message Id  Delete
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Delete Mail
+      tags:
+      - 사내 메일
+  /api/v1/mail/move:
+    post:
+      description: '메일을 다른 폴더로 이동한다.
+
+
+        BR-MAIL-013 적용.'
+      operationId: move_mail_api_v1_mail_move_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: true
+              title: Body
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Move Mail Api V1 Mail Move Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Move Mail
+      tags:
+      - 사내 메일
+  /api/v1/mail/read/{message_id}:
+    post:
+      description: '메일을 읽음으로 표시한다.
+
+
+        BR-MAIL-030, BR-MAIL-032 적용.'
+      operationId: read_mail_api_v1_mail_read__message_id__post
+      parameters:
+      - in: path
+        name: message_id
+        required: true
+        schema:
+          title: Message Id
+          type: string
+      - in: query
+        name: user_id
+        required: true
+        schema:
+          title: User Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Read Mail Api V1 Mail Read  Message Id  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Read Mail
+      tags:
+      - 사내 메일
+  /api/v1/mail/reply:
+    post:
+      description: '메일에 회신한다.
+
+
+        BR-MAIL-006 적용.'
+      operationId: reply_mail_api_v1_mail_reply_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: true
+              title: Body
+              type: object
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Reply Mail Api V1 Mail Reply Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Reply Mail
+      tags:
+      - 사내 메일
+  /api/v1/mail/search:
+    get:
+      description: '메일을 검색한다.
+
+
+        BR-MAIL-033 적용.'
+      operationId: search_mail_api_v1_mail_search_get
+      parameters:
+      - in: query
+        name: user_id
+        required: true
+        schema:
+          title: User Id
+          type: string
+      - in: query
+        name: q
+        required: true
+        schema:
+          minLength: 1
+          title: Q
+          type: string
+      - in: query
+        name: folder
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Folder
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          minimum: 1
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  additionalProperties: true
+                  type: object
+                title: Response Search Mail Api V1 Mail Search Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Search Mail
+      tags:
+      - 사내 메일
+  /api/v1/mail/send:
+    post:
+      description: '메일을 전송한다.
+
+
+        BR-MAIL-001, BR-MAIL-002, BR-MAIL-005 적용.'
+      operationId: send_mail_api_v1_mail_send_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: true
+              title: Body
+              type: object
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Send Mail Api V1 Mail Send Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Send Mail
+      tags:
+      - 사내 메일
+  /api/v1/mail/star/{message_id}:
+    post:
+      description: 메일 즐겨찾기를 토글한다.
+      operationId: toggle_star_api_v1_mail_star__message_id__post
+      parameters:
+      - in: path
+        name: message_id
+        required: true
+        schema:
+          title: Message Id
+          type: string
+      - in: query
+        name: user_id
+        required: true
+        schema:
+          title: User Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Toggle Star Api V1 Mail Star  Message Id  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Toggle Star
+      tags:
+      - 사내 메일
+  /api/v1/mail/templates/create:
+    post:
+      description: '메일 템플릿을 생성한다.
+
+
+        BR-MAIL-020 적용.'
+      operationId: create_template_api_v1_mail_templates_create_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: true
+              title: Body
+              type: object
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Create Template Api V1 Mail Templates Create Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create Template
+      tags:
+      - 사내 메일
+  /api/v1/mail/templates/render:
+    post:
+      description: '메일 템플릿을 렌더링한다.
+
+
+        BR-MAIL-021, BR-MAIL-022 적용.'
+      operationId: render_template_api_v1_mail_templates_render_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: true
+              title: Body
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  type: string
+                title: Response Render Template Api V1 Mail Templates Render Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Render Template
+      tags:
+      - 사내 메일
+  /api/v1/mail/thread/{thread_id}:
+    get:
+      description: 스레드에 속한 모든 메시지를 조회한다.
+      operationId: get_thread_api_v1_mail_thread__thread_id__get
+      parameters:
+      - in: path
+        name: thread_id
+        required: true
+        schema:
+          title: Thread Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  additionalProperties: true
+                  type: object
+                title: Response Get Thread Api V1 Mail Thread  Thread Id  Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Thread
+      tags:
+      - 사내 메일
+  /api/v1/mail/unread/{message_id}:
+    post:
+      description: 메일을 안읽음으로 표시한다.
+      operationId: unread_mail_api_v1_mail_unread__message_id__post
+      parameters:
+      - in: path
+        name: message_id
+        required: true
+        schema:
+          title: Message Id
+          type: string
+      - in: query
+        name: user_id
+        required: true
+        schema:
+          title: User Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Unread Mail Api V1 Mail Unread  Message Id  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Unread Mail
+      tags:
+      - 사내 메일
+  /api/v1/org-chart-snapshots:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: org_chart_snapshot_목록_api_v1_org_chart_snapshots_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_OrgChartSnapshot_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Org Chart Snapshot 목록
+      tags:
+      - 조직도스냅샷
+    post:
+      description: 엔티티를 생성한다.
+      operationId: org_chart_snapshot_생성_api_v1_org_chart_snapshots_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrgChartSnapshotCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Org Chart Snapshot 생성 Api V1 Org Chart Snapshots Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Org Chart Snapshot 생성
+      tags:
+      - 조직도스냅샷
+  /api/v1/org-chart-snapshots/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: org_chart_snapshot_삭제_api_v1_org_chart_snapshots__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Org Chart Snapshot 삭제
+      tags:
+      - 조직도스냅샷
+    get:
+      description: 엔티티를 조회한다.
+      operationId: org_chart_snapshot_조회_api_v1_org_chart_snapshots__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Org Chart Snapshot 조회 Api V1 Org Chart Snapshots  Doc
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Org Chart Snapshot 조회
+      tags:
+      - 조직도스냅샷
+    put:
+      description: 엔티티를 수정한다.
+      operationId: org_chart_snapshot_수정_api_v1_org_chart_snapshots__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrgChartSnapshotUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Org Chart Snapshot 수정 Api V1 Org Chart Snapshots  Doc
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Org Chart Snapshot 수정
+      tags:
+      - 조직도스냅샷
+  /api/v1/org-chart-snapshots/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: org_chart_snapshot_취소_api_v1_org_chart_snapshots__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Org Chart Snapshot 취소 Api V1 Org Chart Snapshots  Doc
+                  Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Org Chart Snapshot 취소
+      tags:
+      - 조직도스냅샷
+  /api/v1/org-chart-snapshots/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: org_chart_snapshot_제출_api_v1_org_chart_snapshots__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Org Chart Snapshot 제출 Api V1 Org Chart Snapshots  Doc
+                  Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Org Chart Snapshot 제출
+      tags:
+      - 조직도스냅샷
+  /api/v1/org-tree/units/{unit_id}/move:
+    post:
+      description: 조직 단위를 다른 상위 단위로 이동한다.
+      operationId: move_unit_api_v1_org_tree_units__unit_id__move_post
+      parameters:
+      - in: path
+        name: unit_id
+        required: true
+        schema:
+          title: Unit Id
+          type: string
+      - in: query
+        name: new_parent_id
+        required: true
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: New Parent Id
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Move Unit Api V1 Org Tree Units  Unit Id  Move Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Move Unit
+      tags:
+      - 조직트리
+  /api/v1/org-tree/{org_id}:
+    get:
+      description: 조직의 전체 트리 구조를 조회한다.
+      operationId: get_org_tree_api_v1_org_tree__org_id__get
+      parameters:
+      - in: path
+        name: org_id
+        required: true
+        schema:
+          title: Org Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Get Org Tree Api V1 Org Tree  Org Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Org Tree
+      tags:
+      - 조직트리
+  /api/v1/org-tree/{org_id}/snapshot:
+    post:
+      description: 조직도 스냅샷을 생성한다.
+      operationId: create_snapshot_api_v1_org_tree__org_id__snapshot_post
+      parameters:
+      - in: path
+        name: org_id
+        required: true
+        schema:
+          title: Org Id
+          type: string
+      - in: query
+        name: snapshot_date
+        required: false
+        schema:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Snapshot Date
+      - in: query
+        name: description
+        required: false
+        schema:
+          default: ''
+          title: Description
+          type: string
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Create Snapshot Api V1 Org Tree  Org Id  Snapshot
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create Snapshot
+      tags:
+      - 조직트리
+  /api/v1/org-units:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: org_unit_목록_api_v1_org_units_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_OrgUnit_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Org Unit 목록
+      tags:
+      - 조직단위
+    post:
+      description: 엔티티를 생성한다.
+      operationId: org_unit_생성_api_v1_org_units_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrgUnitCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Org Unit 생성 Api V1 Org Units Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Org Unit 생성
+      tags:
+      - 조직단위
+  /api/v1/org-units/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: org_unit_삭제_api_v1_org_units__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Org Unit 삭제
+      tags:
+      - 조직단위
+    get:
+      description: 엔티티를 조회한다.
+      operationId: org_unit_조회_api_v1_org_units__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Org Unit 조회 Api V1 Org Units  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Org Unit 조회
+      tags:
+      - 조직단위
+    put:
+      description: 엔티티를 수정한다.
+      operationId: org_unit_수정_api_v1_org_units__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrgUnitUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Org Unit 수정 Api V1 Org Units  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Org Unit 수정
+      tags:
+      - 조직단위
+  /api/v1/organizations:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: organization_목록_api_v1_organizations_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_Organization_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Organization 목록
+      tags:
+      - 조직
+    post:
+      description: 엔티티를 생성한다.
+      operationId: organization_생성_api_v1_organizations_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Organization 생성 Api V1 Organizations Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Organization 생성
+      tags:
+      - 조직
+  /api/v1/organizations/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: organization_삭제_api_v1_organizations__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Organization 삭제
+      tags:
+      - 조직
+    get:
+      description: 엔티티를 조회한다.
+      operationId: organization_조회_api_v1_organizations__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Organization 조회 Api V1 Organizations  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Organization 조회
+      tags:
+      - 조직
+    put:
+      description: 엔티티를 수정한다.
+      operationId: organization_수정_api_v1_organizations__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Organization 수정 Api V1 Organizations  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Organization 수정
+      tags:
+      - 조직
+  /api/v1/positions:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: position_목록_api_v1_positions_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_Position_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Position 목록
+      tags:
+      - 직위
+    post:
+      description: 엔티티를 생성한다.
+      operationId: position_생성_api_v1_positions_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PositionCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Position 생성 Api V1 Positions Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Position 생성
+      tags:
+      - 직위
+  /api/v1/positions/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: position_삭제_api_v1_positions__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Position 삭제
+      tags:
+      - 직위
+    get:
+      description: 엔티티를 조회한다.
+      operationId: position_조회_api_v1_positions__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Position 조회 Api V1 Positions  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Position 조회
+      tags:
+      - 직위
+    put:
+      description: 엔티티를 수정한다.
+      operationId: position_수정_api_v1_positions__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PositionUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Position 수정 Api V1 Positions  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Position 수정
+      tags:
+      - 직위
+  /health:
+    get:
+      description: 서비스 상태를 확인한다 (하위 호환).
+      operationId: health_health_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Health Health Get
+                type: object
+          description: Successful Response
+      summary: Health
+      tags:
+      - health
+  /health/live:
+    get:
+      description: Liveness probe — 프로세스 생존 확인.
+      operationId: liveness_health_live_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Liveness Health Live Get
+                type: object
+          description: Successful Response
+      summary: Liveness
+      tags:
+      - health
+  /health/ready:
+    get:
+      description: Readiness probe — DB/NATS/Valkey 연결 포함 서비스 준비 상태 확인.
+      operationId: readiness_health_ready_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Readiness
+      tags:
+      - health
+  /health/startup:
+    get:
+      description: Startup probe — 서비스 초기화 완료 확인 (readiness와 동일).
+      operationId: startup_health_startup_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Startup
+      tags:
+      - health
+servers:
+- url: /comms
+- description: 현재 서버
+  url: /
+tags:
+- description: 메일 폴더 API
+  name: 메일 폴더
+- description: 메일 템플릿 API
+  name: 메일 템플릿
+- description: 메일 배포 목록 API
+  name: 메일 배포 목록
+- description: 메일 자동 분류 규칙 API
+  name: 메일 자동 분류 규칙
+- description: 메일 메시지 API
+  name: 메일 메시지
+- description: 수신자 메일 상태 API
+  name: 수신자 메일 상태
+- description: 조직 API
+  name: 조직
+- description: 조직단위 API
+  name: 조직단위
+- description: 직위 API
+  name: 직위
+- description: 인명부 API
+  name: 인명부
+- description: 조직도스냅샷 API
+  name: 조직도스냅샷

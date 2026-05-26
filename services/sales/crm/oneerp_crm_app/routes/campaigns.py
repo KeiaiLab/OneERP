@@ -1,0 +1,72 @@
+"""캠페인(Campaign) CRUD 라우트."""
+
+from __future__ import annotations
+
+from fastapi import APIRouter, Depends
+from oneerp_core.errors import OneERPError
+from oneerp_core.naming import generate_name
+from oneerp_core.permissions import require_permission
+from oneerp_core.repository import Repository
+
+from ..models.campaign import Campaign, CampaignCreate, CampaignUpdate
+
+router = APIRouter(prefix="/api/v1/campaigns", tags=["캠페인"])
+_COLLECTION = "campaigns"
+_PREFIX = "CMPG"
+
+
+def _get_repo() -> Repository:
+    """Repository 인스턴스를 반환한다."""
+    return Repository(_COLLECTION)
+
+
+@router.post("/", status_code=201, dependencies=[Depends(require_permission("campaign:create"))])
+async def create_campaign(body: CampaignCreate) -> dict:
+    """캠페인을 생성한다."""
+    repo = _get_repo()
+    doc_id = generate_name(_PREFIX)
+    doc = Campaign(_id=doc_id, **body.model_dump())
+    repo.insert(doc)
+    return {"campaign_id": doc_id, "message": "캠페인이 생성되었습니다"}
+
+
+@router.get("/", dependencies=[Depends(require_permission("campaign:read"))])
+async def list_campaigns(page: int = 1, page_size: int = 20) -> dict:
+    """캠페인 목록을 페이지네이션으로 조회한다."""
+    repo = _get_repo()
+    skip = (page - 1) * page_size
+    data = repo.find_many(skip=skip, limit=page_size, sort=[("created_at", -1)])
+    total = repo.count()
+    return {"data": data, "total": total, "page": page, "page_size": page_size}
+
+
+@router.get("/{doc_id}", dependencies=[Depends(require_permission("campaign:read"))])
+async def get_campaign(doc_id: str) -> dict:
+    """캠페인 상세 정보를 조회한다."""
+    repo = _get_repo()
+    doc = repo.find_by_id(doc_id)
+    if not doc:
+        raise OneERPError(status_code=404, error="not_found", detail="캠페인을 찾을 수 없습니다")
+    return doc
+
+
+@router.put("/{doc_id}", dependencies=[Depends(require_permission("campaign:write"))])
+async def update_campaign(doc_id: str, body: CampaignUpdate) -> dict:
+    """캠페인을 수정한다."""
+    repo = _get_repo()
+    doc = repo.find_by_id(doc_id)
+    if not doc:
+        raise OneERPError(status_code=404, error="not_found", detail="캠페인을 찾을 수 없습니다")
+    repo.update_by_id(doc_id, body.model_dump(exclude_none=True))
+    return {"message": "캠페인이 수정되었습니다"}
+
+
+@router.delete("/{doc_id}", dependencies=[Depends(require_permission("campaign:delete"))])
+async def delete_campaign(doc_id: str) -> dict:
+    """캠페인을 삭제한다."""
+    repo = _get_repo()
+    doc = repo.find_by_id(doc_id)
+    if not doc:
+        raise OneERPError(status_code=404, error="not_found", detail="캠페인을 찾을 수 없습니다")
+    repo.delete_by_id(doc_id)
+    return {"message": "캠페인이 삭제되었습니다"}

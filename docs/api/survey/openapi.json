@@ -1,0 +1,4370 @@
+{
+  "components": {
+    "schemas": {
+      "Anonymity": {
+        "description": "익명/기명 구분.",
+        "enum": [
+          "anonymous",
+          "named"
+        ],
+        "title": "Anonymity",
+        "type": "string"
+      },
+      "Answer": {
+        "description": "답변 — 임베디드.",
+        "properties": {
+          "date_value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "날짜 답변",
+            "title": "Date Value"
+          },
+          "matrix_values": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "매트릭스 값",
+            "title": "Matrix Values"
+          },
+          "nps_value": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "NPS 값 (0~10)",
+            "title": "Nps Value"
+          },
+          "question_id": {
+            "description": "질문 ID",
+            "title": "Question Id",
+            "type": "string"
+          },
+          "scale_value": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "척도 값",
+            "title": "Scale Value"
+          },
+          "selected_options": {
+            "description": "선택한 option_id",
+            "items": {
+              "type": "string"
+            },
+            "title": "Selected Options",
+            "type": "array"
+          },
+          "text_value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "텍스트 답변",
+            "title": "Text Value"
+          }
+        },
+        "required": [
+          "question_id"
+        ],
+        "title": "Answer",
+        "type": "object"
+      },
+      "DocStatus": {
+        "description": "문서 상태 — ERPNext 호환.",
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "title": "DocStatus",
+        "type": "integer"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "LogicAction": {
+        "description": "조건부 로직 액션.",
+        "enum": [
+          "jump_to",
+          "skip",
+          "end_survey"
+        ],
+        "title": "LogicAction",
+        "type": "string"
+      },
+      "LogicRule": {
+        "description": "조건부 로직 규칙 — 임베디드.",
+        "properties": {
+          "action": {
+            "$ref": "#/components/schemas/LogicAction",
+            "description": "액션"
+          },
+          "condition_option_id": {
+            "description": "조건 선택지 ID",
+            "title": "Condition Option Id",
+            "type": "string"
+          },
+          "target_question_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "이동 대상 질문 ID",
+            "title": "Target Question Id"
+          }
+        },
+        "required": [
+          "condition_option_id",
+          "action"
+        ],
+        "title": "LogicRule",
+        "type": "object"
+      },
+      "PaginatedResponse_PollVote_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/PollVote"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[PollVote]",
+        "type": "object"
+      },
+      "PaginatedResponse_Poll_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/Poll"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[Poll]",
+        "type": "object"
+      },
+      "PaginatedResponse_SurveyQuestion_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/SurveyQuestion"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[SurveyQuestion]",
+        "type": "object"
+      },
+      "PaginatedResponse_SurveyResponse_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/SurveyResponse"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[SurveyResponse]",
+        "type": "object"
+      },
+      "PaginatedResponse_SurveyTemplate_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/SurveyTemplate"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[SurveyTemplate]",
+        "type": "object"
+      },
+      "PaginatedResponse_Survey_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/Survey"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "PaginatedResponse[Survey]",
+        "type": "object"
+      },
+      "Poll": {
+        "description": "투표 문서.",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "anonymity": {
+            "default": "named",
+            "title": "Anonymity",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "ends_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ends At"
+          },
+          "options": {
+            "items": {
+              "$ref": "#/components/schemas/PollOption"
+            },
+            "title": "Options",
+            "type": "array"
+          },
+          "poll_type": {
+            "$ref": "#/components/schemas/PollType",
+            "default": "single_choice"
+          },
+          "show_results": {
+            "$ref": "#/components/schemas/PollShowResults",
+            "default": "realtime"
+          },
+          "status": {
+            "$ref": "#/components/schemas/PollStatus",
+            "default": "active"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "title": {
+            "default": "",
+            "title": "Title",
+            "type": "string"
+          },
+          "total_votes": {
+            "default": 0,
+            "title": "Total Votes",
+            "type": "integer"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          }
+        },
+        "title": "Poll",
+        "type": "object"
+      },
+      "PollCreate": {
+        "description": "투표 생성 요청 스키마.",
+        "properties": {
+          "anonymity": {
+            "default": "named",
+            "description": "익명/기명",
+            "title": "Anonymity",
+            "type": "string"
+          },
+          "ends_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "마감 시각",
+            "title": "Ends At"
+          },
+          "options": {
+            "description": "선택지 (최소 2개)",
+            "items": {
+              "$ref": "#/components/schemas/PollOption"
+            },
+            "minItems": 2,
+            "title": "Options",
+            "type": "array"
+          },
+          "poll_type": {
+            "$ref": "#/components/schemas/PollType",
+            "description": "투표 유형"
+          },
+          "show_results": {
+            "$ref": "#/components/schemas/PollShowResults",
+            "default": "realtime",
+            "description": "결과 공개 시점"
+          },
+          "title": {
+            "description": "투표 제목",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "poll_type",
+          "options"
+        ],
+        "title": "PollCreate",
+        "type": "object"
+      },
+      "PollOption": {
+        "description": "투표 선택지 — 임베디드.",
+        "properties": {
+          "option_id": {
+            "description": "선택지 ID",
+            "title": "Option Id",
+            "type": "string"
+          },
+          "text": {
+            "description": "선택지 텍스트",
+            "title": "Text",
+            "type": "string"
+          },
+          "vote_count": {
+            "default": 0,
+            "description": "득표 수",
+            "title": "Vote Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "option_id",
+          "text"
+        ],
+        "title": "PollOption",
+        "type": "object"
+      },
+      "PollShowResults": {
+        "description": "투표 결과 공개 시점.",
+        "enum": [
+          "realtime",
+          "after_close"
+        ],
+        "title": "PollShowResults",
+        "type": "string"
+      },
+      "PollStatus": {
+        "description": "투표 상태.",
+        "enum": [
+          "active",
+          "closed"
+        ],
+        "title": "PollStatus",
+        "type": "string"
+      },
+      "PollType": {
+        "description": "투표 유형.",
+        "enum": [
+          "yes_no",
+          "single_choice",
+          "multiple_choice"
+        ],
+        "title": "PollType",
+        "type": "string"
+      },
+      "PollUpdate": {
+        "description": "투표 수정 요청 스키마.",
+        "properties": {
+          "ends_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ends At"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PollStatus"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          }
+        },
+        "title": "PollUpdate",
+        "type": "object"
+      },
+      "PollVote": {
+        "description": "투표 기록 문서.",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "poll_id": {
+            "default": "",
+            "title": "Poll Id",
+            "type": "string"
+          },
+          "selected_options": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Selected Options",
+            "type": "array"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          },
+          "voted_at": {
+            "format": "date-time",
+            "title": "Voted At",
+            "type": "string"
+          },
+          "voter_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Voter Hash"
+          },
+          "voter_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Voter Id"
+          }
+        },
+        "title": "PollVote",
+        "type": "object"
+      },
+      "PollVoteCreate": {
+        "description": "투표 기록 생성 요청 스키마.",
+        "properties": {
+          "poll_id": {
+            "description": "투표 ID",
+            "title": "Poll Id",
+            "type": "string"
+          },
+          "selected_options": {
+            "description": "선택한 option_id",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "title": "Selected Options",
+            "type": "array"
+          },
+          "voter_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "중복 투표 방지 해시",
+            "title": "Voter Hash"
+          },
+          "voter_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "투표자 ID",
+            "title": "Voter Id"
+          }
+        },
+        "required": [
+          "poll_id",
+          "selected_options"
+        ],
+        "title": "PollVoteCreate",
+        "type": "object"
+      },
+      "PollVoteUpdate": {
+        "description": "투표 기록 수정 요청 스키마 (사용하지 않지만 EntityMeta 호환).",
+        "properties": {},
+        "title": "PollVoteUpdate",
+        "type": "object"
+      },
+      "QuestionOption": {
+        "description": "질문 선택지 — 임베디드.",
+        "properties": {
+          "is_other": {
+            "default": false,
+            "description": "기타 옵션 여부",
+            "title": "Is Other",
+            "type": "boolean"
+          },
+          "option_id": {
+            "description": "선택지 ID",
+            "title": "Option Id",
+            "type": "string"
+          },
+          "order": {
+            "description": "표시 순서",
+            "title": "Order",
+            "type": "integer"
+          },
+          "text": {
+            "description": "선택지 텍스트",
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "option_id",
+          "text",
+          "order"
+        ],
+        "title": "QuestionOption",
+        "type": "object"
+      },
+      "QuestionType": {
+        "description": "질문 유형.",
+        "enum": [
+          "single_choice",
+          "multiple_choice",
+          "text",
+          "long_text",
+          "scale",
+          "matrix",
+          "nps",
+          "date"
+        ],
+        "title": "QuestionType",
+        "type": "string"
+      },
+      "ShowResults": {
+        "description": "결과 공개 시점.",
+        "enum": [
+          "realtime",
+          "after_submit",
+          "after_close",
+          "never"
+        ],
+        "title": "ShowResults",
+        "type": "string"
+      },
+      "Survey": {
+        "description": "설문 문서.\n\n설문/투표의 최상위 엔티티.",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "allow_multiple": {
+            "default": false,
+            "title": "Allow Multiple",
+            "type": "boolean"
+          },
+          "anonymity": {
+            "$ref": "#/components/schemas/Anonymity",
+            "default": "named"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "ends_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ends At"
+          },
+          "response_count": {
+            "default": 0,
+            "title": "Response Count",
+            "type": "integer"
+          },
+          "show_results": {
+            "$ref": "#/components/schemas/ShowResults",
+            "default": "after_close"
+          },
+          "starts_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Starts At"
+          },
+          "status": {
+            "$ref": "#/components/schemas/SurveyStatus",
+            "default": "draft"
+          },
+          "survey_type": {
+            "$ref": "#/components/schemas/SurveyType",
+            "default": "survey"
+          },
+          "target_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Target Ids",
+            "type": "array"
+          },
+          "target_type": {
+            "$ref": "#/components/schemas/TargetType",
+            "default": "all"
+          },
+          "template_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Template Id"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "title": {
+            "default": "",
+            "title": "Title",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          }
+        },
+        "title": "Survey",
+        "type": "object"
+      },
+      "SurveyCreate": {
+        "description": "설문 생성 요청 스키마.",
+        "properties": {
+          "allow_multiple": {
+            "default": false,
+            "description": "중복 응답 허용",
+            "title": "Allow Multiple",
+            "type": "boolean"
+          },
+          "anonymity": {
+            "$ref": "#/components/schemas/Anonymity",
+            "default": "named",
+            "description": "익명/기명"
+          },
+          "description": {
+            "default": "",
+            "description": "설문 설명",
+            "maxLength": 2000,
+            "title": "Description",
+            "type": "string"
+          },
+          "ends_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "마감 시각",
+            "title": "Ends At"
+          },
+          "show_results": {
+            "$ref": "#/components/schemas/ShowResults",
+            "default": "after_close",
+            "description": "결과 공개 시점"
+          },
+          "starts_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "배포 시작 시각",
+            "title": "Starts At"
+          },
+          "survey_type": {
+            "$ref": "#/components/schemas/SurveyType",
+            "default": "survey",
+            "description": "유형"
+          },
+          "target_ids": {
+            "description": "대상 ID 목록",
+            "items": {
+              "type": "string"
+            },
+            "title": "Target Ids",
+            "type": "array"
+          },
+          "target_type": {
+            "$ref": "#/components/schemas/TargetType",
+            "default": "all",
+            "description": "배포 대상 유형"
+          },
+          "template_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "템플릿 참조",
+            "title": "Template Id"
+          },
+          "title": {
+            "description": "설문 제목",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title"
+        ],
+        "title": "SurveyCreate",
+        "type": "object"
+      },
+      "SurveyQuestion": {
+        "description": "설문 질문 문서.",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "logic_rules": {
+            "items": {
+              "$ref": "#/components/schemas/LogicRule"
+            },
+            "title": "Logic Rules",
+            "type": "array"
+          },
+          "matrix_columns": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Matrix Columns",
+            "type": "array"
+          },
+          "matrix_rows": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Matrix Rows",
+            "type": "array"
+          },
+          "options": {
+            "items": {
+              "$ref": "#/components/schemas/QuestionOption"
+            },
+            "title": "Options",
+            "type": "array"
+          },
+          "order": {
+            "default": 1,
+            "title": "Order",
+            "type": "integer"
+          },
+          "question_text": {
+            "default": "",
+            "title": "Question Text",
+            "type": "string"
+          },
+          "question_type": {
+            "$ref": "#/components/schemas/QuestionType",
+            "default": "text"
+          },
+          "required": {
+            "default": true,
+            "title": "Required",
+            "type": "boolean"
+          },
+          "scale_max": {
+            "default": 5,
+            "title": "Scale Max",
+            "type": "integer"
+          },
+          "scale_max_label": {
+            "default": "",
+            "title": "Scale Max Label",
+            "type": "string"
+          },
+          "scale_min": {
+            "default": 1,
+            "title": "Scale Min",
+            "type": "integer"
+          },
+          "scale_min_label": {
+            "default": "",
+            "title": "Scale Min Label",
+            "type": "string"
+          },
+          "survey_id": {
+            "default": "",
+            "title": "Survey Id",
+            "type": "string"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          }
+        },
+        "title": "SurveyQuestion",
+        "type": "object"
+      },
+      "SurveyQuestionCreate": {
+        "description": "설문 질문 생성 요청 스키마.",
+        "properties": {
+          "logic_rules": {
+            "description": "조건부 로직",
+            "items": {
+              "$ref": "#/components/schemas/LogicRule"
+            },
+            "title": "Logic Rules",
+            "type": "array"
+          },
+          "matrix_columns": {
+            "description": "매트릭스 열 목록",
+            "items": {
+              "type": "string"
+            },
+            "title": "Matrix Columns",
+            "type": "array"
+          },
+          "matrix_rows": {
+            "description": "매트릭스 행 목록",
+            "items": {
+              "type": "string"
+            },
+            "title": "Matrix Rows",
+            "type": "array"
+          },
+          "options": {
+            "description": "선택지",
+            "items": {
+              "$ref": "#/components/schemas/QuestionOption"
+            },
+            "title": "Options",
+            "type": "array"
+          },
+          "order": {
+            "description": "표시 순서",
+            "minimum": 1.0,
+            "title": "Order",
+            "type": "integer"
+          },
+          "question_text": {
+            "description": "질문 내용",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Question Text",
+            "type": "string"
+          },
+          "question_type": {
+            "$ref": "#/components/schemas/QuestionType",
+            "description": "질문 유형"
+          },
+          "required": {
+            "default": true,
+            "description": "필수 응답 여부",
+            "title": "Required",
+            "type": "boolean"
+          },
+          "scale_max": {
+            "default": 5,
+            "description": "척도 최댓값",
+            "maximum": 10.0,
+            "title": "Scale Max",
+            "type": "integer"
+          },
+          "scale_max_label": {
+            "default": "",
+            "description": "척도 최댓값 레이블",
+            "title": "Scale Max Label",
+            "type": "string"
+          },
+          "scale_min": {
+            "default": 1,
+            "description": "척도 최솟값",
+            "title": "Scale Min",
+            "type": "integer"
+          },
+          "scale_min_label": {
+            "default": "",
+            "description": "척도 최솟값 레이블",
+            "title": "Scale Min Label",
+            "type": "string"
+          },
+          "survey_id": {
+            "description": "설문 ID",
+            "title": "Survey Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "survey_id",
+          "question_text",
+          "question_type",
+          "order"
+        ],
+        "title": "SurveyQuestionCreate",
+        "type": "object"
+      },
+      "SurveyQuestionUpdate": {
+        "description": "설문 질문 수정 요청 스키마.",
+        "properties": {
+          "logic_rules": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/LogicRule"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Logic Rules"
+          },
+          "matrix_columns": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Matrix Columns"
+          },
+          "matrix_rows": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Matrix Rows"
+          },
+          "options": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/QuestionOption"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Options"
+          },
+          "order": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Order"
+          },
+          "question_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Question Text"
+          },
+          "required": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Required"
+          },
+          "scale_max": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scale Max"
+          },
+          "scale_max_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scale Max Label"
+          },
+          "scale_min": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scale Min"
+          },
+          "scale_min_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scale Min Label"
+          }
+        },
+        "title": "SurveyQuestionUpdate",
+        "type": "object"
+      },
+      "SurveyResponse": {
+        "description": "설문 응답 문서.",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "answers": {
+            "items": {
+              "$ref": "#/components/schemas/Answer"
+            },
+            "title": "Answers",
+            "type": "array"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "ip_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ip Hash"
+          },
+          "respondent_department": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Respondent Department"
+          },
+          "respondent_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Respondent Id"
+          },
+          "respondent_role": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Respondent Role"
+          },
+          "submitted_at": {
+            "format": "date-time",
+            "title": "Submitted At",
+            "type": "string"
+          },
+          "survey_id": {
+            "default": "",
+            "title": "Survey Id",
+            "type": "string"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          }
+        },
+        "title": "SurveyResponse",
+        "type": "object"
+      },
+      "SurveyResponseCreate": {
+        "description": "설문 응답 생성 요청 스키마.",
+        "properties": {
+          "answers": {
+            "description": "답변 목록",
+            "items": {
+              "$ref": "#/components/schemas/Answer"
+            },
+            "title": "Answers",
+            "type": "array"
+          },
+          "ip_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "IP 해시",
+            "title": "Ip Hash"
+          },
+          "respondent_department": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "응답자 부서",
+            "title": "Respondent Department"
+          },
+          "respondent_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "응답자 ID",
+            "title": "Respondent Id"
+          },
+          "respondent_role": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "응답자 직급",
+            "title": "Respondent Role"
+          },
+          "survey_id": {
+            "description": "설문 ID",
+            "title": "Survey Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "survey_id",
+          "answers"
+        ],
+        "title": "SurveyResponseCreate",
+        "type": "object"
+      },
+      "SurveyResponseUpdate": {
+        "description": "설문 응답 수정 요청 스키마.",
+        "properties": {
+          "answers": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Answer"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Answers"
+          }
+        },
+        "title": "SurveyResponseUpdate",
+        "type": "object"
+      },
+      "SurveyStatus": {
+        "description": "설문 상태.",
+        "enum": [
+          "draft",
+          "active",
+          "closed",
+          "archived"
+        ],
+        "title": "SurveyStatus",
+        "type": "string"
+      },
+      "SurveyTemplate": {
+        "description": "설문 템플릿 문서.",
+        "properties": {
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "category": {
+            "$ref": "#/components/schemas/TemplateCategory",
+            "default": "custom"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "default": "",
+            "title": "Created By",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "docstatus": {
+            "$ref": "#/components/schemas/DocStatus",
+            "default": 0
+          },
+          "is_system": {
+            "default": false,
+            "title": "Is System",
+            "type": "boolean"
+          },
+          "name": {
+            "default": "",
+            "title": "Name",
+            "type": "string"
+          },
+          "questions": {
+            "items": {
+              "$ref": "#/components/schemas/TemplateQuestionSnapshot"
+            },
+            "title": "Questions",
+            "type": "array"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "default": "",
+            "title": "Updated By",
+            "type": "string"
+          },
+          "usage_count": {
+            "default": 0,
+            "title": "Usage Count",
+            "type": "integer"
+          }
+        },
+        "title": "SurveyTemplate",
+        "type": "object"
+      },
+      "SurveyTemplateCreate": {
+        "description": "설문 템플릿 생성 요청 스키마.",
+        "properties": {
+          "category": {
+            "$ref": "#/components/schemas/TemplateCategory",
+            "description": "카테고리"
+          },
+          "description": {
+            "default": "",
+            "description": "설명",
+            "title": "Description",
+            "type": "string"
+          },
+          "is_system": {
+            "default": false,
+            "description": "시스템 기본 템플릿 여부",
+            "title": "Is System",
+            "type": "boolean"
+          },
+          "name": {
+            "description": "템플릿명",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "questions": {
+            "description": "질문 목록",
+            "items": {
+              "$ref": "#/components/schemas/TemplateQuestionSnapshot"
+            },
+            "minItems": 1,
+            "title": "Questions",
+            "type": "array"
+          }
+        },
+        "required": [
+          "name",
+          "category",
+          "questions"
+        ],
+        "title": "SurveyTemplateCreate",
+        "type": "object"
+      },
+      "SurveyTemplateUpdate": {
+        "description": "설문 템플릿 수정 요청 스키마.",
+        "properties": {
+          "category": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TemplateCategory"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "questions": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/TemplateQuestionSnapshot"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Questions"
+          }
+        },
+        "title": "SurveyTemplateUpdate",
+        "type": "object"
+      },
+      "SurveyType": {
+        "description": "설문 유형.",
+        "enum": [
+          "survey",
+          "poll"
+        ],
+        "title": "SurveyType",
+        "type": "string"
+      },
+      "SurveyUpdate": {
+        "description": "설문 수정 요청 스키마.",
+        "properties": {
+          "allow_multiple": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Allow Multiple"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "ends_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ends At"
+          },
+          "show_results": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ShowResults"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "starts_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Starts At"
+          },
+          "target_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Ids"
+          },
+          "target_type": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetType"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          }
+        },
+        "title": "SurveyUpdate",
+        "type": "object"
+      },
+      "TargetType": {
+        "description": "배포 대상 유형.",
+        "enum": [
+          "all",
+          "department",
+          "role",
+          "custom"
+        ],
+        "title": "TargetType",
+        "type": "string"
+      },
+      "TemplateCategory": {
+        "description": "템플릿 카테고리.",
+        "enum": [
+          "satisfaction",
+          "culture",
+          "education",
+          "stress",
+          "custom"
+        ],
+        "title": "TemplateCategory",
+        "type": "string"
+      },
+      "TemplateQuestionSnapshot": {
+        "description": "템플릿 내 질문 스냅샷 — 임베디드.",
+        "properties": {
+          "matrix_columns": {
+            "description": "매트릭스 열",
+            "items": {
+              "type": "string"
+            },
+            "title": "Matrix Columns",
+            "type": "array"
+          },
+          "matrix_rows": {
+            "description": "매트릭스 행",
+            "items": {
+              "type": "string"
+            },
+            "title": "Matrix Rows",
+            "type": "array"
+          },
+          "options": {
+            "description": "선택지",
+            "items": {
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "boolean"
+                  }
+                ]
+              },
+              "type": "object"
+            },
+            "title": "Options",
+            "type": "array"
+          },
+          "order": {
+            "description": "표시 순서",
+            "minimum": 1.0,
+            "title": "Order",
+            "type": "integer"
+          },
+          "question_text": {
+            "description": "질문 내용",
+            "title": "Question Text",
+            "type": "string"
+          },
+          "question_type": {
+            "description": "질문 유형",
+            "title": "Question Type",
+            "type": "string"
+          },
+          "required": {
+            "default": true,
+            "description": "필수 여부",
+            "title": "Required",
+            "type": "boolean"
+          },
+          "scale_max": {
+            "default": 5,
+            "description": "척도 최댓값",
+            "title": "Scale Max",
+            "type": "integer"
+          },
+          "scale_min": {
+            "default": 1,
+            "description": "척도 최솟값",
+            "title": "Scale Min",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "question_text",
+          "question_type",
+          "order"
+        ],
+        "title": "TemplateQuestionSnapshot",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "contact": {
+      "name": "OneERP 개발팀"
+    },
+    "description": "OneERP Survey 서비스 REST API",
+    "license": {
+      "name": "Proprietary"
+    },
+    "title": "OneERP Survey API",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/v1/poll-votes": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "poll_vote_목록_api_v1_poll_votes_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_PollVote_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Poll Vote 목록",
+        "tags": [
+          "투표 기록"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "poll_vote_생성_api_v1_poll_votes_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PollVoteCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Poll Vote 생성 Api V1 Poll Votes Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Poll Vote 생성",
+        "tags": [
+          "투표 기록"
+        ]
+      }
+    },
+    "/api/v1/poll-votes/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "poll_vote_삭제_api_v1_poll_votes__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Poll Vote 삭제",
+        "tags": [
+          "투표 기록"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "poll_vote_조회_api_v1_poll_votes__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Poll Vote 조회 Api V1 Poll Votes  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Poll Vote 조회",
+        "tags": [
+          "투표 기록"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "poll_vote_수정_api_v1_poll_votes__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PollVoteUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Poll Vote 수정 Api V1 Poll Votes  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Poll Vote 수정",
+        "tags": [
+          "투표 기록"
+        ]
+      }
+    },
+    "/api/v1/poll-votes/{doc_id}/cancel": {
+      "post": {
+        "description": "문서를 취소한다 (제출 → 취소).",
+        "operationId": "poll_vote_취소_api_v1_poll_votes__doc_id__cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Poll Vote 취소 Api V1 Poll Votes  Doc Id  Cancel Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Poll Vote 취소",
+        "tags": [
+          "투표 기록"
+        ]
+      }
+    },
+    "/api/v1/poll-votes/{doc_id}/submit": {
+      "post": {
+        "description": "문서를 제출한다 (초안 → 제출).",
+        "operationId": "poll_vote_제출_api_v1_poll_votes__doc_id__submit_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Poll Vote 제출 Api V1 Poll Votes  Doc Id  Submit Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Poll Vote 제출",
+        "tags": [
+          "투표 기록"
+        ]
+      }
+    },
+    "/api/v1/polls": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "poll_목록_api_v1_polls_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_Poll_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Poll 목록",
+        "tags": [
+          "투표"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "poll_생성_api_v1_polls_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PollCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Poll 생성 Api V1 Polls Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Poll 생성",
+        "tags": [
+          "투표"
+        ]
+      }
+    },
+    "/api/v1/polls/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "poll_삭제_api_v1_polls__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Poll 삭제",
+        "tags": [
+          "투표"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "poll_조회_api_v1_polls__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Poll 조회 Api V1 Polls  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Poll 조회",
+        "tags": [
+          "투표"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "poll_수정_api_v1_polls__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PollUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Poll 수정 Api V1 Polls  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Poll 수정",
+        "tags": [
+          "투표"
+        ]
+      }
+    },
+    "/api/v1/polls/{doc_id}/cancel": {
+      "post": {
+        "description": "문서를 취소한다 (제출 → 취소).",
+        "operationId": "poll_취소_api_v1_polls__doc_id__cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Poll 취소 Api V1 Polls  Doc Id  Cancel Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Poll 취소",
+        "tags": [
+          "투표"
+        ]
+      }
+    },
+    "/api/v1/polls/{doc_id}/submit": {
+      "post": {
+        "description": "문서를 제출한다 (초안 → 제출).",
+        "operationId": "poll_제출_api_v1_polls__doc_id__submit_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Poll 제출 Api V1 Polls  Doc Id  Submit Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Poll 제출",
+        "tags": [
+          "투표"
+        ]
+      }
+    },
+    "/api/v1/polls/{poll_id}/close": {
+      "post": {
+        "description": "투표를 마감한다.",
+        "operationId": "close_poll_api_v1_polls__poll_id__close_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "poll_id",
+            "required": true,
+            "schema": {
+              "title": "Poll Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Close Poll Api V1 Polls  Poll Id  Close Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Close Poll",
+        "tags": [
+          "설문/투표"
+        ]
+      }
+    },
+    "/api/v1/polls/{poll_id}/results": {
+      "get": {
+        "description": "투표 결과를 조회한다.",
+        "operationId": "get_poll_results_api_v1_polls__poll_id__results_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "poll_id",
+            "required": true,
+            "schema": {
+              "title": "Poll Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Get Poll Results Api V1 Polls  Poll Id  Results Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Poll Results",
+        "tags": [
+          "설문/투표"
+        ]
+      }
+    },
+    "/api/v1/polls/{poll_id}/vote": {
+      "post": {
+        "description": "투표한다.",
+        "operationId": "cast_vote_api_v1_polls__poll_id__vote_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "poll_id",
+            "required": true,
+            "schema": {
+              "title": "Poll Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "title": "Body",
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Cast Vote Api V1 Polls  Poll Id  Vote Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Cast Vote",
+        "tags": [
+          "설문/투표"
+        ]
+      }
+    },
+    "/api/v1/survey-questions": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "survey_question_목록_api_v1_survey_questions_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_SurveyQuestion_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey Question 목록",
+        "tags": [
+          "설문 질문"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "survey_question_생성_api_v1_survey_questions_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SurveyQuestionCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Survey Question 생성 Api V1 Survey Questions Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey Question 생성",
+        "tags": [
+          "설문 질문"
+        ]
+      }
+    },
+    "/api/v1/survey-questions/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "survey_question_삭제_api_v1_survey_questions__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey Question 삭제",
+        "tags": [
+          "설문 질문"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "survey_question_조회_api_v1_survey_questions__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Survey Question 조회 Api V1 Survey Questions  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey Question 조회",
+        "tags": [
+          "설문 질문"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "survey_question_수정_api_v1_survey_questions__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SurveyQuestionUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Survey Question 수정 Api V1 Survey Questions  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey Question 수정",
+        "tags": [
+          "설문 질문"
+        ]
+      }
+    },
+    "/api/v1/survey-questions/{doc_id}/cancel": {
+      "post": {
+        "description": "문서를 취소한다 (제출 → 취소).",
+        "operationId": "survey_question_취소_api_v1_survey_questions__doc_id__cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Survey Question 취소 Api V1 Survey Questions  Doc Id  Cancel Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey Question 취소",
+        "tags": [
+          "설문 질문"
+        ]
+      }
+    },
+    "/api/v1/survey-questions/{doc_id}/submit": {
+      "post": {
+        "description": "문서를 제출한다 (초안 → 제출).",
+        "operationId": "survey_question_제출_api_v1_survey_questions__doc_id__submit_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Survey Question 제출 Api V1 Survey Questions  Doc Id  Submit Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey Question 제출",
+        "tags": [
+          "설문 질문"
+        ]
+      }
+    },
+    "/api/v1/survey-responses": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "survey_response_목록_api_v1_survey_responses_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_SurveyResponse_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey Response 목록",
+        "tags": [
+          "설문 응답"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "survey_response_생성_api_v1_survey_responses_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SurveyResponseCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Survey Response 생성 Api V1 Survey Responses Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey Response 생성",
+        "tags": [
+          "설문 응답"
+        ]
+      }
+    },
+    "/api/v1/survey-responses/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "survey_response_삭제_api_v1_survey_responses__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey Response 삭제",
+        "tags": [
+          "설문 응답"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "survey_response_조회_api_v1_survey_responses__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Survey Response 조회 Api V1 Survey Responses  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey Response 조회",
+        "tags": [
+          "설문 응답"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "survey_response_수정_api_v1_survey_responses__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SurveyResponseUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Survey Response 수정 Api V1 Survey Responses  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey Response 수정",
+        "tags": [
+          "설문 응답"
+        ]
+      }
+    },
+    "/api/v1/survey-responses/{doc_id}/cancel": {
+      "post": {
+        "description": "문서를 취소한다 (제출 → 취소).",
+        "operationId": "survey_response_취소_api_v1_survey_responses__doc_id__cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Survey Response 취소 Api V1 Survey Responses  Doc Id  Cancel Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey Response 취소",
+        "tags": [
+          "설문 응답"
+        ]
+      }
+    },
+    "/api/v1/survey-responses/{doc_id}/submit": {
+      "post": {
+        "description": "문서를 제출한다 (초안 → 제출).",
+        "operationId": "survey_response_제출_api_v1_survey_responses__doc_id__submit_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Survey Response 제출 Api V1 Survey Responses  Doc Id  Submit Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey Response 제출",
+        "tags": [
+          "설문 응답"
+        ]
+      }
+    },
+    "/api/v1/survey-templates": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "survey_template_목록_api_v1_survey_templates_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_SurveyTemplate_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey Template 목록",
+        "tags": [
+          "설문 템플릿"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "survey_template_생성_api_v1_survey_templates_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SurveyTemplateCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Survey Template 생성 Api V1 Survey Templates Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey Template 생성",
+        "tags": [
+          "설문 템플릿"
+        ]
+      }
+    },
+    "/api/v1/survey-templates/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "survey_template_삭제_api_v1_survey_templates__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey Template 삭제",
+        "tags": [
+          "설문 템플릿"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "survey_template_조회_api_v1_survey_templates__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Survey Template 조회 Api V1 Survey Templates  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey Template 조회",
+        "tags": [
+          "설문 템플릿"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "survey_template_수정_api_v1_survey_templates__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SurveyTemplateUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Survey Template 수정 Api V1 Survey Templates  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey Template 수정",
+        "tags": [
+          "설문 템플릿"
+        ]
+      }
+    },
+    "/api/v1/surveys": {
+      "get": {
+        "description": "엔티티 목록을 페이지네이션으로 조회한다.",
+        "operationId": "survey_목록_api_v1_surveys_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_Survey_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey 목록",
+        "tags": [
+          "설문"
+        ]
+      },
+      "post": {
+        "description": "엔티티를 생성한다.",
+        "operationId": "survey_생성_api_v1_surveys_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SurveyCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Survey 생성 Api V1 Surveys Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey 생성",
+        "tags": [
+          "설문"
+        ]
+      }
+    },
+    "/api/v1/surveys/from-template": {
+      "post": {
+        "description": "템플릿으로 설문을 생성한다.",
+        "operationId": "create_from_template_api_v1_surveys_from_template_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "title": "Body",
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Create From Template Api V1 Surveys From Template Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create From Template",
+        "tags": [
+          "설문/투표"
+        ]
+      }
+    },
+    "/api/v1/surveys/{doc_id}": {
+      "delete": {
+        "description": "엔티티를 삭제한다. 초안 상태에서만 허용.",
+        "operationId": "survey_삭제_api_v1_surveys__doc_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey 삭제",
+        "tags": [
+          "설문"
+        ]
+      },
+      "get": {
+        "description": "엔티티를 조회한다.",
+        "operationId": "survey_조회_api_v1_surveys__doc_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Survey 조회 Api V1 Surveys  Doc Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey 조회",
+        "tags": [
+          "설문"
+        ]
+      },
+      "put": {
+        "description": "엔티티를 수정한다.",
+        "operationId": "survey_수정_api_v1_surveys__doc_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SurveyUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Survey 수정 Api V1 Surveys  Doc Id  Put",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey 수정",
+        "tags": [
+          "설문"
+        ]
+      }
+    },
+    "/api/v1/surveys/{doc_id}/cancel": {
+      "post": {
+        "description": "문서를 취소한다 (제출 → 취소).",
+        "operationId": "survey_취소_api_v1_surveys__doc_id__cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Survey 취소 Api V1 Surveys  Doc Id  Cancel Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey 취소",
+        "tags": [
+          "설문"
+        ]
+      }
+    },
+    "/api/v1/surveys/{doc_id}/submit": {
+      "post": {
+        "description": "문서를 제출한다 (초안 → 제출).",
+        "operationId": "survey_제출_api_v1_surveys__doc_id__submit_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc_id",
+            "required": true,
+            "schema": {
+              "title": "Doc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Survey 제출 Api V1 Surveys  Doc Id  Submit Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Survey 제출",
+        "tags": [
+          "설문"
+        ]
+      }
+    },
+    "/api/v1/surveys/{survey_id}/close": {
+      "post": {
+        "description": "설문을 마감한다 (active → closed).",
+        "operationId": "close_survey_api_v1_surveys__survey_id__close_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "survey_id",
+            "required": true,
+            "schema": {
+              "title": "Survey Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Close Survey Api V1 Surveys  Survey Id  Close Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Close Survey",
+        "tags": [
+          "설문/투표"
+        ]
+      }
+    },
+    "/api/v1/surveys/{survey_id}/publish": {
+      "post": {
+        "description": "설문을 배포한다 (draft → active).",
+        "operationId": "publish_survey_api_v1_surveys__survey_id__publish_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "survey_id",
+            "required": true,
+            "schema": {
+              "title": "Survey Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Publish Survey Api V1 Surveys  Survey Id  Publish Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Publish Survey",
+        "tags": [
+          "설문/투표"
+        ]
+      }
+    },
+    "/api/v1/surveys/{survey_id}/responses": {
+      "post": {
+        "description": "설문 응답을 제출한다.",
+        "operationId": "submit_response_api_v1_surveys__survey_id__responses_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "survey_id",
+            "required": true,
+            "schema": {
+              "title": "Survey Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "title": "Body",
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Submit Response Api V1 Surveys  Survey Id  Responses Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Submit Response",
+        "tags": [
+          "설문/투표"
+        ]
+      }
+    },
+    "/api/v1/surveys/{survey_id}/results": {
+      "get": {
+        "description": "설문 결과를 조회한다.",
+        "operationId": "get_survey_results_api_v1_surveys__survey_id__results_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "survey_id",
+            "required": true,
+            "schema": {
+              "title": "Survey Id",
+              "type": "string"
+            }
+          },
+          {
+            "description": "교차 분석 기준",
+            "in": "query",
+            "name": "group_by",
+            "required": false,
+            "schema": {
+              "default": "",
+              "description": "교차 분석 기준",
+              "title": "Group By",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Get Survey Results Api V1 Surveys  Survey Id  Results Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Survey Results",
+        "tags": [
+          "설문/투표"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "description": "서비스 상태를 확인한다 (하위 호환).",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Health Health Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/health/live": {
+      "get": {
+        "description": "Liveness probe — 프로세스 생존 확인.",
+        "operationId": "liveness_health_live_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Liveness Health Live Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Liveness",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "description": "Readiness probe — DB/NATS/Valkey 연결 포함 서비스 준비 상태 확인.",
+        "operationId": "readiness_health_ready_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Readiness",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/health/startup": {
+      "get": {
+        "description": "Startup probe — 서비스 초기화 완료 확인 (readiness와 동일).",
+        "operationId": "startup_health_startup_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Startup",
+        "tags": [
+          "health"
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/survey"
+    },
+    {
+      "description": "현재 서버",
+      "url": "/"
+    }
+  ],
+  "tags": [
+    {
+      "description": "설문 API",
+      "name": "설문"
+    },
+    {
+      "description": "설문 질문 API",
+      "name": "설문 질문"
+    },
+    {
+      "description": "설문 응답 API",
+      "name": "설문 응답"
+    },
+    {
+      "description": "투표 API",
+      "name": "투표"
+    },
+    {
+      "description": "투표 기록 API",
+      "name": "투표 기록"
+    },
+    {
+      "description": "설문 템플릿 API",
+      "name": "설문 템플릿"
+    }
+  ]
+}

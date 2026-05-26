@@ -1,0 +1,405 @@
+# GENERATED FILE. DO NOT EDIT.
+# source: deploy/catalog/planes.yaml, deploy/catalog/services.yaml, deploy/catalog/releases/current.yaml
+# release: v0.1.0
+#
+# ADR-0014 통합 진입 구조:
+#   - plane 간 통신: compose 네트워크 hostname (ex. http://api-plane:8000)
+#   - 외부 진입: edge-router(Caddy) 만 host:8080 노출
+#     · /api/* → edge-plane:8000 (FastAPI gateway → 도메인 mount)
+#     · /*      → web:3000        (Next.js SSR/static)
+#   - 개발자 직접 접근: `docker compose exec <svc> ...` 또는 edge-router 라우팅 사용
+name: oneerp
+services:
+  postgres:
+    image: ghcr.io/ferretdb/postgres-documentdb:17-0.107.0-ferretdb-2.7.0
+    hostname: postgres
+    environment:
+      POSTGRES_USER: ferret
+      POSTGRES_PASSWORD: ferret
+      POSTGRES_DB: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+    - postgres_data:/var/lib/postgresql/data
+    expose:
+    - '5432'
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - pg_isready -U ferret -d postgres
+      interval: 5s
+      timeout: 3s
+      retries: 5
+  ferretdb:
+    image: ghcr.io/ferretdb/ferretdb:2.7.0
+    hostname: ferretdb
+    environment:
+      FERRETDB_POSTGRESQL_URL: postgres://ferret:ferret@postgres:5432/postgres?sslmode=disable
+      FERRETDB_LISTEN_ADDR: 0.0.0.0:27017
+      FERRETDB_AUTH: 'false'
+      FERRETDB_LOG_LEVEL: INFO
+    expose:
+    - '27017'
+    depends_on:
+      postgres:
+        condition: service_healthy
+  valkey:
+    image: valkey/valkey:8
+    hostname: valkey
+    expose:
+    - '6379'
+    healthcheck:
+      test:
+      - CMD
+      - valkey-cli
+      - ping
+      interval: 5s
+      timeout: 3s
+      retries: 5
+  nats:
+    image: nats:2.11-alpine
+    hostname: nats
+    command:
+    - --jetstream
+    - --store_dir
+    - /data
+    - -m
+    - '8222'
+    expose:
+    - '4222'
+    - '8222'
+    volumes:
+    - nats_data:/data
+    healthcheck:
+      test:
+      - CMD
+      - wget
+      - --spider
+      - -q
+      - http://localhost:8222/healthz
+      interval: 5s
+      timeout: 3s
+      retries: 5
+  api-plane:
+    profiles:
+    - plane
+    - full
+    hostname: api-plane
+    build:
+      context: .
+      dockerfile: planes/api_plane/Dockerfile
+    image: ghcr.io/oneerp/plane-api:v0.1.0-g084b78e
+    pull_policy: ${ONEERP_COMPOSE_PULL_POLICY:-build}
+    environment:
+      ONEERP_FERRETDB_URI: mongodb://ferretdb:27017
+      ONEERP_DATABASE_NAME: oneerp
+      ONEERP_VALKEY_URL: redis://valkey:6379/0
+      ONEERP_NATS_URL: nats://nats:4222
+      ONEERP_JWT_SECRET: ${ONEERP_JWT_SECRET:-dev-secret-change-in-production}
+      ONEERP_DEBUG: ${ONEERP_DEBUG:-false}
+      ONEERP_SERVICE_NAME: plane-api
+      ONEERP_PLANE_NAME: api
+      ONEERP_PLANE_API_URL: http://api-plane:8000
+      ONEERP_PLANE_REALTIME_URL: http://realtime-plane:8000
+      ONEERP_PLANE_WORKER_URL: http://worker-plane:8000
+      ONEERP_PLANE_SCHEDULER_URL: http://scheduler-plane:8000
+      ONEERP_PLANE_EDGE_URL: http://edge-plane:8000
+      ONEERP_PLANE_EXTENSION_URL: http://extension-plane:8000
+    expose:
+    - '8000'
+    depends_on:
+      ferretdb:
+        condition: service_started
+      valkey:
+        condition: service_healthy
+      nats:
+        condition: service_healthy
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - python -c 'import urllib.request,sys; sys.exit(0 if urllib.request.urlopen("http://localhost:8000/health",timeout=2).status==200
+        else 1)'
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 20s
+  realtime-plane:
+    profiles:
+    - plane
+    - full
+    hostname: realtime-plane
+    build:
+      context: .
+      dockerfile: planes/realtime_plane/Dockerfile
+    image: ghcr.io/oneerp/plane-realtime:v0.1.0-g084b78e
+    pull_policy: ${ONEERP_COMPOSE_PULL_POLICY:-build}
+    environment:
+      ONEERP_FERRETDB_URI: mongodb://ferretdb:27017
+      ONEERP_DATABASE_NAME: oneerp
+      ONEERP_VALKEY_URL: redis://valkey:6379/0
+      ONEERP_NATS_URL: nats://nats:4222
+      ONEERP_JWT_SECRET: ${ONEERP_JWT_SECRET:-dev-secret-change-in-production}
+      ONEERP_DEBUG: ${ONEERP_DEBUG:-false}
+      ONEERP_SERVICE_NAME: plane-realtime
+      ONEERP_PLANE_NAME: realtime
+      ONEERP_PLANE_API_URL: http://api-plane:8000
+      ONEERP_PLANE_REALTIME_URL: http://realtime-plane:8000
+      ONEERP_PLANE_WORKER_URL: http://worker-plane:8000
+      ONEERP_PLANE_SCHEDULER_URL: http://scheduler-plane:8000
+      ONEERP_PLANE_EDGE_URL: http://edge-plane:8000
+      ONEERP_PLANE_EXTENSION_URL: http://extension-plane:8000
+    expose:
+    - '8000'
+    depends_on:
+      ferretdb:
+        condition: service_started
+      valkey:
+        condition: service_healthy
+      nats:
+        condition: service_healthy
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - python -c 'import urllib.request,sys; sys.exit(0 if urllib.request.urlopen("http://localhost:8000/health",timeout=2).status==200
+        else 1)'
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 20s
+  worker-plane:
+    profiles:
+    - plane
+    - full
+    hostname: worker-plane
+    build:
+      context: .
+      dockerfile: planes/worker_plane/Dockerfile
+    image: ghcr.io/oneerp/plane-worker:v0.1.0-g084b78e
+    pull_policy: ${ONEERP_COMPOSE_PULL_POLICY:-build}
+    environment:
+      ONEERP_FERRETDB_URI: mongodb://ferretdb:27017
+      ONEERP_DATABASE_NAME: oneerp
+      ONEERP_VALKEY_URL: redis://valkey:6379/0
+      ONEERP_NATS_URL: nats://nats:4222
+      ONEERP_JWT_SECRET: ${ONEERP_JWT_SECRET:-dev-secret-change-in-production}
+      ONEERP_DEBUG: ${ONEERP_DEBUG:-false}
+      ONEERP_SERVICE_NAME: plane-worker
+      ONEERP_PLANE_NAME: worker
+      ONEERP_PLANE_API_URL: http://api-plane:8000
+      ONEERP_PLANE_REALTIME_URL: http://realtime-plane:8000
+      ONEERP_PLANE_WORKER_URL: http://worker-plane:8000
+      ONEERP_PLANE_SCHEDULER_URL: http://scheduler-plane:8000
+      ONEERP_PLANE_EDGE_URL: http://edge-plane:8000
+      ONEERP_PLANE_EXTENSION_URL: http://extension-plane:8000
+    expose:
+    - '8000'
+    depends_on:
+      ferretdb:
+        condition: service_started
+      valkey:
+        condition: service_healthy
+      nats:
+        condition: service_healthy
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - python -c 'import urllib.request,sys; sys.exit(0 if urllib.request.urlopen("http://localhost:8000/health",timeout=2).status==200
+        else 1)'
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 20s
+  scheduler-plane:
+    profiles:
+    - plane
+    - full
+    hostname: scheduler-plane
+    build:
+      context: .
+      dockerfile: planes/scheduler_plane/Dockerfile
+    image: ghcr.io/oneerp/plane-scheduler:v0.1.0-g084b78e
+    pull_policy: ${ONEERP_COMPOSE_PULL_POLICY:-build}
+    environment:
+      ONEERP_FERRETDB_URI: mongodb://ferretdb:27017
+      ONEERP_DATABASE_NAME: oneerp
+      ONEERP_VALKEY_URL: redis://valkey:6379/0
+      ONEERP_NATS_URL: nats://nats:4222
+      ONEERP_JWT_SECRET: ${ONEERP_JWT_SECRET:-dev-secret-change-in-production}
+      ONEERP_DEBUG: ${ONEERP_DEBUG:-false}
+      ONEERP_SERVICE_NAME: plane-scheduler
+      ONEERP_PLANE_NAME: scheduler
+      ONEERP_PLANE_API_URL: http://api-plane:8000
+      ONEERP_PLANE_REALTIME_URL: http://realtime-plane:8000
+      ONEERP_PLANE_WORKER_URL: http://worker-plane:8000
+      ONEERP_PLANE_SCHEDULER_URL: http://scheduler-plane:8000
+      ONEERP_PLANE_EDGE_URL: http://edge-plane:8000
+      ONEERP_PLANE_EXTENSION_URL: http://extension-plane:8000
+    expose:
+    - '8000'
+    depends_on:
+      ferretdb:
+        condition: service_started
+      valkey:
+        condition: service_healthy
+      nats:
+        condition: service_healthy
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - python -c 'import urllib.request,sys; sys.exit(0 if urllib.request.urlopen("http://localhost:8000/health",timeout=2).status==200
+        else 1)'
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 20s
+  edge-plane:
+    profiles:
+    - plane
+    - full
+    hostname: edge-plane
+    build:
+      context: .
+      dockerfile: planes/edge_plane/Dockerfile
+    image: ghcr.io/oneerp/plane-edge:v0.1.0-g084b78e
+    pull_policy: ${ONEERP_COMPOSE_PULL_POLICY:-build}
+    environment:
+      ONEERP_FERRETDB_URI: mongodb://ferretdb:27017
+      ONEERP_DATABASE_NAME: oneerp
+      ONEERP_VALKEY_URL: redis://valkey:6379/0
+      ONEERP_NATS_URL: nats://nats:4222
+      ONEERP_JWT_SECRET: ${ONEERP_JWT_SECRET:-dev-secret-change-in-production}
+      ONEERP_DEBUG: ${ONEERP_DEBUG:-false}
+      ONEERP_SERVICE_NAME: plane-edge
+      ONEERP_PLANE_NAME: edge
+      ONEERP_PLANE_API_URL: http://api-plane:8000
+      ONEERP_PLANE_REALTIME_URL: http://realtime-plane:8000
+      ONEERP_PLANE_WORKER_URL: http://worker-plane:8000
+      ONEERP_PLANE_SCHEDULER_URL: http://scheduler-plane:8000
+      ONEERP_PLANE_EDGE_URL: http://edge-plane:8000
+      ONEERP_PLANE_EXTENSION_URL: http://extension-plane:8000
+    expose:
+    - '8000'
+    depends_on:
+      ferretdb:
+        condition: service_started
+      valkey:
+        condition: service_healthy
+      nats:
+        condition: service_healthy
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - python -c 'import urllib.request,sys; sys.exit(0 if urllib.request.urlopen("http://localhost:8000/health",timeout=2).status==200
+        else 1)'
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 20s
+  extension-plane:
+    profiles:
+    - plane
+    - full
+    hostname: extension-plane
+    build:
+      context: .
+      dockerfile: planes/extension_plane/Dockerfile
+    image: ghcr.io/oneerp/plane-extension:v0.1.0-g084b78e
+    pull_policy: ${ONEERP_COMPOSE_PULL_POLICY:-build}
+    environment:
+      ONEERP_FERRETDB_URI: mongodb://ferretdb:27017
+      ONEERP_DATABASE_NAME: oneerp
+      ONEERP_VALKEY_URL: redis://valkey:6379/0
+      ONEERP_NATS_URL: nats://nats:4222
+      ONEERP_JWT_SECRET: ${ONEERP_JWT_SECRET:-dev-secret-change-in-production}
+      ONEERP_DEBUG: ${ONEERP_DEBUG:-false}
+      ONEERP_SERVICE_NAME: plane-extension
+      ONEERP_PLANE_NAME: extension
+      ONEERP_PLANE_API_URL: http://api-plane:8000
+      ONEERP_PLANE_REALTIME_URL: http://realtime-plane:8000
+      ONEERP_PLANE_WORKER_URL: http://worker-plane:8000
+      ONEERP_PLANE_SCHEDULER_URL: http://scheduler-plane:8000
+      ONEERP_PLANE_EDGE_URL: http://edge-plane:8000
+      ONEERP_PLANE_EXTENSION_URL: http://extension-plane:8000
+    expose:
+    - '8000'
+    depends_on:
+      ferretdb:
+        condition: service_started
+      valkey:
+        condition: service_healthy
+      nats:
+        condition: service_healthy
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - python -c 'import urllib.request,sys; sys.exit(0 if urllib.request.urlopen("http://localhost:8000/health",timeout=2).status==200
+        else 1)'
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 20s
+  web:
+    profiles:
+    - minimal
+    - starter
+    - business
+    - advanced
+    - platform
+    - full
+    hostname: web
+    build:
+      context: web
+      dockerfile: Dockerfile
+    image: ghcr.io/oneerp/web:v0.1.0-g084b78e
+    pull_policy: ${ONEERP_COMPOSE_PULL_POLICY:-build}
+    environment:
+      NODE_ENV: production
+      HOSTNAME: 0.0.0.0
+      PORT: '3000'
+      NEXT_PUBLIC_API_BASE_URL: http://edge-plane:8000
+      NEXT_PUBLIC_DEMO_USERNAME: ${ONEERP_DEV_ADMIN_USERNAME:-demo}
+      NEXT_PUBLIC_DEMO_PASSWORD: ${ONEERP_DEV_ADMIN_PASSWORD:-demo1234}
+    expose:
+    - '3000'
+    depends_on:
+      edge-plane:
+        condition: service_healthy
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - node -e 'require("http").get("http://localhost:3000/",r=>process.exit(r.statusCode<500?0:1)).on("error",()=>process.exit(1))'
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 30s
+  edge-router:
+    profiles:
+    - minimal
+    - starter
+    - business
+    - advanced
+    - platform
+    - full
+    image: caddy:2-alpine
+    hostname: edge-router
+    ports:
+    - 8080:80
+    volumes:
+    - ./deploy/edge-router/Caddyfile:/etc/caddy/Caddyfile:ro
+    - edge_router_data:/data
+    depends_on:
+      edge-plane:
+        condition: service_healthy
+      web:
+        condition: service_healthy
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - wget --spider -q http://localhost:80/ || exit 1
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+volumes:
+  postgres_data: null
+  nats_data: null
+  edge_router_data: null

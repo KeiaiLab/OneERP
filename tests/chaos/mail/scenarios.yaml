@@ -1,0 +1,35 @@
+# G2-4 chaos scenario · staging 전용
+# source: docs/kb/incident/chaos-mail-2026-04-22.md
+# conducted_at: 2026-04-22T07:00:00Z
+# expected_mttr_minutes: 15
+apiVersion: chaosmesh.org/v1alpha1
+kind: PodChaos
+metadata:
+  name: mail-pod-kill
+  namespace: services-staging
+spec:
+  action: pod-kill
+  mode: one
+  duration: "30s"
+  selector:
+    labelSelectors:
+      app: mail
+    namespaces: ["services-staging"]
+---
+apiVersion: chaosmesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: mail-network-delay
+  namespace: services-staging
+spec:
+  action: delay
+  mode: one
+  duration: "60s"
+  selector:
+    labelSelectors:
+      app: mail
+    namespaces: ["services-staging"]
+  delay:
+    latency: "200ms"
+    correlation: "50"
+    jitter: "50ms"

@@ -1,0 +1,6103 @@
+components:
+  schemas:
+    CarbonEmission:
+      description: 탄소 배출 문서.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        calculation_method:
+          default: ''
+          title: Calculation Method
+          type: string
+        company:
+          default: ''
+          title: Company
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        emission_amount:
+          default: '0'
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Emission Amount
+          type: string
+        emission_code:
+          default: ''
+          title: Emission Code
+          type: string
+        facility:
+          default: ''
+          title: Facility
+          type: string
+        measurement_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Measurement Date
+        source_name:
+          default: ''
+          title: Source Name
+          type: string
+        source_type:
+          default: ''
+          title: Source Type
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        unit:
+          default: tCO2e
+          title: Unit
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: CarbonEmission
+      type: object
+    CarbonEmissionCreate:
+      description: 탄소 배출 생성 요청 스키마.
+      properties:
+        calculation_method:
+          default: ''
+          title: Calculation Method
+          type: string
+        company:
+          default: ''
+          title: Company
+          type: string
+        emission_amount:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          default: '0'
+          title: Emission Amount
+        emission_code:
+          title: Emission Code
+          type: string
+        facility:
+          default: ''
+          title: Facility
+          type: string
+        measurement_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Measurement Date
+        source_name:
+          default: ''
+          title: Source Name
+          type: string
+        source_type:
+          default: ''
+          title: Source Type
+          type: string
+        unit:
+          default: tCO2e
+          title: Unit
+          type: string
+      required:
+      - emission_code
+      title: CarbonEmissionCreate
+      type: object
+    CarbonEmissionUpdate:
+      description: 탄소 배출 수정 요청 스키마.
+      properties:
+        calculation_method:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Calculation Method
+        company:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Company
+        emission_amount:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Emission Amount
+        emission_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Emission Code
+        facility:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Facility
+        measurement_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Measurement Date
+        source_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Name
+        source_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Type
+        unit:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Unit
+      title: CarbonEmissionUpdate
+      type: object
+    ConsolidatedReport:
+      description: 연결 재무제표 문서.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        elimination_breakdown:
+          description: 소거 내역
+          items:
+            $ref: '#/components/schemas/EliminationBreakdown'
+          title: Elimination Breakdown
+          type: array
+        entity_breakdown:
+          description: 법인별 내역
+          items:
+            $ref: '#/components/schemas/EntityBreakdown'
+          title: Entity Breakdown
+          type: array
+        finalized_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: 확정 시각
+          title: Finalized At
+        finalized_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: 확정자
+          title: Finalized By
+        generated_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: 생성 시각
+          title: Generated At
+        generated_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: 생성자
+          title: Generated By
+        line_items:
+          description: 보고서 라인 항목
+          items:
+            $ref: '#/components/schemas/ReportLineItem'
+          title: Line Items
+          type: array
+        nci_breakdown:
+          anyOf:
+          - $ref: '#/components/schemas/NCIBreakdown'
+          - type: 'null'
+          description: 비지배지분 내역
+        period_id:
+          description: 연결 기간 참조
+          title: Period Id
+          type: string
+        presentation_currency:
+          default: KRW
+          description: 보고 통화
+          title: Presentation Currency
+          type: string
+        report_date:
+          description: 보고일
+          format: date
+          title: Report Date
+          type: string
+        report_type:
+          $ref: '#/components/schemas/ReportType'
+          description: 보고서 유형
+        status:
+          $ref: '#/components/schemas/ReportStatus'
+          default: draft
+          description: 보고서 상태
+        tenant_id:
+          title: Tenant Id
+          type: string
+        totals:
+          $ref: '#/components/schemas/ReportTotals'
+          description: 합계
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        version:
+          default: 1
+          description: 버전
+          title: Version
+          type: integer
+      required:
+      - period_id
+      - report_type
+      - report_date
+      title: ConsolidatedReport
+      type: object
+    ConsolidatedReportCreate:
+      description: 보고서 생성 요청 스키마.
+      properties:
+        period_id:
+          title: Period Id
+          type: string
+        presentation_currency:
+          default: KRW
+          title: Presentation Currency
+          type: string
+        report_date:
+          format: date
+          title: Report Date
+          type: string
+        report_type:
+          $ref: '#/components/schemas/ReportType'
+      required:
+      - period_id
+      - report_type
+      - report_date
+      title: ConsolidatedReportCreate
+      type: object
+    ConsolidatedReportUpdate:
+      description: 보고서 수정 요청 스키마.
+      properties:
+        remarks:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Remarks
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/ReportStatus'
+          - type: 'null'
+      title: ConsolidatedReportUpdate
+      type: object
+    ConsolidationEntity:
+      description: 연결 대상 법인 문서.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        accounting_entity_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: 개별 회계 법인 연결 ID
+          title: Accounting Entity Id
+        acquisition_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          description: 취득일
+          title: Acquisition Date
+        chart_of_accounts_mapping_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: 그룹 CoA 매핑 참조
+          title: Chart Of Accounts Mapping Id
+        consolidation_method:
+          $ref: '#/components/schemas/ConsolidationMethod'
+          default: full
+          description: 연결 방법
+        country_code:
+          default: KR
+          description: 소재 국가 (ISO 3166-1 alpha-2)
+          title: Country Code
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        disposal_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          description: 처분일
+          title: Disposal Date
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        entity_code:
+          description: 법인 코드
+          title: Entity Code
+          type: string
+        entity_name:
+          description: 법인명
+          title: Entity Name
+          type: string
+        entity_type:
+          $ref: '#/components/schemas/EntityType'
+          default: subsidiary
+          description: 법인 유형
+        fiscal_year_start_month:
+          default: 1
+          description: 회계연도 시작월
+          title: Fiscal Year Start Month
+          type: integer
+        functional_currency:
+          default: KRW
+          description: 기능통화 (ISO 4217)
+          title: Functional Currency
+          type: string
+        is_parent:
+          default: false
+          description: 지배기업 여부
+          title: Is Parent
+          type: boolean
+        remarks:
+          default: ''
+          description: 비고
+          title: Remarks
+          type: string
+        status:
+          $ref: '#/components/schemas/EntityStatus'
+          default: active
+          description: 법인 상태
+        sub_group_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: 소속 중간 지주회사
+          title: Sub Group Id
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      required:
+      - entity_code
+      - entity_name
+      title: ConsolidationEntity
+      type: object
+    ConsolidationEntityCreate:
+      description: 법인 생성 요청 스키마.
+      properties:
+        accounting_entity_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Accounting Entity Id
+        acquisition_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Acquisition Date
+        chart_of_accounts_mapping_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Chart Of Accounts Mapping Id
+        consolidation_method:
+          $ref: '#/components/schemas/ConsolidationMethod'
+          default: full
+        country_code:
+          default: KR
+          title: Country Code
+          type: string
+        disposal_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Disposal Date
+        entity_code:
+          title: Entity Code
+          type: string
+        entity_name:
+          title: Entity Name
+          type: string
+        entity_type:
+          $ref: '#/components/schemas/EntityType'
+          default: subsidiary
+        fiscal_year_start_month:
+          default: 1
+          title: Fiscal Year Start Month
+          type: integer
+        functional_currency:
+          default: KRW
+          title: Functional Currency
+          type: string
+        is_parent:
+          default: false
+          title: Is Parent
+          type: boolean
+        remarks:
+          default: ''
+          title: Remarks
+          type: string
+        status:
+          $ref: '#/components/schemas/EntityStatus'
+          default: active
+        sub_group_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sub Group Id
+      required:
+      - entity_code
+      - entity_name
+      title: ConsolidationEntityCreate
+      type: object
+    ConsolidationEntityUpdate:
+      description: 법인 수정 요청 스키마.
+      properties:
+        accounting_entity_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Accounting Entity Id
+        acquisition_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Acquisition Date
+        chart_of_accounts_mapping_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Chart Of Accounts Mapping Id
+        consolidation_method:
+          anyOf:
+          - $ref: '#/components/schemas/ConsolidationMethod'
+          - type: 'null'
+        country_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Country Code
+        disposal_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Disposal Date
+        entity_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Entity Name
+        entity_type:
+          anyOf:
+          - $ref: '#/components/schemas/EntityType'
+          - type: 'null'
+        fiscal_year_start_month:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Fiscal Year Start Month
+        functional_currency:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Functional Currency
+        is_parent:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Parent
+        remarks:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Remarks
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/EntityStatus'
+          - type: 'null'
+        sub_group_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sub Group Id
+      title: ConsolidationEntityUpdate
+      type: object
+    ConsolidationMethod:
+      description: 연결 방법.
+      enum:
+      - full
+      - equity
+      - proportionate
+      - none
+      title: ConsolidationMethod
+      type: string
+    ConsolidationPeriod:
+      description: 연결 기간 문서.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        closed_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: 마감 시각
+          title: Closed At
+        closed_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: 마감자
+          title: Closed By
+        collected_entities:
+          default: 0
+          description: 데이터 수집 완료 법인 수
+          title: Collected Entities
+          type: integer
+        consolidation_status:
+          $ref: '#/components/schemas/ProcessStatus'
+          default: pending
+          description: 연결 합산 상태
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        elimination_count:
+          default: 0
+          description: 소거 전표 건수
+          title: Elimination Count
+          type: integer
+        elimination_status:
+          $ref: '#/components/schemas/ProcessStatus'
+          default: pending
+          description: 소거 처리 상태
+        elimination_total_amount:
+          default: '0'
+          description: 소거 합계 금액
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Elimination Total Amount
+          type: string
+        entity_collection_status:
+          description: 법인별 데이터 수집 상태
+          items:
+            $ref: '#/components/schemas/EntityCollectionStatus'
+          title: Entity Collection Status
+          type: array
+        fiscal_year:
+          description: 회계연도
+          title: Fiscal Year
+          type: string
+        from_date:
+          description: 시작일
+          format: date
+          title: From Date
+          type: string
+        opened_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: 개시 시각
+          title: Opened At
+        opened_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: 개시자
+          title: Opened By
+        period_name:
+          description: 기간명
+          title: Period Name
+          type: string
+        period_type:
+          $ref: '#/components/schemas/PeriodType'
+          default: monthly
+          description: 기간 유형
+        remarks:
+          default: ''
+          description: 비고
+          title: Remarks
+          type: string
+        report_status:
+          $ref: '#/components/schemas/ProcessStatus'
+          default: pending
+          description: 보고서 생성 상태
+        status:
+          $ref: '#/components/schemas/PeriodStatus'
+          default: not_started
+          description: 기간 상태
+        tenant_id:
+          title: Tenant Id
+          type: string
+        to_date:
+          description: 종료일
+          format: date
+          title: To Date
+          type: string
+        total_entities:
+          default: 0
+          description: 연결 대상 법인 수
+          title: Total Entities
+          type: integer
+        translation_status:
+          $ref: '#/components/schemas/ProcessStatus'
+          default: pending
+          description: 환산 처리 상태
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      required:
+      - period_name
+      - from_date
+      - to_date
+      - fiscal_year
+      title: ConsolidationPeriod
+      type: object
+    ConsolidationPeriodCreate:
+      description: 연결 기간 생성 요청 스키마.
+      properties:
+        fiscal_year:
+          title: Fiscal Year
+          type: string
+        from_date:
+          format: date
+          title: From Date
+          type: string
+        period_name:
+          title: Period Name
+          type: string
+        period_type:
+          $ref: '#/components/schemas/PeriodType'
+          default: monthly
+        remarks:
+          default: ''
+          title: Remarks
+          type: string
+        to_date:
+          format: date
+          title: To Date
+          type: string
+      required:
+      - period_name
+      - from_date
+      - to_date
+      - fiscal_year
+      title: ConsolidationPeriodCreate
+      type: object
+    ConsolidationPeriodUpdate:
+      description: 연결 기간 수정 요청 스키마.
+      properties:
+        period_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Period Name
+        remarks:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Remarks
+      title: ConsolidationPeriodUpdate
+      type: object
+    CurrencyTranslation:
+      description: 통화 환산 문서.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        average_rate:
+          description: 평균 환율
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Average Rate
+          type: string
+        bs_items:
+          description: BS 환산 항목
+          items:
+            $ref: '#/components/schemas/TranslationItem'
+          title: Bs Items
+          type: array
+        closing_rate:
+          description: 기말 환율
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Closing Rate
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        entity_id:
+          description: 대상 법인
+          title: Entity Id
+          type: string
+        error_message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: 오류 메시지
+          title: Error Message
+        fcta_amount:
+          default: '0'
+          description: 해외사업환산손익 (FCTA)
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Fcta Amount
+          type: string
+        fcta_calculation_detail:
+          anyOf:
+          - $ref: '#/components/schemas/FCTADetail'
+          - type: 'null'
+          description: FCTA 산출 상세
+        historical_rates:
+          description: 역사적 환율
+          items:
+            $ref: '#/components/schemas/HistoricalRate-Output'
+          title: Historical Rates
+          type: array
+        period_id:
+          description: 연결 기간
+          title: Period Id
+          type: string
+        pl_items:
+          description: PL 환산 항목
+          items:
+            $ref: '#/components/schemas/TranslationItem'
+          title: Pl Items
+          type: array
+        source_currency:
+          description: 원통화 (기능통화)
+          title: Source Currency
+          type: string
+        status:
+          $ref: '#/components/schemas/TranslationStatus'
+          default: pending
+          description: 환산 상태
+        target_currency:
+          default: KRW
+          description: 보고통화
+          title: Target Currency
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        total_original_assets:
+          default: '0'
+          description: 원통화 총자산
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Total Original Assets
+          type: string
+        total_original_liabilities:
+          default: '0'
+          description: 원통화 총부채
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Total Original Liabilities
+          type: string
+        total_translated_assets:
+          default: '0'
+          description: 환산 후 총자산
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Total Translated Assets
+          type: string
+        total_translated_liabilities:
+          default: '0'
+          description: 환산 후 총부채
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Total Translated Liabilities
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      required:
+      - period_id
+      - entity_id
+      - source_currency
+      - closing_rate
+      - average_rate
+      title: CurrencyTranslation
+      type: object
+    CurrencyTranslationCreate:
+      description: 통화 환산 생성 요청 스키마.
+      properties:
+        average_rate:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          title: Average Rate
+        closing_rate:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          title: Closing Rate
+        entity_id:
+          title: Entity Id
+          type: string
+        historical_rates:
+          default: []
+          items:
+            $ref: '#/components/schemas/HistoricalRate-Input'
+          title: Historical Rates
+          type: array
+        period_id:
+          title: Period Id
+          type: string
+        source_currency:
+          title: Source Currency
+          type: string
+        target_currency:
+          default: KRW
+          title: Target Currency
+          type: string
+      required:
+      - period_id
+      - entity_id
+      - source_currency
+      - closing_rate
+      - average_rate
+      title: CurrencyTranslationCreate
+      type: object
+    CurrencyTranslationUpdate:
+      description: 통화 환산 수정 요청 스키마.
+      properties:
+        average_rate:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Average Rate
+        closing_rate:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Closing Rate
+        error_message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Message
+        historical_rates:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/HistoricalRate-Input'
+            type: array
+          - type: 'null'
+          title: Historical Rates
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/TranslationStatus'
+          - type: 'null'
+      title: CurrencyTranslationUpdate
+      type: object
+    DocStatus:
+      description: 문서 상태 — ERPNext 호환.
+      enum:
+      - 0
+      - 1
+      - 2
+      title: DocStatus
+      type: integer
+    ESGDisclosure:
+      description: ESG 공시 문서.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        company:
+          default: ''
+          title: Company
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        disclosure_code:
+          default: ''
+          title: Disclosure Code
+          type: string
+        disclosure_type:
+          default: ''
+          title: Disclosure Type
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        publication_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Publication Date
+        regulatory_body:
+          default: ''
+          title: Regulatory Body
+          type: string
+        reporting_period:
+          default: ''
+          title: Reporting Period
+          type: string
+        status:
+          default: draft
+          title: Status
+          type: string
+        sustainability_report_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sustainability Report Id
+        tenant_id:
+          title: Tenant Id
+          type: string
+        title:
+          default: ''
+          title: Title
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: ESGDisclosure
+      type: object
+    ESGDisclosureCreate:
+      description: ESG 공시 생성 요청 스키마.
+      properties:
+        company:
+          default: ''
+          title: Company
+          type: string
+        disclosure_code:
+          title: Disclosure Code
+          type: string
+        disclosure_type:
+          default: ''
+          title: Disclosure Type
+          type: string
+        publication_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Publication Date
+        regulatory_body:
+          default: ''
+          title: Regulatory Body
+          type: string
+        reporting_period:
+          default: ''
+          title: Reporting Period
+          type: string
+        status:
+          default: draft
+          title: Status
+          type: string
+        sustainability_report_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sustainability Report Id
+        title:
+          title: Title
+          type: string
+      required:
+      - disclosure_code
+      - title
+      title: ESGDisclosureCreate
+      type: object
+    ESGDisclosureUpdate:
+      description: ESG 공시 수정 요청 스키마.
+      properties:
+        company:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Company
+        disclosure_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Disclosure Code
+        disclosure_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Disclosure Type
+        publication_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Publication Date
+        regulatory_body:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Regulatory Body
+        reporting_period:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reporting Period
+        status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+        sustainability_report_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sustainability Report Id
+        title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Title
+      title: ESGDisclosureUpdate
+      type: object
+    ESGMetric:
+      description: ESG 지표 문서.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        category:
+          default: ''
+          title: Category
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        description:
+          default: ''
+          title: Description
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        is_mandatory:
+          default: false
+          title: Is Mandatory
+          type: boolean
+        metric_code:
+          default: ''
+          title: Metric Code
+          type: string
+        metric_name:
+          default: ''
+          title: Metric Name
+          type: string
+        regulation_reference:
+          default: ''
+          title: Regulation Reference
+          type: string
+        target_value:
+          default: '0'
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Target Value
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        unit:
+          default: ''
+          title: Unit
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: ESGMetric
+      type: object
+    ESGMetricCreate:
+      description: ESG 지표 생성 요청 스키마.
+      properties:
+        category:
+          default: ''
+          title: Category
+          type: string
+        description:
+          default: ''
+          title: Description
+          type: string
+        is_mandatory:
+          default: false
+          title: Is Mandatory
+          type: boolean
+        metric_code:
+          title: Metric Code
+          type: string
+        metric_name:
+          title: Metric Name
+          type: string
+        regulation_reference:
+          default: ''
+          title: Regulation Reference
+          type: string
+        target_value:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          default: '0'
+          title: Target Value
+        unit:
+          default: ''
+          title: Unit
+          type: string
+      required:
+      - metric_code
+      - metric_name
+      title: ESGMetricCreate
+      type: object
+    ESGMetricUpdate:
+      description: ESG 지표 수정 요청 스키마.
+      properties:
+        category:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Category
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        is_mandatory:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Mandatory
+        metric_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Metric Code
+        metric_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Metric Name
+        regulation_reference:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Regulation Reference
+        target_value:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Target Value
+        unit:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Unit
+      title: ESGMetricUpdate
+      type: object
+    EliminationBreakdown:
+      description: 소거 내역.
+      properties:
+        account_code:
+          description: 계정 코드
+          title: Account Code
+          type: string
+        amount:
+          default: '0'
+          description: 소거 금액
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Amount
+          type: string
+        credit_entity_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: 대변 법인
+          title: Credit Entity Id
+        debit_entity_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: 차변 법인
+          title: Debit Entity Id
+        elimination_type:
+          description: 소거 유형
+          title: Elimination Type
+          type: string
+        rule_id:
+          description: 소거 규칙 ID
+          title: Rule Id
+          type: string
+      required:
+      - elimination_type
+      - rule_id
+      - account_code
+      title: EliminationBreakdown
+      type: object
+    EliminationLineTemplate-Input:
+      description: 소거 분개 라인 템플릿.
+      properties:
+        account_code:
+          description: 그룹 CoA 계정과목 코드
+          title: Account Code
+          type: string
+        amount_formula:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: 산출 공식
+          title: Amount Formula
+        amount_source:
+          description: 금액 원천 (matched_amount/calculated/fixed)
+          title: Amount Source
+          type: string
+        entity_role:
+          description: 법인 역할 (seller/buyer/parent/subsidiary/group)
+          title: Entity Role
+          type: string
+        fixed_amount:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 고정 금액
+          title: Fixed Amount
+      required:
+      - account_code
+      - entity_role
+      - amount_source
+      title: EliminationLineTemplate
+      type: object
+    EliminationLineTemplate-Output:
+      description: 소거 분개 라인 템플릿.
+      properties:
+        account_code:
+          description: 그룹 CoA 계정과목 코드
+          title: Account Code
+          type: string
+        amount_formula:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: 산출 공식
+          title: Amount Formula
+        amount_source:
+          description: 금액 원천 (matched_amount/calculated/fixed)
+          title: Amount Source
+          type: string
+        entity_role:
+          description: 법인 역할 (seller/buyer/parent/subsidiary/group)
+          title: Entity Role
+          type: string
+        fixed_amount:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 고정 금액
+          title: Fixed Amount
+      required:
+      - account_code
+      - entity_role
+      - amount_source
+      title: EliminationLineTemplate
+      type: object
+    EliminationRule:
+      description: 소거 규칙 문서.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        applicable_entity_pairs:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/EntityPair'
+            type: array
+          - type: 'null'
+          description: 적용 대상 법인 쌍
+          title: Applicable Entity Pairs
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        credit_entries_template:
+          description: 대변 분개 템플릿
+          items:
+            $ref: '#/components/schemas/EliminationLineTemplate-Output'
+          title: Credit Entries Template
+          type: array
+        debit_entries_template:
+          description: 차변 분개 템플릿
+          items:
+            $ref: '#/components/schemas/EliminationLineTemplate-Output'
+          title: Debit Entries Template
+          type: array
+        description:
+          default: ''
+          description: 규칙 설명
+          title: Description
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        elimination_type:
+          $ref: '#/components/schemas/EliminationType'
+          description: 소거 유형
+        is_automatic:
+          default: true
+          description: 자동 소거 여부
+          title: Is Automatic
+          type: boolean
+        is_recurring:
+          default: true
+          description: 반복 소거 여부
+          title: Is Recurring
+          type: boolean
+        matching_criteria:
+          $ref: '#/components/schemas/MatchingCriteria'
+          description: 매칭 조건
+        priority:
+          default: 100
+          description: 실행 우선순위 (낮을수록 먼저)
+          title: Priority
+          type: integer
+        rule_code:
+          description: 규칙 코드
+          title: Rule Code
+          type: string
+        rule_name:
+          description: 규칙명
+          title: Rule Name
+          type: string
+        status:
+          $ref: '#/components/schemas/RuleStatus'
+          default: active
+          description: 규칙 상태
+        tenant_id:
+          title: Tenant Id
+          type: string
+        tolerance_amount:
+          default: '1'
+          description: 허용 오차 금액
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Tolerance Amount
+          type: string
+        tolerance_percentage:
+          default: '0'
+          description: 허용 오차 비율 (%)
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Tolerance Percentage
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      required:
+      - rule_code
+      - rule_name
+      - elimination_type
+      title: EliminationRule
+      type: object
+    EliminationRuleCreate:
+      description: 소거 규칙 생성 요청 스키마.
+      properties:
+        applicable_entity_pairs:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/EntityPair'
+            type: array
+          - type: 'null'
+          title: Applicable Entity Pairs
+        credit_entries_template:
+          default: []
+          items:
+            $ref: '#/components/schemas/EliminationLineTemplate-Input'
+          title: Credit Entries Template
+          type: array
+        debit_entries_template:
+          default: []
+          items:
+            $ref: '#/components/schemas/EliminationLineTemplate-Input'
+          title: Debit Entries Template
+          type: array
+        description:
+          default: ''
+          title: Description
+          type: string
+        elimination_type:
+          $ref: '#/components/schemas/EliminationType'
+        is_automatic:
+          default: true
+          title: Is Automatic
+          type: boolean
+        is_recurring:
+          default: true
+          title: Is Recurring
+          type: boolean
+        matching_criteria:
+          anyOf:
+          - $ref: '#/components/schemas/MatchingCriteria'
+          - type: 'null'
+        priority:
+          default: 100
+          title: Priority
+          type: integer
+        rule_code:
+          title: Rule Code
+          type: string
+        rule_name:
+          title: Rule Name
+          type: string
+        status:
+          $ref: '#/components/schemas/RuleStatus'
+          default: active
+        tolerance_amount:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          default: '1'
+          title: Tolerance Amount
+        tolerance_percentage:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          default: '0'
+          title: Tolerance Percentage
+      required:
+      - rule_code
+      - rule_name
+      - elimination_type
+      title: EliminationRuleCreate
+      type: object
+    EliminationRuleUpdate:
+      description: 소거 규칙 수정 요청 스키마.
+      properties:
+        applicable_entity_pairs:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/EntityPair'
+            type: array
+          - type: 'null'
+          title: Applicable Entity Pairs
+        credit_entries_template:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/EliminationLineTemplate-Input'
+            type: array
+          - type: 'null'
+          title: Credit Entries Template
+        debit_entries_template:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/EliminationLineTemplate-Input'
+            type: array
+          - type: 'null'
+          title: Debit Entries Template
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        is_automatic:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Automatic
+        is_recurring:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Recurring
+        matching_criteria:
+          anyOf:
+          - $ref: '#/components/schemas/MatchingCriteria'
+          - type: 'null'
+        priority:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Priority
+        rule_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Rule Name
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/RuleStatus'
+          - type: 'null'
+        tolerance_amount:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Tolerance Amount
+        tolerance_percentage:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Tolerance Percentage
+      title: EliminationRuleUpdate
+      type: object
+    EliminationType:
+      description: 소거 유형.
+      enum:
+      - revenue_expense
+      - receivable_payable
+      - unrealized_profit_inventory
+      - unrealized_profit_asset
+      - dividend
+      - loan
+      - investment_equity
+      title: EliminationType
+      type: string
+    EntityBreakdown:
+      description: 법인별 내역.
+      properties:
+        account_code:
+          description: 계정 코드
+          title: Account Code
+          type: string
+        entity_id:
+          description: CENT ID
+          title: Entity Id
+          type: string
+        entity_name:
+          description: 법인명
+          title: Entity Name
+          type: string
+        functional_currency:
+          description: 기능통화
+          title: Functional Currency
+          type: string
+        original_amount:
+          default: '0'
+          description: 원통화 금액
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Original Amount
+          type: string
+        translated_amount:
+          default: '0'
+          description: 환산 후 금액
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Translated Amount
+          type: string
+        translation_rate:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 적용 환율
+          title: Translation Rate
+      required:
+      - entity_id
+      - entity_name
+      - functional_currency
+      - account_code
+      title: EntityBreakdown
+      type: object
+    EntityCollectionStatus:
+      description: 법인별 데이터 수집 상태.
+      properties:
+        collected_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: 수집 완료 시각
+          title: Collected At
+        entity_id:
+          description: CENT ID
+          title: Entity Id
+          type: string
+        entity_name:
+          description: 법인명
+          title: Entity Name
+          type: string
+        individual_period_closed:
+          default: false
+          description: 개별 회계기간 마감 여부
+          title: Individual Period Closed
+          type: boolean
+        status:
+          default: not_started
+          description: 수집 상태
+          title: Status
+          type: string
+        trial_balance_total:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 잔액시산표 합계 (검증용)
+          title: Trial Balance Total
+        validation_errors:
+          description: 검증 오류 목록
+          items:
+            type: string
+          title: Validation Errors
+          type: array
+      required:
+      - entity_id
+      - entity_name
+      title: EntityCollectionStatus
+      type: object
+    EntityPair:
+      description: 법인 쌍.
+      properties:
+        entity_a_id:
+          description: 법인 A
+          title: Entity A Id
+          type: string
+        entity_b_id:
+          description: 법인 B
+          title: Entity B Id
+          type: string
+      required:
+      - entity_a_id
+      - entity_b_id
+      title: EntityPair
+      type: object
+    EntityStatus:
+      description: 법인 상태.
+      enum:
+      - active
+      - inactive
+      - pending
+      title: EntityStatus
+      type: string
+    EntityType:
+      description: 법인 유형.
+      enum:
+      - parent
+      - subsidiary
+      - associate
+      - joint_venture
+      title: EntityType
+      type: string
+    FCTADetail:
+      description: FCTA 산출 상세.
+      properties:
+        bs_translation_total:
+          default: '0'
+          description: BS 환산 합계
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Bs Translation Total
+          type: string
+        closing_fcta:
+          default: '0'
+          description: 기말 FCTA
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Closing Fcta
+          type: string
+        current_fcta:
+          default: '0'
+          description: 당기 FCTA
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Current Fcta
+          type: string
+        equity_translation_total:
+          default: '0'
+          description: 자본 환산 합계
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Equity Translation Total
+          type: string
+        opening_fcta:
+          default: '0'
+          description: 기초 FCTA 잔액
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Opening Fcta
+          type: string
+        pl_translation_total:
+          default: '0'
+          description: PL 환산 합계
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Pl Translation Total
+          type: string
+      title: FCTADetail
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    HistoricalRate-Input:
+      description: 역사적 환율.
+      properties:
+        account_code:
+          description: 적용 대상 계정 코드
+          title: Account Code
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: 설명
+          title: Description
+        rate:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          description: 역사적 환율
+          title: Rate
+        rate_date:
+          description: 환율 기준일
+          format: date
+          title: Rate Date
+          type: string
+      required:
+      - account_code
+      - rate
+      - rate_date
+      title: HistoricalRate
+      type: object
+    HistoricalRate-Output:
+      description: 역사적 환율.
+      properties:
+        account_code:
+          description: 적용 대상 계정 코드
+          title: Account Code
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: 설명
+          title: Description
+        rate:
+          description: 역사적 환율
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Rate
+          type: string
+        rate_date:
+          description: 환율 기준일
+          format: date
+          title: Rate Date
+          type: string
+      required:
+      - account_code
+      - rate
+      - rate_date
+      title: HistoricalRate
+      type: object
+    IntercompanyBalance:
+      description: 내부거래 잔액 문서.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        balance_type:
+          $ref: '#/components/schemas/IntercompanyBalanceType'
+          description: 잔액 유형
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        difference_amount:
+          default: '0'
+          description: 차이 금액
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Difference Amount
+          type: string
+        difference_percentage:
+          default: '0'
+          description: 차이 비율 (%)
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Difference Percentage
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        elimination_entry_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: 연결된 소거 전표 ID
+          title: Elimination Entry Id
+        entity_a_account_code:
+          default: ''
+          description: 법인 A 계정과목
+          title: Entity A Account Code
+          type: string
+        entity_a_amount:
+          default: '0'
+          description: 법인 A 장부 금액
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Entity A Amount
+          type: string
+        entity_a_currency:
+          default: KRW
+          description: 법인 A 통화
+          title: Entity A Currency
+          type: string
+        entity_a_id:
+          description: 법인 A (매도/대여/배당지급)
+          title: Entity A Id
+          type: string
+        entity_a_translated_amount:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 법인 A 보고통화 환산액
+          title: Entity A Translated Amount
+        entity_b_account_code:
+          default: ''
+          description: 법인 B 계정과목
+          title: Entity B Account Code
+          type: string
+        entity_b_amount:
+          default: '0'
+          description: 법인 B 장부 금액
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Entity B Amount
+          type: string
+        entity_b_currency:
+          default: KRW
+          description: 법인 B 통화
+          title: Entity B Currency
+          type: string
+        entity_b_id:
+          description: 법인 B (매수/차입/배당수취)
+          title: Entity B Id
+          type: string
+        entity_b_translated_amount:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 법인 B 보고통화 환산액
+          title: Entity B Translated Amount
+        match_status:
+          $ref: '#/components/schemas/MatchStatus'
+          default: unmatched
+          description: 대사 상태
+        period_id:
+          description: 연결 기간
+          title: Period Id
+          type: string
+        remarks:
+          default: ''
+          description: 비고
+          title: Remarks
+          type: string
+        source_journal_ids_a:
+          description: 법인 A 원천 전표 ID 목록
+          items:
+            type: string
+          title: Source Journal Ids A
+          type: array
+        source_journal_ids_b:
+          description: 법인 B 원천 전표 ID 목록
+          items:
+            type: string
+          title: Source Journal Ids B
+          type: array
+        tenant_id:
+          title: Tenant Id
+          type: string
+        tolerance_applied:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 적용된 허용 오차
+          title: Tolerance Applied
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      required:
+      - period_id
+      - entity_a_id
+      - entity_b_id
+      - balance_type
+      title: IntercompanyBalance
+      type: object
+    IntercompanyBalanceCreate:
+      description: 내부거래 잔액 생성 요청 스키마.
+      properties:
+        balance_type:
+          $ref: '#/components/schemas/IntercompanyBalanceType'
+        entity_a_account_code:
+          default: ''
+          title: Entity A Account Code
+          type: string
+        entity_a_amount:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          default: '0'
+          title: Entity A Amount
+        entity_a_currency:
+          default: KRW
+          title: Entity A Currency
+          type: string
+        entity_a_id:
+          title: Entity A Id
+          type: string
+        entity_b_account_code:
+          default: ''
+          title: Entity B Account Code
+          type: string
+        entity_b_amount:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          default: '0'
+          title: Entity B Amount
+        entity_b_currency:
+          default: KRW
+          title: Entity B Currency
+          type: string
+        entity_b_id:
+          title: Entity B Id
+          type: string
+        period_id:
+          title: Period Id
+          type: string
+        remarks:
+          default: ''
+          title: Remarks
+          type: string
+      required:
+      - period_id
+      - entity_a_id
+      - entity_b_id
+      - balance_type
+      title: IntercompanyBalanceCreate
+      type: object
+    IntercompanyBalanceType:
+      description: 내부거래 잔액 유형.
+      enum:
+      - revenue_expense
+      - receivable_payable
+      - loan
+      - dividend
+      - other
+      title: IntercompanyBalanceType
+      type: string
+    IntercompanyBalanceUpdate:
+      description: 내부거래 잔액 수정 요청 스키마.
+      properties:
+        entity_a_amount:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Entity A Amount
+        entity_b_amount:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Entity B Amount
+        match_status:
+          anyOf:
+          - $ref: '#/components/schemas/MatchStatus'
+          - type: 'null'
+        remarks:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Remarks
+      title: IntercompanyBalanceUpdate
+      type: object
+    InvestmentRelation:
+      description: 투자 관계 문서.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        acquisition_cost:
+          default: '0'
+          description: 취득 대가
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Acquisition Cost
+          type: string
+        acquisition_cost_currency:
+          default: KRW
+          description: 취득 대가 통화
+          title: Acquisition Cost Currency
+          type: string
+        acquisition_date:
+          description: 취득일
+          format: date
+          title: Acquisition Date
+          type: string
+        consolidation_method:
+          $ref: '#/components/schemas/ConsolidationMethod'
+          default: full
+          description: 연결 방법
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        disposal_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          description: 처분일
+          title: Disposal Date
+        disposal_proceeds:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 처분 대가
+          title: Disposal Proceeds
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        effective_ownership_percentage:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 유효 지분율 (간접 지분 포함)
+          title: Effective Ownership Percentage
+        fair_value_net_assets:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 취득 시점 순자산 공정가치
+          title: Fair Value Net Assets
+        goodwill:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 영업권
+          title: Goodwill
+        investee_entity_id:
+          description: 피투자자 법인 ID
+          title: Investee Entity Id
+          type: string
+        investor_entity_id:
+          description: 투자자 법인 ID
+          title: Investor Entity Id
+          type: string
+        is_control:
+          default: false
+          description: 지배력 보유 여부
+          title: Is Control
+          type: boolean
+        is_joint_control:
+          default: false
+          description: 공동지배력 여부
+          title: Is Joint Control
+          type: boolean
+        is_significant_influence:
+          default: false
+          description: 유의적 영향력 여부
+          title: Is Significant Influence
+          type: boolean
+        nci_fair_value:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 취득 시점 NCI 공정가치
+          title: Nci Fair Value
+        ownership_percentage:
+          default: '0'
+          description: 소유 지분율 (%)
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Ownership Percentage
+          type: string
+        remarks:
+          default: ''
+          description: 비고
+          title: Remarks
+          type: string
+        status:
+          $ref: '#/components/schemas/RelationStatus'
+          default: active
+          description: 관계 상태
+        tenant_id:
+          title: Tenant Id
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        voting_rights_percentage:
+          default: '0'
+          description: 의결권 비율 (%)
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Voting Rights Percentage
+          type: string
+      required:
+      - investor_entity_id
+      - investee_entity_id
+      - acquisition_date
+      title: InvestmentRelation
+      type: object
+    InvestmentRelationCreate:
+      description: 투자 관계 생성 요청 스키마.
+      properties:
+        acquisition_cost:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          default: '0'
+          title: Acquisition Cost
+        acquisition_cost_currency:
+          default: KRW
+          title: Acquisition Cost Currency
+          type: string
+        acquisition_date:
+          format: date
+          title: Acquisition Date
+          type: string
+        disposal_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Disposal Date
+        disposal_proceeds:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Disposal Proceeds
+        fair_value_net_assets:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Fair Value Net Assets
+        investee_entity_id:
+          title: Investee Entity Id
+          type: string
+        investor_entity_id:
+          title: Investor Entity Id
+          type: string
+        is_joint_control:
+          default: false
+          title: Is Joint Control
+          type: boolean
+        nci_fair_value:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Nci Fair Value
+        ownership_percentage:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          default: '0'
+          title: Ownership Percentage
+        remarks:
+          default: ''
+          title: Remarks
+          type: string
+        voting_rights_percentage:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          default: '0'
+          title: Voting Rights Percentage
+      required:
+      - investor_entity_id
+      - investee_entity_id
+      - acquisition_date
+      title: InvestmentRelationCreate
+      type: object
+    InvestmentRelationUpdate:
+      description: 투자 관계 수정 요청 스키마.
+      properties:
+        disposal_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Disposal Date
+        disposal_proceeds:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Disposal Proceeds
+        fair_value_net_assets:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Fair Value Net Assets
+        is_joint_control:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Joint Control
+        nci_fair_value:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Nci Fair Value
+        ownership_percentage:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Ownership Percentage
+        remarks:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Remarks
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/RelationStatus'
+          - type: 'null'
+        voting_rights_percentage:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Voting Rights Percentage
+      title: InvestmentRelationUpdate
+      type: object
+    MatchStatus:
+      description: 대사 상태.
+      enum:
+      - unmatched
+      - matched
+      - within_tolerance
+      - mismatch
+      title: MatchStatus
+      type: string
+    MatchingCriteria:
+      description: 내부거래 매칭 조건.
+      properties:
+        currency_match:
+          default: true
+          description: 통화 일치 필수 여부
+          title: Currency Match
+          type: boolean
+        date_range_days:
+          default: 0
+          description: 거래일 허용 범위 (일수)
+          title: Date Range Days
+          type: integer
+        match_by:
+          default: amount
+          description: 매칭 기준 (amount/reference/both)
+          title: Match By
+          type: string
+        source_account_pattern:
+          description: 매도법인 계정과목 패턴
+          title: Source Account Pattern
+          type: string
+        target_account_pattern:
+          description: 매수법인 계정과목 패턴
+          title: Target Account Pattern
+          type: string
+      required:
+      - source_account_pattern
+      - target_account_pattern
+      title: MatchingCriteria
+      type: object
+    NCIBreakdown:
+      description: 비지배지분 내역.
+      properties:
+        entity_details:
+          description: 법인별 NCI 상세
+          items:
+            $ref: '#/components/schemas/NCIEntityDetail'
+          title: Entity Details
+          type: array
+        total_nci_equity:
+          default: '0'
+          description: NCI 자본 합계
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Total Nci Equity
+          type: string
+        total_nci_oci:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: NCI 귀속 OCI
+          title: Total Nci Oci
+        total_nci_profit:
+          default: '0'
+          description: NCI 귀속 당기순이익
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Total Nci Profit
+          type: string
+      title: NCIBreakdown
+      type: object
+    NCIEntityDetail:
+      description: 법인별 NCI 상세.
+      properties:
+        entity_id:
+          description: CENT ID
+          title: Entity Id
+          type: string
+        entity_name:
+          description: 법인명
+          title: Entity Name
+          type: string
+        nci_equity:
+          default: '0'
+          description: NCI 자본
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Nci Equity
+          type: string
+        nci_oci:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: NCI 귀속 OCI
+          title: Nci Oci
+        nci_percentage:
+          default: '0'
+          description: NCI 비율 (%)
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Nci Percentage
+          type: string
+        nci_profit:
+          default: '0'
+          description: NCI 귀속 당기순이익
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Nci Profit
+          type: string
+      required:
+      - entity_id
+      - entity_name
+      title: NCIEntityDetail
+      type: object
+    PaginatedResponse_CarbonEmission_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/CarbonEmission'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[CarbonEmission]
+      type: object
+    PaginatedResponse_ConsolidatedReport_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ConsolidatedReport'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[ConsolidatedReport]
+      type: object
+    PaginatedResponse_ConsolidationEntity_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ConsolidationEntity'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[ConsolidationEntity]
+      type: object
+    PaginatedResponse_ConsolidationPeriod_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ConsolidationPeriod'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[ConsolidationPeriod]
+      type: object
+    PaginatedResponse_CurrencyTranslation_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/CurrencyTranslation'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[CurrencyTranslation]
+      type: object
+    PaginatedResponse_ESGDisclosure_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ESGDisclosure'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[ESGDisclosure]
+      type: object
+    PaginatedResponse_ESGMetric_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ESGMetric'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[ESGMetric]
+      type: object
+    PaginatedResponse_EliminationRule_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/EliminationRule'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[EliminationRule]
+      type: object
+    PaginatedResponse_IntercompanyBalance_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/IntercompanyBalance'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[IntercompanyBalance]
+      type: object
+    PaginatedResponse_InvestmentRelation_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/InvestmentRelation'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[InvestmentRelation]
+      type: object
+    PaginatedResponse_SustainabilityReport_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/SustainabilityReport'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[SustainabilityReport]
+      type: object
+    PaginatedResponse_WasteManagement_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/WasteManagement'
+          title: Data
+          type: array
+        page:
+          title: Page
+          type: integer
+        page_size:
+          title: Page Size
+          type: integer
+        total:
+          title: Total
+          type: integer
+      required:
+      - data
+      - total
+      - page
+      - page_size
+      title: PaginatedResponse[WasteManagement]
+      type: object
+    PeriodStatus:
+      description: 기간 상태.
+      enum:
+      - not_started
+      - open
+      - in_progress
+      - review
+      - closed
+      - reopened
+      title: PeriodStatus
+      type: string
+    PeriodType:
+      description: 기간 유형.
+      enum:
+      - monthly
+      - quarterly
+      - annual
+      title: PeriodType
+      type: string
+    ProcessStatus:
+      description: 처리 상태.
+      enum:
+      - pending
+      - in_progress
+      - completed
+      - failed
+      title: ProcessStatus
+      type: string
+    RelationStatus:
+      description: 투자 관계 상태.
+      enum:
+      - active
+      - disposed
+      - pending
+      title: RelationStatus
+      type: string
+    ReportLineItem:
+      description: 보고서 라인 항목.
+      properties:
+        account_code:
+          description: 그룹 CoA 계정 코드
+          title: Account Code
+          type: string
+        account_level:
+          default: 1
+          description: 계정 깊이
+          title: Account Level
+          type: integer
+        account_name:
+          description: 계정과목명
+          title: Account Name
+          type: string
+        current_period:
+          default: '0'
+          description: 당기 금액
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Current Period
+          type: string
+        is_subtotal:
+          default: false
+          description: 소계 여부
+          title: Is Subtotal
+          type: boolean
+        line_no:
+          description: 라인 순서
+          title: Line No
+          type: integer
+        nci:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 비지배지분 귀속분
+          title: Nci
+        parent_controlling:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 지배기업 귀속분
+          title: Parent Controlling
+        prior_period:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 전기 금액
+          title: Prior Period
+        variance:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 변동액
+          title: Variance
+        variance_percentage:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 변동률 (%)
+          title: Variance Percentage
+      required:
+      - line_no
+      - account_code
+      - account_name
+      title: ReportLineItem
+      type: object
+    ReportStatus:
+      description: 보고서 상태.
+      enum:
+      - draft
+      - final
+      - superseded
+      title: ReportStatus
+      type: string
+    ReportTotals:
+      description: 합계.
+      properties:
+        bs_balance_check:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: BS 균형 검증 (0이어야 함)
+          title: Bs Balance Check
+        nci_equity:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 비지배지분
+          title: Nci Equity
+        nci_net_income:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: NCI 귀속 순이익
+          title: Nci Net Income
+        net_cash_financing:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 재무활동 현금흐름 (CF)
+          title: Net Cash Financing
+        net_cash_investing:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 투자활동 현금흐름 (CF)
+          title: Net Cash Investing
+        net_cash_operating:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 영업활동 현금흐름 (CF)
+          title: Net Cash Operating
+        net_income:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 당기순이익 (PL)
+          title: Net Income
+        parent_equity:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 지배기업 귀속 자본
+          title: Parent Equity
+        parent_net_income:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 지배기업 귀속 순이익
+          title: Parent Net Income
+        total_assets:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 총자산 (BS)
+          title: Total Assets
+        total_equity:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 총자본 (BS)
+          title: Total Equity
+        total_expense:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 총비용 (PL)
+          title: Total Expense
+        total_liabilities:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 총부채 (BS)
+          title: Total Liabilities
+        total_revenue:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 총매출 (PL)
+          title: Total Revenue
+      title: ReportTotals
+      type: object
+    ReportType:
+      description: 보고서 유형.
+      enum:
+      - balance_sheet
+      - income_statement
+      - cash_flow
+      - equity_changes
+      title: ReportType
+      type: string
+    RuleStatus:
+      description: 규칙 상태.
+      enum:
+      - active
+      - inactive
+      - draft
+      title: RuleStatus
+      type: string
+    SustainabilityReport:
+      description: 지속가능성 보고서 문서.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        company:
+          default: ''
+          title: Company
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        governance_metrics:
+          additionalProperties: true
+          default: {}
+          title: Governance Metrics
+          type: object
+        published_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Published Date
+        report_code:
+          default: ''
+          title: Report Code
+          type: string
+        reporting_year:
+          default: 0
+          title: Reporting Year
+          type: integer
+        scope_1_emissions:
+          default: '0'
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Scope 1 Emissions
+          type: string
+        scope_2_emissions:
+          default: '0'
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Scope 2 Emissions
+          type: string
+        scope_3_emissions:
+          default: '0'
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Scope 3 Emissions
+          type: string
+        social_metrics:
+          additionalProperties: true
+          default: {}
+          title: Social Metrics
+          type: object
+        status:
+          default: draft
+          title: Status
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        title:
+          default: ''
+          title: Title
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+      title: SustainabilityReport
+      type: object
+    SustainabilityReportCreate:
+      description: 지속가능성 보고서 생성 요청 스키마.
+      properties:
+        company:
+          default: ''
+          title: Company
+          type: string
+        governance_metrics:
+          additionalProperties: true
+          default: {}
+          title: Governance Metrics
+          type: object
+        published_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Published Date
+        report_code:
+          title: Report Code
+          type: string
+        reporting_year:
+          default: 0
+          title: Reporting Year
+          type: integer
+        scope_1_emissions:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          default: '0'
+          title: Scope 1 Emissions
+        scope_2_emissions:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          default: '0'
+          title: Scope 2 Emissions
+        scope_3_emissions:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          default: '0'
+          title: Scope 3 Emissions
+        social_metrics:
+          additionalProperties: true
+          default: {}
+          title: Social Metrics
+          type: object
+        status:
+          default: draft
+          title: Status
+          type: string
+        title:
+          title: Title
+          type: string
+      required:
+      - report_code
+      - title
+      title: SustainabilityReportCreate
+      type: object
+    SustainabilityReportUpdate:
+      description: 지속가능성 보고서 수정 요청 스키마.
+      properties:
+        company:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Company
+        governance_metrics:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Governance Metrics
+        published_date:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Published Date
+        report_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Report Code
+        reporting_year:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Reporting Year
+        scope_1_emissions:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Scope 1 Emissions
+        scope_2_emissions:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Scope 2 Emissions
+        scope_3_emissions:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Scope 3 Emissions
+        social_metrics:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Social Metrics
+        status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+        title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Title
+      title: SustainabilityReportUpdate
+      type: object
+    TranslationItem:
+      description: 환산 항목.
+      properties:
+        account_category:
+          description: 계정 분류 (asset/liability/equity/revenue/expense)
+          title: Account Category
+          type: string
+        account_code:
+          description: 그룹 CoA 계정 코드
+          title: Account Code
+          type: string
+        account_name:
+          description: 계정과목명
+          title: Account Name
+          type: string
+        applied_rate:
+          default: '0'
+          description: 적용 환율
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Applied Rate
+          type: string
+        original_amount:
+          default: '0'
+          description: 원통화 금액
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Original Amount
+          type: string
+        rate_type:
+          description: 환율 유형 (closing/average/historical)
+          title: Rate Type
+          type: string
+        translated_amount:
+          default: '0'
+          description: 환산 후 금액
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Translated Amount
+          type: string
+        translation_difference:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: 환산 차이
+          title: Translation Difference
+      required:
+      - account_code
+      - account_name
+      - account_category
+      - rate_type
+      title: TranslationItem
+      type: object
+    TranslationStatus:
+      description: 환산 상태.
+      enum:
+      - pending
+      - completed
+      - error
+      title: TranslationStatus
+      type: string
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    WasteManagement:
+      description: 폐기물 관리 문서.
+      properties:
+        _id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        company:
+          default: ''
+          title: Company
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        created_by:
+          default: ''
+          title: Created By
+          type: string
+        disposal_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Disposal Date
+        disposal_method:
+          default: ''
+          title: Disposal Method
+          type: string
+        disposal_vendor:
+          default: ''
+          title: Disposal Vendor
+          type: string
+        docstatus:
+          $ref: '#/components/schemas/DocStatus'
+          default: 0
+        record_code:
+          default: ''
+          title: Record Code
+          type: string
+        recycling_rate:
+          default: '0'
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Recycling Rate
+          type: string
+        tenant_id:
+          title: Tenant Id
+          type: string
+        unit:
+          default: ''
+          title: Unit
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+        updated_by:
+          default: ''
+          title: Updated By
+          type: string
+        waste_amount:
+          default: '0'
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Waste Amount
+          type: string
+        waste_type:
+          default: ''
+          title: Waste Type
+          type: string
+      title: WasteManagement
+      type: object
+    WasteManagementCreate:
+      description: 폐기물 관리 생성 요청 스키마.
+      properties:
+        company:
+          default: ''
+          title: Company
+          type: string
+        disposal_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Disposal Date
+        disposal_method:
+          default: ''
+          title: Disposal Method
+          type: string
+        disposal_vendor:
+          default: ''
+          title: Disposal Vendor
+          type: string
+        record_code:
+          title: Record Code
+          type: string
+        recycling_rate:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          default: '0'
+          title: Recycling Rate
+        unit:
+          default: ''
+          title: Unit
+          type: string
+        waste_amount:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          default: '0'
+          title: Waste Amount
+        waste_type:
+          default: ''
+          title: Waste Type
+          type: string
+      required:
+      - record_code
+      title: WasteManagementCreate
+      type: object
+    WasteManagementUpdate:
+      description: 폐기물 관리 수정 요청 스키마.
+      properties:
+        company:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Company
+        disposal_date:
+          anyOf:
+          - format: date
+            type: string
+          - type: 'null'
+          title: Disposal Date
+        disposal_method:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Disposal Method
+        disposal_vendor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Disposal Vendor
+        record_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Record Code
+        recycling_rate:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Recycling Rate
+        unit:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Unit
+        waste_amount:
+          anyOf:
+          - type: number
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          title: Waste Amount
+        waste_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Waste Type
+      title: WasteManagementUpdate
+      type: object
+info:
+  contact:
+    name: OneERP 개발팀
+  description: OneERP Finance-extra 서비스 REST API
+  license:
+    name: Proprietary
+  title: OneERP Finance-extra API
+  version: 0.1.0
+openapi: 3.1.0
+paths:
+  /api/v1/carbon-emissions:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: carbon_emission_목록_api_v1_carbon_emissions_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_CarbonEmission_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Carbon Emission 목록
+      tags:
+      - 탄소 배출
+    post:
+      description: 엔티티를 생성한다.
+      operationId: carbon_emission_생성_api_v1_carbon_emissions_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarbonEmissionCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Carbon Emission 생성 Api V1 Carbon Emissions Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Carbon Emission 생성
+      tags:
+      - 탄소 배출
+  /api/v1/carbon-emissions/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: carbon_emission_삭제_api_v1_carbon_emissions__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Carbon Emission 삭제
+      tags:
+      - 탄소 배출
+    get:
+      description: 엔티티를 조회한다.
+      operationId: carbon_emission_조회_api_v1_carbon_emissions__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Carbon Emission 조회 Api V1 Carbon Emissions  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Carbon Emission 조회
+      tags:
+      - 탄소 배출
+    put:
+      description: 엔티티를 수정한다.
+      operationId: carbon_emission_수정_api_v1_carbon_emissions__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarbonEmissionUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Carbon Emission 수정 Api V1 Carbon Emissions  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Carbon Emission 수정
+      tags:
+      - 탄소 배출
+  /api/v1/carbon-emissions/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: carbon_emission_취소_api_v1_carbon_emissions__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Carbon Emission 취소 Api V1 Carbon Emissions  Doc Id  Cancel
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Carbon Emission 취소
+      tags:
+      - 탄소 배출
+  /api/v1/carbon-emissions/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: carbon_emission_제출_api_v1_carbon_emissions__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Carbon Emission 제출 Api V1 Carbon Emissions  Doc Id  Submit
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Carbon Emission 제출
+      tags:
+      - 탄소 배출
+  /api/v1/consolidated-reports:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: consolidated_report_목록_api_v1_consolidated_reports_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_ConsolidatedReport_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Consolidated Report 목록
+      tags:
+      - 연결 재무제표
+    post:
+      description: 엔티티를 생성한다.
+      operationId: consolidated_report_생성_api_v1_consolidated_reports_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsolidatedReportCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Consolidated Report 생성 Api V1 Consolidated Reports
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Consolidated Report 생성
+      tags:
+      - 연결 재무제표
+  /api/v1/consolidated-reports/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: consolidated_report_삭제_api_v1_consolidated_reports__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Consolidated Report 삭제
+      tags:
+      - 연결 재무제표
+    get:
+      description: 엔티티를 조회한다.
+      operationId: consolidated_report_조회_api_v1_consolidated_reports__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Consolidated Report 조회 Api V1 Consolidated Reports  Doc
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Consolidated Report 조회
+      tags:
+      - 연결 재무제표
+    put:
+      description: 엔티티를 수정한다.
+      operationId: consolidated_report_수정_api_v1_consolidated_reports__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsolidatedReportUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Consolidated Report 수정 Api V1 Consolidated Reports  Doc
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Consolidated Report 수정
+      tags:
+      - 연결 재무제표
+  /api/v1/consolidated-reports/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: consolidated_report_취소_api_v1_consolidated_reports__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Consolidated Report 취소 Api V1 Consolidated Reports  Doc
+                  Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Consolidated Report 취소
+      tags:
+      - 연결 재무제표
+  /api/v1/consolidated-reports/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: consolidated_report_제출_api_v1_consolidated_reports__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Consolidated Report 제출 Api V1 Consolidated Reports  Doc
+                  Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Consolidated Report 제출
+      tags:
+      - 연결 재무제표
+  /api/v1/consolidation-entities:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: consolidation_entity_목록_api_v1_consolidation_entities_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_ConsolidationEntity_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Consolidation Entity 목록
+      tags:
+      - 연결 대상 법인
+    post:
+      description: 엔티티를 생성한다.
+      operationId: consolidation_entity_생성_api_v1_consolidation_entities_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsolidationEntityCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Consolidation Entity 생성 Api V1 Consolidation Entities
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Consolidation Entity 생성
+      tags:
+      - 연결 대상 법인
+  /api/v1/consolidation-entities/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: consolidation_entity_삭제_api_v1_consolidation_entities__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Consolidation Entity 삭제
+      tags:
+      - 연결 대상 법인
+    get:
+      description: 엔티티를 조회한다.
+      operationId: consolidation_entity_조회_api_v1_consolidation_entities__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Consolidation Entity 조회 Api V1 Consolidation Entities  Doc
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Consolidation Entity 조회
+      tags:
+      - 연결 대상 법인
+    put:
+      description: 엔티티를 수정한다.
+      operationId: consolidation_entity_수정_api_v1_consolidation_entities__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsolidationEntityUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Consolidation Entity 수정 Api V1 Consolidation Entities  Doc
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Consolidation Entity 수정
+      tags:
+      - 연결 대상 법인
+  /api/v1/consolidation-periods:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: consolidation_period_목록_api_v1_consolidation_periods_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_ConsolidationPeriod_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Consolidation Period 목록
+      tags:
+      - 연결 기간
+    post:
+      description: 엔티티를 생성한다.
+      operationId: consolidation_period_생성_api_v1_consolidation_periods_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsolidationPeriodCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Consolidation Period 생성 Api V1 Consolidation Periods
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Consolidation Period 생성
+      tags:
+      - 연결 기간
+  /api/v1/consolidation-periods/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: consolidation_period_삭제_api_v1_consolidation_periods__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Consolidation Period 삭제
+      tags:
+      - 연결 기간
+    get:
+      description: 엔티티를 조회한다.
+      operationId: consolidation_period_조회_api_v1_consolidation_periods__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Consolidation Period 조회 Api V1 Consolidation Periods  Doc
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Consolidation Period 조회
+      tags:
+      - 연결 기간
+    put:
+      description: 엔티티를 수정한다.
+      operationId: consolidation_period_수정_api_v1_consolidation_periods__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsolidationPeriodUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Consolidation Period 수정 Api V1 Consolidation Periods  Doc
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Consolidation Period 수정
+      tags:
+      - 연결 기간
+  /api/v1/consolidation-periods/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: consolidation_period_취소_api_v1_consolidation_periods__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Consolidation Period 취소 Api V1 Consolidation Periods  Doc
+                  Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Consolidation Period 취소
+      tags:
+      - 연결 기간
+  /api/v1/consolidation-periods/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: consolidation_period_제출_api_v1_consolidation_periods__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Consolidation Period 제출 Api V1 Consolidation Periods  Doc
+                  Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Consolidation Period 제출
+      tags:
+      - 연결 기간
+  /api/v1/consolidation/ownership-tree:
+    get:
+      description: 지분 구조 트리를 조회한다.
+      operationId: get_ownership_tree_api_v1_consolidation_ownership_tree_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Get Ownership Tree Api V1 Consolidation Ownership
+                  Tree Get
+                type: object
+          description: Successful Response
+      summary: Get Ownership Tree
+      tags:
+      - 연결결산
+  /api/v1/consolidation/periods/{period_id}/close:
+    post:
+      description: 연결 기간을 마감한다 (review → closed).
+      operationId: close_period_api_v1_consolidation_periods__period_id__close_post
+      parameters:
+      - in: path
+        name: period_id
+        required: true
+        schema:
+          title: Period Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Close Period Api V1 Consolidation Periods  Period
+                  Id  Close Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Close Period
+      tags:
+      - 연결결산
+  /api/v1/consolidation/periods/{period_id}/eliminate:
+    post:
+      description: 소거를 실행한다.
+      operationId: execute_elimination_api_v1_consolidation_periods__period_id__eliminate_post
+      parameters:
+      - in: path
+        name: period_id
+        required: true
+        schema:
+          title: Period Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Execute Elimination Api V1 Consolidation Periods  Period
+                  Id  Eliminate Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Execute Elimination
+      tags:
+      - 연결결산
+  /api/v1/consolidation/periods/{period_id}/open:
+    post:
+      description: 연결 기간을 개시한다 (not_started → open).
+      operationId: open_period_api_v1_consolidation_periods__period_id__open_post
+      parameters:
+      - in: path
+        name: period_id
+        required: true
+        schema:
+          title: Period Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Open Period Api V1 Consolidation Periods  Period Id  Open
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Open Period
+      tags:
+      - 연결결산
+  /api/v1/consolidation/periods/{period_id}/reopen:
+    post:
+      description: 연결 기간을 재개한다 (closed → reopened).
+      operationId: reopen_period_api_v1_consolidation_periods__period_id__reopen_post
+      parameters:
+      - in: path
+        name: period_id
+        required: true
+        schema:
+          title: Period Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Reopen Period Api V1 Consolidation Periods  Period
+                  Id  Reopen Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Reopen Period
+      tags:
+      - 연결결산
+  /api/v1/currency-translations:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: currency_translation_목록_api_v1_currency_translations_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_CurrencyTranslation_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Currency Translation 목록
+      tags:
+      - 통화 환산
+    post:
+      description: 엔티티를 생성한다.
+      operationId: currency_translation_생성_api_v1_currency_translations_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CurrencyTranslationCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Currency Translation 생성 Api V1 Currency Translations
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Currency Translation 생성
+      tags:
+      - 통화 환산
+  /api/v1/currency-translations/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: currency_translation_삭제_api_v1_currency_translations__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Currency Translation 삭제
+      tags:
+      - 통화 환산
+    get:
+      description: 엔티티를 조회한다.
+      operationId: currency_translation_조회_api_v1_currency_translations__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Currency Translation 조회 Api V1 Currency Translations  Doc
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Currency Translation 조회
+      tags:
+      - 통화 환산
+    put:
+      description: 엔티티를 수정한다.
+      operationId: currency_translation_수정_api_v1_currency_translations__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CurrencyTranslationUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Currency Translation 수정 Api V1 Currency Translations  Doc
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Currency Translation 수정
+      tags:
+      - 통화 환산
+  /api/v1/currency-translations/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: currency_translation_취소_api_v1_currency_translations__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Currency Translation 취소 Api V1 Currency Translations  Doc
+                  Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Currency Translation 취소
+      tags:
+      - 통화 환산
+  /api/v1/currency-translations/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: currency_translation_제출_api_v1_currency_translations__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Currency Translation 제출 Api V1 Currency Translations  Doc
+                  Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Currency Translation 제출
+      tags:
+      - 통화 환산
+  /api/v1/elimination-rules:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: elimination_rule_목록_api_v1_elimination_rules_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_EliminationRule_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Elimination Rule 목록
+      tags:
+      - 소거 규칙
+    post:
+      description: 엔티티를 생성한다.
+      operationId: elimination_rule_생성_api_v1_elimination_rules_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EliminationRuleCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Elimination Rule 생성 Api V1 Elimination Rules Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Elimination Rule 생성
+      tags:
+      - 소거 규칙
+  /api/v1/elimination-rules/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: elimination_rule_삭제_api_v1_elimination_rules__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Elimination Rule 삭제
+      tags:
+      - 소거 규칙
+    get:
+      description: 엔티티를 조회한다.
+      operationId: elimination_rule_조회_api_v1_elimination_rules__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Elimination Rule 조회 Api V1 Elimination Rules  Doc
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Elimination Rule 조회
+      tags:
+      - 소거 규칙
+    put:
+      description: 엔티티를 수정한다.
+      operationId: elimination_rule_수정_api_v1_elimination_rules__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EliminationRuleUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Elimination Rule 수정 Api V1 Elimination Rules  Doc
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Elimination Rule 수정
+      tags:
+      - 소거 규칙
+  /api/v1/esg-disclosures:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: esg_disclosure_목록_api_v1_esg_disclosures_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_ESGDisclosure_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Esg Disclosure 목록
+      tags:
+      - ESG 공시
+    post:
+      description: 엔티티를 생성한다.
+      operationId: esg_disclosure_생성_api_v1_esg_disclosures_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ESGDisclosureCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Esg Disclosure 생성 Api V1 Esg Disclosures Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Esg Disclosure 생성
+      tags:
+      - ESG 공시
+  /api/v1/esg-disclosures/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: esg_disclosure_삭제_api_v1_esg_disclosures__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Esg Disclosure 삭제
+      tags:
+      - ESG 공시
+    get:
+      description: 엔티티를 조회한다.
+      operationId: esg_disclosure_조회_api_v1_esg_disclosures__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Esg Disclosure 조회 Api V1 Esg Disclosures  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Esg Disclosure 조회
+      tags:
+      - ESG 공시
+    put:
+      description: 엔티티를 수정한다.
+      operationId: esg_disclosure_수정_api_v1_esg_disclosures__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ESGDisclosureUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Esg Disclosure 수정 Api V1 Esg Disclosures  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Esg Disclosure 수정
+      tags:
+      - ESG 공시
+  /api/v1/esg-disclosures/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: esg_disclosure_취소_api_v1_esg_disclosures__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Esg Disclosure 취소 Api V1 Esg Disclosures  Doc Id  Cancel
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Esg Disclosure 취소
+      tags:
+      - ESG 공시
+  /api/v1/esg-disclosures/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: esg_disclosure_제출_api_v1_esg_disclosures__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Esg Disclosure 제출 Api V1 Esg Disclosures  Doc Id  Submit
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Esg Disclosure 제출
+      tags:
+      - ESG 공시
+  /api/v1/esg-metrics:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: esg_metric_목록_api_v1_esg_metrics_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_ESGMetric_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Esg Metric 목록
+      tags:
+      - ESG 지표
+    post:
+      description: 엔티티를 생성한다.
+      operationId: esg_metric_생성_api_v1_esg_metrics_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ESGMetricCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Esg Metric 생성 Api V1 Esg Metrics Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Esg Metric 생성
+      tags:
+      - ESG 지표
+  /api/v1/esg-metrics/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: esg_metric_삭제_api_v1_esg_metrics__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Esg Metric 삭제
+      tags:
+      - ESG 지표
+    get:
+      description: 엔티티를 조회한다.
+      operationId: esg_metric_조회_api_v1_esg_metrics__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Esg Metric 조회 Api V1 Esg Metrics  Doc Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Esg Metric 조회
+      tags:
+      - ESG 지표
+    put:
+      description: 엔티티를 수정한다.
+      operationId: esg_metric_수정_api_v1_esg_metrics__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ESGMetricUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Esg Metric 수정 Api V1 Esg Metrics  Doc Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Esg Metric 수정
+      tags:
+      - ESG 지표
+  /api/v1/intercompany-balances:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: intercompany_balance_목록_api_v1_intercompany_balances_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_IntercompanyBalance_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Intercompany Balance 목록
+      tags:
+      - 내부거래 잔액
+    post:
+      description: 엔티티를 생성한다.
+      operationId: intercompany_balance_생성_api_v1_intercompany_balances_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IntercompanyBalanceCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Intercompany Balance 생성 Api V1 Intercompany Balances
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Intercompany Balance 생성
+      tags:
+      - 내부거래 잔액
+  /api/v1/intercompany-balances/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: intercompany_balance_삭제_api_v1_intercompany_balances__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Intercompany Balance 삭제
+      tags:
+      - 내부거래 잔액
+    get:
+      description: 엔티티를 조회한다.
+      operationId: intercompany_balance_조회_api_v1_intercompany_balances__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Intercompany Balance 조회 Api V1 Intercompany Balances  Doc
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Intercompany Balance 조회
+      tags:
+      - 내부거래 잔액
+    put:
+      description: 엔티티를 수정한다.
+      operationId: intercompany_balance_수정_api_v1_intercompany_balances__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IntercompanyBalanceUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Intercompany Balance 수정 Api V1 Intercompany Balances  Doc
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Intercompany Balance 수정
+      tags:
+      - 내부거래 잔액
+  /api/v1/intercompany-balances/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: intercompany_balance_취소_api_v1_intercompany_balances__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Intercompany Balance 취소 Api V1 Intercompany Balances  Doc
+                  Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Intercompany Balance 취소
+      tags:
+      - 내부거래 잔액
+  /api/v1/intercompany-balances/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: intercompany_balance_제출_api_v1_intercompany_balances__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Intercompany Balance 제출 Api V1 Intercompany Balances  Doc
+                  Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Intercompany Balance 제출
+      tags:
+      - 내부거래 잔액
+  /api/v1/investment-relations:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: investment_relation_목록_api_v1_investment_relations_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_InvestmentRelation_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Investment Relation 목록
+      tags:
+      - 투자 관계
+    post:
+      description: 엔티티를 생성한다.
+      operationId: investment_relation_생성_api_v1_investment_relations_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvestmentRelationCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Investment Relation 생성 Api V1 Investment Relations
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Investment Relation 생성
+      tags:
+      - 투자 관계
+  /api/v1/investment-relations/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: investment_relation_삭제_api_v1_investment_relations__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Investment Relation 삭제
+      tags:
+      - 투자 관계
+    get:
+      description: 엔티티를 조회한다.
+      operationId: investment_relation_조회_api_v1_investment_relations__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Investment Relation 조회 Api V1 Investment Relations  Doc
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Investment Relation 조회
+      tags:
+      - 투자 관계
+    put:
+      description: 엔티티를 수정한다.
+      operationId: investment_relation_수정_api_v1_investment_relations__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvestmentRelationUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Investment Relation 수정 Api V1 Investment Relations  Doc
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Investment Relation 수정
+      tags:
+      - 투자 관계
+  /api/v1/investment-relations/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: investment_relation_취소_api_v1_investment_relations__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Investment Relation 취소 Api V1 Investment Relations  Doc
+                  Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Investment Relation 취소
+      tags:
+      - 투자 관계
+  /api/v1/investment-relations/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: investment_relation_제출_api_v1_investment_relations__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Investment Relation 제출 Api V1 Investment Relations  Doc
+                  Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Investment Relation 제출
+      tags:
+      - 투자 관계
+  /api/v1/sustainability-reports:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: sustainability_report_목록_api_v1_sustainability_reports_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_SustainabilityReport_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Sustainability Report 목록
+      tags:
+      - 지속가능성 보고서
+    post:
+      description: 엔티티를 생성한다.
+      operationId: sustainability_report_생성_api_v1_sustainability_reports_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SustainabilityReportCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Sustainability Report 생성 Api V1 Sustainability Reports
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Sustainability Report 생성
+      tags:
+      - 지속가능성 보고서
+  /api/v1/sustainability-reports/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: sustainability_report_삭제_api_v1_sustainability_reports__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Sustainability Report 삭제
+      tags:
+      - 지속가능성 보고서
+    get:
+      description: 엔티티를 조회한다.
+      operationId: sustainability_report_조회_api_v1_sustainability_reports__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Sustainability Report 조회 Api V1 Sustainability Reports  Doc
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Sustainability Report 조회
+      tags:
+      - 지속가능성 보고서
+    put:
+      description: 엔티티를 수정한다.
+      operationId: sustainability_report_수정_api_v1_sustainability_reports__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SustainabilityReportUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Sustainability Report 수정 Api V1 Sustainability Reports  Doc
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Sustainability Report 수정
+      tags:
+      - 지속가능성 보고서
+  /api/v1/sustainability-reports/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: sustainability_report_취소_api_v1_sustainability_reports__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Sustainability Report 취소 Api V1 Sustainability Reports  Doc
+                  Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Sustainability Report 취소
+      tags:
+      - 지속가능성 보고서
+  /api/v1/sustainability-reports/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: sustainability_report_제출_api_v1_sustainability_reports__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Sustainability Report 제출 Api V1 Sustainability Reports  Doc
+                  Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Sustainability Report 제출
+      tags:
+      - 지속가능성 보고서
+  /api/v1/waste-managements:
+    get:
+      description: 엔티티 목록을 페이지네이션으로 조회한다.
+      operationId: waste_management_목록_api_v1_waste_managements_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          title: Page Size
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_WasteManagement_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Waste Management 목록
+      tags:
+      - 폐기물 관리
+    post:
+      description: 엔티티를 생성한다.
+      operationId: waste_management_생성_api_v1_waste_managements_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WasteManagementCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Waste Management 생성 Api V1 Waste Managements Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Waste Management 생성
+      tags:
+      - 폐기물 관리
+  /api/v1/waste-managements/{doc_id}:
+    delete:
+      description: 엔티티를 삭제한다. 초안 상태에서만 허용.
+      operationId: waste_management_삭제_api_v1_waste_managements__doc_id__delete
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Waste Management 삭제
+      tags:
+      - 폐기물 관리
+    get:
+      description: 엔티티를 조회한다.
+      operationId: waste_management_조회_api_v1_waste_managements__doc_id__get
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Waste Management 조회 Api V1 Waste Managements  Doc
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Waste Management 조회
+      tags:
+      - 폐기물 관리
+    put:
+      description: 엔티티를 수정한다.
+      operationId: waste_management_수정_api_v1_waste_managements__doc_id__put
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WasteManagementUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Waste Management 수정 Api V1 Waste Managements  Doc
+                  Id  Put
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Waste Management 수정
+      tags:
+      - 폐기물 관리
+  /api/v1/waste-managements/{doc_id}/cancel:
+    post:
+      description: 문서를 취소한다 (제출 → 취소).
+      operationId: waste_management_취소_api_v1_waste_managements__doc_id__cancel_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Waste Management 취소 Api V1 Waste Managements  Doc
+                  Id  Cancel Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Waste Management 취소
+      tags:
+      - 폐기물 관리
+  /api/v1/waste-managements/{doc_id}/submit:
+    post:
+      description: 문서를 제출한다 (초안 → 제출).
+      operationId: waste_management_제출_api_v1_waste_managements__doc_id__submit_post
+      parameters:
+      - in: path
+        name: doc_id
+        required: true
+        schema:
+          title: Doc Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Waste Management 제출 Api V1 Waste Managements  Doc
+                  Id  Submit Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Waste Management 제출
+      tags:
+      - 폐기물 관리
+  /health:
+    get:
+      description: 서비스 상태를 확인한다 (하위 호환).
+      operationId: health_health_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Health Health Get
+                type: object
+          description: Successful Response
+      summary: Health
+      tags:
+      - health
+  /health/live:
+    get:
+      description: Liveness probe — 프로세스 생존 확인.
+      operationId: liveness_health_live_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Liveness Health Live Get
+                type: object
+          description: Successful Response
+      summary: Liveness
+      tags:
+      - health
+  /health/ready:
+    get:
+      description: Readiness probe — DB/NATS/Valkey 연결 포함 서비스 준비 상태 확인.
+      operationId: readiness_health_ready_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Readiness
+      tags:
+      - health
+  /health/startup:
+    get:
+      description: Startup probe — 서비스 초기화 완료 확인 (readiness와 동일).
+      operationId: startup_health_startup_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Startup
+      tags:
+      - health
+servers:
+- url: /finance-extra
+- description: 현재 서버
+  url: /
+tags:
+- description: 연결 대상 법인 API
+  name: 연결 대상 법인
+- description: 소거 규칙 API
+  name: 소거 규칙
+- description: 투자 관계 API
+  name: 투자 관계
+- description: 연결 기간 API
+  name: 연결 기간
+- description: 연결 재무제표 API
+  name: 연결 재무제표
+- description: 통화 환산 API
+  name: 통화 환산
+- description: 내부거래 잔액 API
+  name: 내부거래 잔액
+- description: ESG 지표 API
+  name: ESG 지표
+- description: 지속가능성 보고서 API
+  name: 지속가능성 보고서
+- description: 탄소 배출 API
+  name: 탄소 배출
+- description: 폐기물 관리 API
+  name: 폐기물 관리
+- description: ESG 공시 API
+  name: ESG 공시
