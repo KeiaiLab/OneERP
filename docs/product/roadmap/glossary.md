@@ -66,7 +66,7 @@ audience: shared
 |---|---|---|
 | 기능 완전성 | 5 | ERD 일치 · API 명세 · CRUD · 테스트 커버리지 |
 | 통합 | 3 | Outbox 일관성 · 트레이스 · Contract 테스트 |
-| 배포 | 3 | buildx · OpenAPI drift · ArgoCD 승격 |
+| 배포 | 3 | buildx · OpenAPI drift · Flux 승격 |
 | 운영 | 5 | SLO · 관측 · 백업 RPO · 복구 RTO · 알림 |
 | 보안 | 7 | RBAC · ABAC · 멀티테넌시 티어 · 감사 로그 · 시크릿 · 취약점 · 인증 |
 

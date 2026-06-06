@@ -150,7 +150,8 @@ kubectl -n $NS get endpoints
 
 ```bash
 # 상세 절차: docs/ops/runbook-service-deploy.md "롤백 절차" 참조
-argocd app rollback oneerp-gateway <REVISION_NUMBER>
+# Git을 직전 정상 릴리즈로 되돌린 뒤 Flux를 강제 reconcile한다.
+flux reconcile helmrelease oneerp-gateway -n services
 ```
 
 **조치 B: 핫픽스 배포**
@@ -158,7 +159,7 @@ argocd app rollback oneerp-gateway <REVISION_NUMBER>
 ```bash
 # 1. 핫픽스 브랜치에서 수정
 # 2. CI 빌드 후 이미지 태그 확인
-# 3. 수동 배포 (ArgoCD 또는 kubectl)
+# 3. 수동 배포 (Flux reconcile 또는 kubectl)
 NS=services
 kubectl -n $NS set image deployment/gateway \
   gateway=ghcr.io/oneerp/gateway:<HOTFIX_TAG>

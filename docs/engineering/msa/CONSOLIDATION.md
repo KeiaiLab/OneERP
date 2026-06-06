@@ -87,7 +87,7 @@ feat/msa-consolidation-p6   — before/after 지표 리포트
 
 1. 문제 발생 PR 의 merge commit 식별
 2. `git revert -m 1 <merge-sha>` → 원복 PR 생성
-3. Helm 차트 재정비(P4) 이후 원복은 ArgoCD sync 에도 영향 — 반드시 **인프라 팀 alert** 및 staging 우선 확인
+3. Helm 차트 재정비(P4) 이후 원복은 Flux reconcile 에도 영향 — 반드시 **인프라 팀 alert** 및 staging 우선 확인
 4. 롤백 PR 의 `make stack-smoke` 통과 확인
 
 ## 관련 문서

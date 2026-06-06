@@ -1,7 +1,8 @@
 """배포 카탈로그 기반 산출물 생성기.
 
 ADR-0014 이후 docker-compose 렌더링 단위는 6 Runtime Plane 이다.
-Helm/ArgoCD 산출물은 여전히 48 도메인 단위(services.yaml) 로 생성한다.
+Helm 차트 산출물은 여전히 48 도메인 단위(services.yaml) 로 생성한다.
+배포 reconcile 은 Flux 가 직접 deploy/charts 를 watch 한다 (RFC-0048, ArgoCD ApplicationSet 폐기).
 """
 
 from __future__ import annotations
@@ -18,9 +19,6 @@ if TYPE_CHECKING:
     from scripts.deploy.catalog import PlaneSpec, ReleaseManifest, ServiceSpec
 
 
-PROJECT_REPO_URL = "https://github.com/oneerp/oneerp.git"
-DEFAULT_NAMESPACE = "services"
-APPSET_NAMESPACE = "platform"
 COMPOSE_BUILD_PULL_POLICY = "${ONEERP_COMPOSE_PULL_POLICY:-build}"
 
 
@@ -287,69 +285,6 @@ def render_compose_yaml(
     return header + _dump_yaml(compose_doc)
 
 
-def render_applicationset_yaml(services: dict[str, ServiceSpec], release: ReleaseManifest) -> str:
-    """ArgoCD ApplicationSet 내용을 렌더링한다."""
-    elements = [{"service": service.name} for service in services.values() if service.k8s_enabled]
-    document = {
-        "apiVersion": "argoproj.io/v1alpha1",
-        "kind": "ApplicationSet",
-        "metadata": {
-            "name": "oneerp",
-            "namespace": APPSET_NAMESPACE,
-            "annotations": {
-                "oneerp.example.com/release-version": release.version,
-            },
-        },
-        "spec": {
-            "goTemplate": True,
-            "goTemplateOptions": ["missingkey=error"],
-            "generators": [{"list": {"elements": elements}}],
-            "template": {
-                "metadata": {
-                    "name": "oneerp-{{ .service }}",
-                    "namespace": APPSET_NAMESPACE,
-                    "labels": {
-                        "app.kubernetes.io/part-of": "oneerp",
-                        "oneerp.example.com/service": "{{ .service }}",
-                    },
-                    "finalizers": ["resources-finalizer.argocd.argoproj.io"],
-                },
-                "spec": {
-                    "project": "default",
-                    "source": {
-                        "repoURL": PROJECT_REPO_URL,
-                        "targetRevision": release.version,
-                        "path": "deploy/charts/{{ .service }}",
-                        "helm": {
-                            "valueFiles": [
-                                "values.yaml",
-                                "values-prod.yaml",
-                                "values-release.yaml",
-                            ],
-                        },
-                    },
-                    "destination": {
-                        "server": "https://kubernetes.default.svc",
-                        "namespace": DEFAULT_NAMESPACE,
-                    },
-                    "syncPolicy": {
-                        "automated": {"selfHeal": True, "prune": True},
-                        "syncOptions": ["CreateNamespace=false"],
-                    },
-                },
-            },
-        },
-    }
-    header = dedent(
-        f"""\
-        # GENERATED FILE. DO NOT EDIT.
-        # source: deploy/catalog/services.yaml, deploy/catalog/releases/current.yaml
-        # release: {release.version}
-        """,
-    )
-    return header + _dump_yaml(document)
-
-
 def render_values_release_yaml(_service: ServiceSpec, image_tag: str) -> str:
     """서비스별 릴리즈 override values를 렌더링한다."""
     header = dedent(
@@ -459,9 +394,6 @@ def sync_generated_files(
     targets = {
         root / "docker-compose.yml": render_compose_yaml(planes, services, release),
         root / "deploy" / "edge-router" / "Caddyfile": render_caddyfile(planes),
-        root / "deploy" / "apps" / "applicationset.yaml": render_applicationset_yaml(
-            services, release
-        ),
     }
     for service in services.values():
         if service.k8s_enabled:
@@ -508,9 +440,6 @@ def validate_generated_files(
     expected = {
         root / "docker-compose.yml": render_compose_yaml(planes, services, release),
         root / "deploy" / "edge-router" / "Caddyfile": render_caddyfile(planes),
-        root / "deploy" / "apps" / "applicationset.yaml": render_applicationset_yaml(
-            services, release
-        ),
     }
     for service in services.values():
         if service.k8s_enabled:

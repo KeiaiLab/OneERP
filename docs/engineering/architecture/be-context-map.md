@@ -36,7 +36,7 @@
 ## 확인 필요(Phase 1)
 
 - 서비스 간 통신 패턴 (REST / gRPC / Message Queue) — ADR 필요
-- 배포 방식(GitOps/ArgoCD): `docs/infra/inventory/cicd.md`, `docs/infra/inventory/k8s.md`
+- 배포 방식(GitOps/Flux): `docs/infra/inventory/cicd.md`, `docs/infra/inventory/k8s.md`
 - 인증/권한(OIDC + 그룹/클레임): `docs/infra/inventory/auth-oidc.md`
 - 멀티테넌시 경계: (법인/고객/사업부)
 - Gateway 역할 확정 (API 라우팅/권한 집계 vs BFF)

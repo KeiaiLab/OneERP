@@ -7,7 +7,7 @@ OneERP 마이크로서비스의 배포, 롤백, 배포 후 검증 절차를 정�
 | 항목 | 값 |
 |------|-----|
 | 대상 서비스 | gateway, selling, buying, stock, accounting, hr, payroll, expenses, web |
-| 배포 도구 | ArgoCD + Helm |
+| 배포 도구 | Flux + Helm |
 | 이미지 레지스트리 | Harbor (`ghcr.io/oneerp/`) |
 | CI | CI Actions (`build-push.yml`) |
 | 빌드 도구 | Buildah (CI) / `apple/container` (로컬) |
@@ -16,10 +16,10 @@ OneERP 마이크로서비스의 배포, 롤백, 배포 후 검증 절차를 정�
 ## 사전 조건
 
 - `kubectl` 클러스터 접근 확인 (`kubectl get ns services`)
-- `argocd` CLI 로그인 (`argocd login argo.example.com`)
+- `flux` CLI 설치 확인 (`flux version`) 및 클러스터 접근
 - Harbor 레지스트리 접근 권한 (`buildah login ghcr.io`)
 - Helm 3.x 설치 확인 (`helm version`)
-- ArgoCD Application 리소스가 배포 대상 서비스에 대해 등록되어 있을 것
+- Flux HelmRelease 리소스가 배포 대상 서비스에 대해 등록되어 있을 것
 
 ## 배포 전 게이트
 
@@ -30,15 +30,15 @@ OneERP 마이크로서비스의 배포, 롤백, 배포 후 검증 절차를 정�
 
 ## 배포 절차
 
-### 일반 배포 (ArgoCD 자동 동기화)
+### 일반 배포 (Flux 자동 reconcile)
 
-표준 배포 흐름이다. main 브랜치에 머지하면 CI가 이미지를 빌드·푸시하고 ArgoCD가 자동 동기화한다.
+표준 배포 흐름이다. main 브랜치에 머지하면 CI가 이미지를 빌드·푸시하고 Flux가 자동 reconcile한다.
 
 ```
 PR 머지 → CI Actions(build-push.yml)
   → Buildah 빌드(linux/amd64)
   → Harbor 푸시(SHA 태그 + latest)
-  → ArgoCD 자동 감지
+  → Flux GitRepository/HelmRelease 자동 감지
   → Helm 릴리즈 업그레이드
   → Pod 롤링 업데이트
 ```
@@ -53,17 +53,17 @@ PR 머지 → CI Actions(build-push.yml)
 # Harbor UI: https://ghcr.io/harbor/projects/oneerp/repositories
 ```
 
-**2. ArgoCD 동기화 상태 확인**
+**2. Flux reconcile 상태 확인**
 
 ```bash
-# 전체 앱 상태 확인
-argocd app list --project oneerp
+# 전체 HelmRelease 상태 확인
+flux get helmrelease -n services
 
-# 특정 서비스 동기화 상태 확인
-argocd app get oneerp-gateway -o wide
+# 특정 서비스 reconcile 상태 확인
+flux get helmrelease oneerp-gateway -n services
 
-# 동기화 대기 (최대 5분)
-argocd app wait oneerp-gateway --timeout 300
+# 즉시 재동기화 트리거 + 완료 대기 (최대 5분)
+flux reconcile helmrelease oneerp-gateway -n services --timeout 5m
 ```
 
 **3. Pod 롤아웃 완료 대기**
@@ -79,21 +79,25 @@ kubectl -n $NS rollout status deployment/selling --timeout=120s
 
 ### 수동 배포 (긴급)
 
-ArgoCD 자동 동기화가 동작하지 않거나 즉시 배포가 필요한 경우에 사용한다.
+Flux 자동 reconcile이 동작하지 않거나 즉시 배포가 필요한 경우에 사용한다.
 
-**방법 A: ArgoCD 수동 동기화**
+**방법 A: Flux 수동 reconcile**
 
 ```bash
-# 단일 서비스 강제 동기화
-argocd app sync oneerp-gateway --force
+# Git 소스 먼저 강제 갱신
+flux reconcile source git oneerp -n services
 
-# 전체 프로젝트 동기화
-argocd app sync -l app.kubernetes.io/part-of=oneerp --force
+# 단일 서비스 강제 reconcile
+flux reconcile helmrelease oneerp-gateway -n services
+
+# 전체 서비스 reconcile (HelmRelease 목록 순회)
+flux get helmrelease -n services --no-header | awk '{print $1}' | \
+  xargs -I{} flux reconcile helmrelease {} -n services
 ```
 
 **방법 B: Helm 직접 업그레이드**
 
-ArgoCD가 완전히 불가한 상황에서만 사용한다. ArgoCD와 상태 불일치가 발생하므로 반드시 사후 동기화를 수행한다.
+Flux가 완전히 불가한 상황에서만 사용한다. Flux와 상태 불일치가 발생하므로 반드시 사후 reconcile을 수행한다.
 
 ```bash
 NS=services
@@ -107,13 +111,13 @@ helm upgrade $SERVICE charts/$SERVICE \
   --set image.tag=$TAG \
   --wait --timeout 120s
 
-# ArgoCD 상태 재동기화 (반드시 실행)
-argocd app sync oneerp-$SERVICE
+# Flux 상태 재reconcile (반드시 실행 — drift 복원)
+flux reconcile helmrelease oneerp-$SERVICE -n services
 ```
 
 **방법 C: 이미지 태그 직접 변경**
 
-최후 수단이다. Helm/ArgoCD 모두 불가한 상황에서만 사용한다.
+최후 수단이다. Helm/Flux 모두 불가한 상황에서만 사용한다.
 
 ```bash
 NS=services
@@ -126,7 +130,7 @@ kubectl -n $NS set image deployment/$SERVICE \
 kubectl -n $NS rollout status deployment/$SERVICE --timeout=120s
 ```
 
-> **주의**: 이 방법은 ArgoCD가 감지하면 OutOfSync 상태가 된다. 복구 후 반드시 ArgoCD와 동기화한다.
+> **주의**: 이 방법은 Flux가 감지하면 다음 reconcile에서 drift로 되돌려진다. 복구 후 반드시 Flux와 동기화(`flux reconcile`)한다.
 
 ### 카나리 배포 (선택)
 
@@ -153,7 +157,7 @@ kubectl -n $NS logs -l app=$SERVICE --tail=100 -f
 
 # 5-a. 카나리 성공 → 전체 배포 진행
 kubectl -n $NS delete deployment ${SERVICE}-canary
-argocd app sync oneerp-$SERVICE
+flux reconcile helmrelease oneerp-$SERVICE -n services
 
 # 5-b. 카나리 실패 → 카나리만 삭제
 kubectl -n $NS delete deployment ${SERVICE}-canary
@@ -161,20 +165,26 @@ kubectl -n $NS delete deployment ${SERVICE}-canary
 
 ## 롤백 절차
 
-### ArgoCD 롤백
+### Flux 롤백 (Git revert 기반)
 
-가장 권장하는 롤백 방법이다.
+가장 권장하는 롤백 방법이다. Flux는 Git을 SoT로 reconcile하므로, 롤백은 카탈로그/values를 직전 정상 상태로 되돌려 머지하는 방식이다.
 
 ```bash
-# 배포 이력 조회
-argocd app history oneerp-gateway
+# 1. 직전 정상 릴리즈 커밋으로 deploy/catalog/releases/current.yaml 되돌림
+#    (git revert 또는 이전 이미지 태그로 catalog 수정 후 sync 재생성)
+git revert <BAD_RELEASE_COMMIT>          # 또는 catalog 직접 수정
+uv run python -m scripts.deploy sync     # 산출물 재생성
+git commit -am "revert: oneerp-gateway 릴리즈 롤백" && git push
 
-# 특정 리비전으로 롤백
-argocd app rollback oneerp-gateway <REVISION_NUMBER>
+# 2. Flux 강제 reconcile (Git 반영 즉시 적용)
+flux reconcile source git oneerp -n services
+flux reconcile helmrelease oneerp-gateway -n services
 
-# 롤백 후 상태 확인
-argocd app get oneerp-gateway
+# 3. 롤백 후 상태 확인
+flux get helmrelease oneerp-gateway -n services
 ```
+
+> 긴급 시에는 아래 "Helm 롤백" 또는 "Kubernetes 네이티브 롤백"으로 즉시 복구 후, Git을 정상 상태로 맞춰 Flux drift를 해소한다.
 
 ### 롤백 전 체크리스트
 
@@ -184,7 +194,7 @@ argocd app get oneerp-gateway
 
 ### 롤백 후 체크리스트
 
-- `argocd app get` / `rollout status` / smoke check로 복구 상태 확인
+- `flux get helmrelease` / `rollout status` / smoke check로 복구 상태 확인
 - `./scripts/ci/run.sh` 또는 최소 `./scripts/ci/run_contract_tests.sh` 재실행
 - generated drift 상태와 문서 sync 여부를 기록
 
@@ -219,8 +229,8 @@ helm -n $NS history $SERVICE
 # 이전 리비전으로 롤백
 helm -n $NS rollback $SERVICE <REVISION_NUMBER> --wait --timeout 120s
 
-# ArgoCD 동기화
-argocd app sync oneerp-$SERVICE
+# Flux 재reconcile (Git 정상화 후 drift 해소)
+flux reconcile helmrelease oneerp-$SERVICE -n services
 ```
 
 ### Kubernetes 네이티브 롤백

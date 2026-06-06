@@ -42,7 +42,7 @@ if command -v kubectl >/dev/null 2>&1; then
   run "k8s_ingress" kubectl get ingress -A
   run "k8s_ingressroute" kubectl get ingressroute -A
   run "k8s_ingressroute_keycloak" kubectl -n infra get ingressroute keycloak -o yaml
-  run "k8s_crd_argocd" bash -lc 'kubectl get crd | rg -n "argocd" || true'
+  run "k8s_crd_flux" bash -lc 'kubectl get crd | rg -n "fluxcd|kustomize.toolkit|helm.toolkit" || true'
   run "k8s_crd_observability" bash -lc 'kubectl get crd | rg -n "prometheus|loki|tempo|jaeger|opentelemetry|cert-manager" || true'
 else
   echo "kubectl not found; skipping k8s collection"

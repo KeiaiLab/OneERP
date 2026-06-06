@@ -72,7 +72,7 @@ graph TB
 | Node.js | 22 | 22.x |
 | 인증 (Authentication) | Keycloak OIDC (Phase 1) | - |
 | CI | CI Actions | - |
-| 배포 (Deployment) | ArgoCD + Helm (Phase 2) | - |
+| 배포 (Deployment) | Flux + Helm (Phase 2) | - |
 
 ---
 
