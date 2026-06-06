@@ -4,7 +4,7 @@
 
 | 필드 | 값 |
 |------|----|
-| 상태 | Accepted |
+| 상태 | Accepted (배포 엔진 부분 RFC-0048로 갱신: ArgoCD → Flux, 2026-06-04) |
 | 채택일 | 2026-04-13 |
 | 결정권자 | OneERP 아키텍처 위원회, 플랫폼 리드 |
 | 영향 범위 | 모든 컨테이너 빌드, CI/CD, 환경(dev/stg/prod), 롤백 |
@@ -21,7 +21,7 @@ compatible 한 단계"를 요구한다. 전역 규칙(`/Users/phil/.claude/CLAUD
 
 또한 OneERP는 이중 배포 모델(`docs/engineering/architecture/deployment-parity.md`):
 - 온프렘: docker compose
-- 클라우드: K8s/Helm/ArgoCD
+- 클라우드: K8s/Helm/Flux (최초 ArgoCD 채택, RFC-0048로 Flux 전환 — 2026-06-04)
 - 단일 SoT: `deploy/catalog/`
 
 현재 미정의 사항:

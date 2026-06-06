@@ -345,7 +345,7 @@ A. `consolidation_entry` / `elimination_entry` 의 내부거래 제거가 누락
 3. `uv run pytest services/finance/accounting/tests/security -v` —
    skipped 또는 green (스테이징 없음 상태에서는 skip 허용).
 4. `docker buildx build --builder masblue-builder …` — 이미지 빌드.
-5. ArgoCD 의 accounting application sync.
+5. Flux 의 accounting HelmRelease reconcile (`flux reconcile helmrelease oneerp-accounting -n services`).
 6. gateway 의 라우트 정책(policies/accounting/routes.rego) 재배포 확인.
 7. 배포 후 `/health` 200 OK, `/api/v1/journal-entries` 샘플 호출 200.
 

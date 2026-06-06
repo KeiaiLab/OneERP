@@ -47,7 +47,7 @@
 
 - 입력:
   - CI 제공자/Runner/Secret 관리
-  - K8s/GitOps(ArgoCD) 운영 표준
+  - K8s/GitOps(Flux) 운영 표준
 - 출력:
   - `docs/engineering/ci/quality-gates.md` 확정
   - `docs/infra/ops/observability.md`, `docs/infra/ops/slo.md`, `docs/ops/` 런북 초안

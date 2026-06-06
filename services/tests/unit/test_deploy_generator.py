@@ -79,26 +79,6 @@ def test_compose_렌더링은_공유_env와_프로파일을_반영한다() -> No
     assert "8222" in nats["command"]
 
 
-def test_applicationset_렌더링은_k8s_활성_서비스만_포함한다() -> None:
-    catalog_module = _load_module("scripts/deploy/catalog.py", "deploy_catalog_appset")
-    generator_module = _load_module("scripts/deploy/generator.py", "deploy_generator_appset")
-
-    services = catalog_module.load_service_catalog(ROOT)
-    release = catalog_module.load_release_manifest(ROOT)
-    rendered = generator_module.render_applicationset_yaml(services, release)
-    appset_doc = yaml.safe_load(rendered)
-
-    elements = appset_doc["spec"]["generators"][0]["list"]["elements"]
-    listed_services = [item["service"] for item in elements]
-
-    assert "gateway" in listed_services
-    assert "web" in listed_services
-    assert "pos" not in listed_services
-    assert sorted(listed_services) == sorted(
-        [service.name for service in services.values() if service.k8s_enabled],
-    )
-
-
 def test_서비스_스캐폴드_렌더링은_chart와_dockerfile_템플릿을_제공한다() -> None:
     catalog_module = _load_module("scripts/deploy/catalog.py", "deploy_catalog_scaffold")
     generator_module = _load_module("scripts/deploy/generator.py", "deploy_generator_scaffold")

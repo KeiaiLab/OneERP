@@ -175,28 +175,6 @@ def test_caddyfile_렌더링은_api와_web을_분기한다() -> None:
     assert "handle /api/*" in rendered
 
 
-def test_applicationset_렌더링은_k8s_활성_서비스만_포함한다() -> None:
-    catalog_module = _load_module("scripts/deploy/catalog.py", "deploy_catalog_appset")
-    generator_module = _load_module("scripts/deploy/generator.py", "deploy_generator_appset")
-
-    services = catalog_module.load_service_catalog(ROOT)
-    release = catalog_module.load_release_manifest(ROOT)
-    rendered = generator_module.render_applicationset_yaml(services, release)
-    appset_doc = yaml.safe_load(rendered)
-
-    elements = appset_doc["spec"]["generators"][0]["list"]["elements"]
-    listed_services = [item["service"] for item in elements]
-    target_revision = appset_doc["spec"]["template"]["spec"]["source"]["targetRevision"]
-
-    assert "gateway" in listed_services
-    assert "web" in listed_services
-    assert target_revision == release.version
-    assert target_revision != "main"
-    assert sorted(listed_services) == sorted(
-        [service.name for service in services.values() if service.k8s_enabled],
-    )
-
-
 def test_서비스_스캐폴드는_helm_chart_템플릿만_생성한다() -> None:
     """ADR-0014 이후 도메인 Dockerfile 자동 생성은 중단 — Helm chart 만 스캐폴드."""
     catalog_module = _load_module("scripts/deploy/catalog.py", "deploy_catalog_scaffold")

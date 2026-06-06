@@ -50,7 +50,6 @@ spec:
 | 도메인 | 서비스 | 네임스페이스 |
 |--------|--------|------------|
 | `oneerp.example.com` | OneERP API + Web | `services` |
-| `argo.example.com` | ArgoCD | `platform` |
 | `git.example.com` | CI 시스템 | `platform` |
 | `registry.example.com` | Harbor (별도 관리) | `platform` |
 | `openbao.example.com` | OpenBao | `platform` |
