@@ -6,6 +6,7 @@ EX-DOC-001~011: 에러 케이스 테스트.
 
 from __future__ import annotations
 
+import time
 from datetime import UTC, datetime
 from unittest.mock import MagicMock
 
@@ -17,6 +18,10 @@ from oneerp_documents_app.services.document_lifecycle_service import (
     _compute_document_hash,
     _strip_html,
 )
+
+# 이전 정규식은 이 길이에서 O(n²) 로 수 초 걸렸다.
+_REDOS_INPUT_LEN = 100_000
+_REDOS_BUDGET_SEC = 1.0
 
 
 class TestDocumentLifecycleService:
@@ -347,6 +352,17 @@ class TestDocumentLifecycleService:
         assert _strip_html("<p>안녕하세요</p>") == "안녕하세요"
         assert _strip_html("<b>굵은</b> <i>기울임</i>") == "굵은 기울임"
         assert _strip_html("") == ""
+
+    def test_HTML_태그_제거_ReDoS_방지(self) -> None:
+        """'<' 반복 입력도 선형 시간에 처리한다 (py/polynomial-redos)."""
+        adversarial = "<" * _REDOS_INPUT_LEN
+
+        started = time.perf_counter()
+        result = _strip_html(adversarial)
+        elapsed = time.perf_counter() - started
+
+        assert result == adversarial
+        assert elapsed < _REDOS_BUDGET_SEC
 
     def test_문서_해시_계산(self) -> None:
         """동일 입력 시 동일한 SHA-256 해시를 반환한다."""

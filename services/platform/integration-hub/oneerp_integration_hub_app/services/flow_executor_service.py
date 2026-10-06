@@ -10,6 +10,9 @@ from oneerp_core.repository import Repository
 
 logger = logging.getLogger(__name__)
 
+# 클라이언트용 고정 오류 문구 — 상세는 서버 로그와 integration_logs 에만 둔다.
+_FLOW_FAILED = "플로우 실행 실패"
+
 
 class FlowExecutorService:
     """통합 플로우 실행 비즈니스 로직.
@@ -142,7 +145,7 @@ class FlowExecutorService:
             return {
                 "flow_id": flow_id,
                 "status": "failed",
-                "error": error_msg,
+                "error": _FLOW_FAILED,
                 "duration_ms": duration_ms,
             }
 
