@@ -13,6 +13,8 @@ from oneerp_core.repository import Repository
 logger = logging.getLogger(__name__)
 
 _MPO_PREFIX = "MPO"
+# 클라이언트용 고정 오류 문구 — 예외 상세는 서버 로그에만 남긴다.
+_SYNC_FAILED = "주문 저장 실패"
 
 
 class OrderSyncService:
@@ -84,8 +86,8 @@ class OrderSyncService:
                 }
                 self._order_repo.insert(doc)
                 created += 1
-            except Exception as e:
-                errors.append(f"{ext_id}: {e}")
+            except Exception:
+                errors.append(f"{ext_id}: {_SYNC_FAILED}")
                 logger.exception("주문 동기화 실패: %s", ext_id)
 
         logger.info(

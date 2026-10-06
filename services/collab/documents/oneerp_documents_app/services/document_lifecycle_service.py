@@ -40,7 +40,8 @@ _MAX_CATEGORY_DEPTH = 10
 
 def _strip_html(html: str) -> str:
     """HTML 태그를 제거하여 플레인텍스트로 변환한다."""
-    return re.sub(r"<[^>]+>", "", html).strip()
+    # 태그 본문에서 '<' 를 배제해 '<<<…' 입력의 O(n²) 역추적을 막는다.
+    return re.sub(r"<[^<>]+>", "", html).strip()
 
 
 def _compute_document_hash(title: str, content: str, file_checksums: list[str]) -> str:

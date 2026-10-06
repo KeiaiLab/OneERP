@@ -15,6 +15,9 @@ from oneerp_core.repository import Repository
 
 logger = logging.getLogger(__name__)
 
+# 배치 응답용 고정 문구 — 예외 문자열을 클라이언트에 흘리지 않는다.
+_ERR_PRIMARY_EXISTS = "ERR-DIR-009: 이미 주 소속이 존재합니다"
+
 
 class DirectorySearchService:
     """인명부 검색 비즈니스 로직.
@@ -202,8 +205,8 @@ class DirectorySearchService:
                 # DB 기존 주 소속 중복 검사
                 try:
                     self.validate_primary_assignment(employee_id)
-                except ValueError as e:
-                    errors.append({"index": idx, "error": str(e)})
+                except ValueError:
+                    errors.append({"index": idx, "error": _ERR_PRIMARY_EXISTS})
                     continue
 
             entry["tenant_id"] = self._tenant_id
