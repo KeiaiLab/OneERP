@@ -284,15 +284,13 @@ class AttendanceService:
 
         if exceeded_52h:
             logger.warning(
-                "주52시간 초과: %s (주간 %s, %.1f시간)",
-                employee_id,
+                "주52시간 초과: 주간 %s, %.1f시간",
                 week_start_date,
                 total_hours,
             )
         if exceeded_overtime_12h:
             logger.warning(
-                "연장근로 12시간 초과: %s (연장 %.1f시간)",
-                employee_id,
+                "연장근로 12시간 초과: 연장 %.1f시간",
                 overtime_hours,
             )
 
@@ -349,8 +347,7 @@ class AttendanceService:
         is_due = today >= due_date
 
         logger.info(
-            "건강검진 주기 확인: %s (마지막: %s, 초과: %s)",
-            employee_id,
+            "건강검진 주기 확인: 마지막 %s, 초과 %s",
             latest_date.isoformat(),
             is_due,
         )

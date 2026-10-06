@@ -455,10 +455,9 @@ class WorkReportService:
         self._report_repo.insert(doc)
 
         logger.info(
-            "템플릿 기반 업무일지 생성: %s (템플릿: %s, 작성자: %s)",
+            "템플릿 기반 업무일지 생성: %s (템플릿: %s)",
             report_id,
             template_id,
-            employee_id,
         )
 
         return {

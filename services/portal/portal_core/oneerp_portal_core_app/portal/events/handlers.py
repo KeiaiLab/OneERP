@@ -36,11 +36,9 @@ def handle_employee_department_changed(event_data: dict[str, Any]) -> None:
     EMPLOYEE_DEPARTMENT_CHANGED 이벤트를 수신하여
     해당 사용자의 개인 대시보드 캐시를 무효화한다.
     """
-    employee_id = event_data.get("doc_id", "")
     new_department = event_data.get("data", {}).get("new_department", "")
     logger.info(
-        "부서 변경 이벤트: employee=%s, 새 부서=%s — 레이아웃 재계산",
-        employee_id,
+        "부서 변경 이벤트: 새 부서=%s — 레이아웃 재계산",
         new_department,
     )
     # 개인 대시보드 캐시 무효화

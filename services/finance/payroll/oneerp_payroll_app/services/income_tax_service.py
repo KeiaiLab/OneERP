@@ -142,8 +142,7 @@ class IncomeTaxService:
         tax = max(0.0, base_tax - dependent_deduction)
 
         logger.info(
-            "소득세 산출: gross_pay=%s, dependents=%s, base_tax=%s, tax=%s",
-            gross_pay,
+            "소득세 산출: dependents=%s, base_tax=%s, tax=%s",
             dependents,
             base_tax,
             tax,

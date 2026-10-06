@@ -98,8 +98,7 @@ class TransferService:
         self._employee_repo.update_by_id(employee, {"$push": {"_outbox": outbox_entry}})
 
         logger.info(
-            "인사이동: %s (%s → %s, %s → %s)",
-            employee,
+            "인사이동: %s → %s, %s → %s",
             old_department,
             new_department or old_department,
             old_designation,

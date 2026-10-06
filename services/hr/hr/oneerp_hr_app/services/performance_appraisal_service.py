@@ -103,8 +103,7 @@ class PerformanceAppraisalService:
         self._appraisal_repo.insert(doc)
 
         logger.info(
-            "평가 생성: %s (사이클: %s, 평가자: %s)",
-            employee_id,
+            "평가 생성: 사이클 %s, 평가자 %s",
             appraisal_cycle_id,
             reviewer_id,
         )

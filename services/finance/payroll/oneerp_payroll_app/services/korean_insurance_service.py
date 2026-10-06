@@ -314,10 +314,9 @@ class KoreanInsuranceService:
         )
 
         logger.info(
-            "통합 급여 계산 완료: gross=%s, net=%s, employer=%s",
+            "통합 급여 계산 완료: gross=%s, net=%s",
             gross_pay,
             net_pay,
-            employer_burden,
         )
 
         return PayrollBreakdown(

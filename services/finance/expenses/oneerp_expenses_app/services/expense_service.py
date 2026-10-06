@@ -108,8 +108,7 @@ class ExpenseService:
         ]
 
         logger.info(
-            "법인카드 매칭: 카드=%s (매칭: %d, 미매칭 거래: %d, 미매칭 청구: %d)",
-            card_number,
+            "법인카드 매칭: 매칭 %d, 미매칭 거래 %d, 미매칭 청구 %d",
             len(matched),
             len(unmatched_txns),
             len(unmatched_claims),

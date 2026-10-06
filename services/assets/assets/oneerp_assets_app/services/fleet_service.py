@@ -52,7 +52,7 @@ class FleetService:
             }
         )
 
-        logger.info("차량 배정: %s → %s", vehicle_id, employee)
+        logger.info("차량 배정: %s (%s)", vehicle_id, assignment_id)
         return {"assignment_id": assignment_id, "vehicle": vehicle_id, "employee": employee}
 
     def record_trip(

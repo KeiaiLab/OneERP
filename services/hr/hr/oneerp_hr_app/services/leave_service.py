@@ -112,8 +112,7 @@ class LeaveService:
             )
 
         logger.info(
-            "보상휴가 처리: %s (+%.1f일, 사유: %s)",
-            employee,
+            "보상휴가 처리: +%.1f일, 사유 %s",
             days,
             reason,
         )
@@ -188,7 +187,7 @@ class LeaveService:
                 }
             )
 
-        logger.info("연차 부여: %s → %d일 (회계연도: %s)", employee_id, allocated_days, fiscal_year)
+        logger.info("연차 부여: %d일 (회계연도: %s)", allocated_days, fiscal_year)
         return {
             "employee": employee_id,
             "fiscal_year": fiscal_year,
@@ -271,7 +270,7 @@ class LeaveService:
                 application_update["updated_by"] = actor_id
             app_repo.update_by_id(leave_app_id, application_update)
 
-            logger.info("휴가 승인: %s (%s, %.1f일)", leave_app_id, employee, total_days)
+            logger.info("휴가 승인: %s (%.1f일)", leave_app_id, total_days)
             return {"leave_app_id": leave_app_id, "status": "approved"}
 
         # reject
@@ -439,8 +438,7 @@ class LeaveService:
             total_expired += expired_days
 
         logger.info(
-            "연차 이월: %s (%s→%s, 이월: %.1f일, 소멸: %.1f일)",
-            employee_id,
+            "연차 이월: %s→%s, 이월 %.1f일, 소멸 %.1f일",
             from_year,
             to_year,
             total_carried,

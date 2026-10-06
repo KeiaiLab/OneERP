@@ -116,10 +116,8 @@ class SocialInsuranceService:
         total = total_employee + total_employer
 
         logger.info(
-            "4대보험 산출 완료: tenant=%s, base_salary=%s, total=%s",
+            "4대보험 산출 완료: tenant=%s",
             self.tenant_id,
-            salary,
-            total,
         )
 
         return InsuranceBreakdown(
