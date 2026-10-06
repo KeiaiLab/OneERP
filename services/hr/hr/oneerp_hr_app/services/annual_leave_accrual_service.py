@@ -204,8 +204,7 @@ class AnnualLeaveAccrualService:
             additional_days = max(0, total - base_days)
 
         logger.info(
-            "연차 산정: %s (근속: %d년 %d월, 출근률: %s%%, 규칙: %s, 총 %d일)",
-            employee_id,
+            "연차 산정: 근속 %d년 %d월, 출근률 %s%%, 규칙 %s, 총 %d일",
             years,
             total_months - years * 12,
             rate,

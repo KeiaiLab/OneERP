@@ -251,9 +251,8 @@ class PayrollCalculationService:
         self._slip_repo.insert(slip)
 
         logger.info(
-            "급여명세 생성: slip=%s, employee=%s, gross=%s, net=%s",
+            "급여명세 생성: slip=%s, gross=%s, net=%s",
             slip_id,
-            employee_id,
             gross_pay,
             net_pay,
         )

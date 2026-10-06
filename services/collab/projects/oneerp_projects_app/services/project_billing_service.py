@@ -84,8 +84,7 @@ class ProjectBillingService:
         )
 
         logger.info(
-            "프로젝트 청구: %s (프로젝트: %s, 금액: %s)",
-            billing_id,
+            "프로젝트 청구: 프로젝트 %s, 금액 %s",
             project_id,
             total,
         )

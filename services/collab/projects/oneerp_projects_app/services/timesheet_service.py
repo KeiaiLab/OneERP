@@ -332,7 +332,7 @@ class TimesheetService:
         # 타임시트에 청구 완료 표시
         self._ts_repo.update_by_id(timesheet_id, {"billed": True})
 
-        logger.info("타임시트 청구: %s → %s (%s원)", timesheet_id, billing_id, amount)
+        logger.info("타임시트 청구: %s (%s원)", timesheet_id, amount)
         return {
             "billing_id": billing_id,
             "timesheet_id": timesheet_id,

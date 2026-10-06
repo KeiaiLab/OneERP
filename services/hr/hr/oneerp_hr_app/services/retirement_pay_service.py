@@ -111,8 +111,7 @@ class RetirementPayService:
         )
 
         logger.info(
-            "평균임금 산정: %s (기간: %s~%s, 총임금: %s, 일평균: %s)",
-            employee_id,
+            "평균임금 산정: 기간 %s~%s, 총임금 %s, 일평균 %s",
             period_start.isoformat(),
             period_end.isoformat(),
             total_wage,
@@ -208,8 +207,7 @@ class RetirementPayService:
             retirement_pay = Decimal(0)
 
         logger.info(
-            "퇴직금 산정: %s (근속일: %d, 일급: %s, 퇴직금: %s, 지급대상: %s)",
-            employee_id,
+            "퇴직금 산정: 근속일 %d, 일급 %s, 퇴직금 %s, 지급대상 %s",
             service_days,
             applied_daily,
             retirement_pay,
@@ -258,8 +256,7 @@ class RetirementPayService:
         }
         self._retirement_repo.insert(record)
         logger.info(
-            "퇴직금 기록 저장: %s (%s원)",
-            employee_id,
+            "퇴직금 기록 저장: %s원",
             result["retirement_pay"],
         )
         return record

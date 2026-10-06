@@ -68,8 +68,7 @@ class SkillMapService:
             )
 
         logger.info(
-            "역량 평가: %s (역량: %d개, 평균: %.2f)",
-            employee,
+            "역량 평가: 역량 %d개, 평균 %.2f",
             len(skills),
             avg_score,
         )
@@ -163,8 +162,7 @@ class SkillMapService:
                 )
 
         logger.info(
-            "필수 교육 미수료 확인: %s (미수료: %d건)",
-            employee_id,
+            "필수 교육 미수료 확인: 미수료 %d건",
             len(incomplete),
         )
 

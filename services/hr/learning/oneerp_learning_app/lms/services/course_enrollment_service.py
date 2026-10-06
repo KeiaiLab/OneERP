@@ -144,11 +144,7 @@ class CourseEnrollmentService:
             current_enrolled=request.current_enrolled,
             duplicate_exists=request.duplicate_exists,
         )
-        logger.info(
-            "수강 신청: 과정=%s, 직원=%s",
-            request.course.get("_id", ""),
-            request.employee_id,
-        )
+        logger.info("수강 신청: 과정=%s", request.course.get("_id", ""))
         return {
             "course_ref": request.course.get("_id", ""),
             "employee_id": request.employee_id,

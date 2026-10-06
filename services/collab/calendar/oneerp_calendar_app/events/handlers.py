@@ -52,10 +52,7 @@ async def handle_leave_approved(payload: dict[str, Any], event_id: str) -> None:
         limit=1,
     )
     if not calendars:
-        logger.info(
-            "직원 '%s'의 활성 캘린더가 없어 부재 이벤트를 건너뜁니다",
-            employee_id,
-        )
+        logger.info("활성 캘린더가 없어 부재 이벤트를 건너뜁니다")
         return
 
     calendar_id = calendars[0].get("_id", "")
@@ -80,8 +77,7 @@ async def handle_leave_approved(payload: dict[str, Any], event_id: str) -> None:
     )
 
     logger.info(
-        "휴가 승인 부재 이벤트 생성: 직원=%s, 캘린더=%s, event_id=%s",
-        employee_id,
+        "휴가 승인 부재 이벤트 생성: 캘린더=%s, event_id=%s",
         calendar_id,
         event_id,
     )

@@ -55,7 +55,6 @@ def handle_employee_updated(event_data: dict[str, Any]) -> None:
             updated_count += 1
 
     logger.info(
-        "직원 정보 변경 반영: %s → 인명부 %d건 갱신",
-        employee_id,
+        "직원 정보 변경 반영: 인명부 %d건 갱신",
         updated_count,
     )
