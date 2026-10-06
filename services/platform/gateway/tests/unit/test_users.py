@@ -8,6 +8,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from oneerp_core.errors import OneERPError, oneerp_error_handler
 from oneerp_gateway_app.routes.users import router
+from oneerp_gateway_app.services.password_hasher import needs_rehash, verify_password
 
 _app = FastAPI()
 _app.add_exception_handler(OneERPError, oneerp_error_handler)  # type: ignore[arg-type]
@@ -59,10 +60,8 @@ def test_사용자_생성은_초대상태와_해시를_저장한다(
     assert response.json()["id"] == "USR-2026-00001"
     mock_name.assert_called_once_with("USR", tenant_id="test-tenant")
     inserted_doc = mock_repo.return_value.insert.call_args.args[0]
-    assert (
-        inserted_doc.password_hash
-        == "94e0f9bc7f5a5225bd141bad5adf9befcc112aef09b88f47a14e20b75a7bbec2"  # noqa: S105
-    )
+    assert verify_password("Secret123!", inserted_doc.password_hash)
+    assert not needs_rehash(inserted_doc.password_hash)
     assert inserted_doc.invitation_status == "pending"
     assert inserted_doc.auth_provider == "oidc"
     assert inserted_doc.company_id == "COMP-001"

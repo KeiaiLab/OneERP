@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 from datetime import UTC, datetime
 from typing import TYPE_CHECKING, Any
 
@@ -11,6 +10,7 @@ from oneerp_core.naming import generate_name
 from oneerp_core.repository import Repository
 
 from oneerp_gateway_app.models.user import User, UserAuthProvider, UserInvitationStatus
+from oneerp_gateway_app.services.password_hasher import hash_password
 from oneerp_gateway_app.services.user_presenter import (
     build_summary,
     decorate_user,
@@ -31,10 +31,6 @@ def _get_repo(tenant_id: str) -> Repository:
 
 def _get_company_repo(tenant_id: str) -> Repository:
     return Repository(_COMPANY_COLLECTION, tenant_id=tenant_id)
-
-
-def _hash_password(password: str) -> str:
-    return hashlib.sha256(password.encode()).hexdigest()
 
 
 def normalize_auth_provider(provider: Any, oidc_subject: str) -> str:
@@ -141,7 +137,7 @@ def prepare_user_payload(
         )
 
     if password:
-        payload["password_hash"] = _hash_password(password)
+        payload["password_hash"] = hash_password(password)
     return payload
 
 
