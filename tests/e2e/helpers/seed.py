@@ -6,20 +6,15 @@ pytest 세션 시작 시 한 번 실행되어, 로그인 가능한 초기 상태
 
 from __future__ import annotations
 
-import hashlib
 from datetime import UTC, datetime
 from typing import Any
 
+from oneerp_gateway_app.services.password_hasher import hash_password
 from pymongo import MongoClient
 
 E2E_TENANT_ID = "default"
 E2E_USERNAME = "e2e_admin"
 E2E_PASSWORD = "e2e-pass-2026"  # noqa: S105
-
-
-def _hash_password(password: str) -> str:
-    """비밀번호를 SHA-256으로 해시한다 (gateway auth.py와 동일)."""
-    return hashlib.sha256(password.encode()).hexdigest()
 
 
 def seed_minimal_auth(client: MongoClient, db_name: str) -> dict[str, Any]:
@@ -87,7 +82,7 @@ def seed_minimal_auth(client: MongoClient, db_name: str) -> dict[str, Any]:
                 "is_super_admin": True,
                 "is_active": True,
                 "auth_provider": "password",
-                "password_hash": _hash_password(E2E_PASSWORD),
+                "password_hash": hash_password(E2E_PASSWORD),
                 "created_at": now,
             },
         },

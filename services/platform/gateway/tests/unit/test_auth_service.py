@@ -10,6 +10,7 @@ from fastapi import Request, Response
 from oneerp_core.config import get_core_settings
 from oneerp_core.errors import OneERPError
 from oneerp_gateway_app.services.auth_service import login, refresh
+from oneerp_gateway_app.services.password_hasher import verify_password
 from oneerp_gateway_app.services.token_service import create_access_token
 
 
@@ -112,3 +113,35 @@ def test_refresh는_type이_refresh가_아니면_거부한다(mock_decode_token:
 
     assert exc_info.value.status_code == 401
     assert "유효하지 않은 리프레시 토큰" in str(exc_info.value.detail)
+
+
+@patch("oneerp_gateway_app.services.permission_service.Repository")
+@patch("oneerp_gateway_app.services.auth_service.Repository")
+def test_login은_레거시_해시를_scrypt로_교체한다(
+    mock_repo_cls: MagicMock,
+    mock_permission_repo_cls: MagicMock,
+) -> None:
+    user_repo = MagicMock()
+    user_repo.find_many.return_value = [
+        {
+            "_id": "USR-001",
+            "username": "demo",
+            "tenant_id": "default",
+            "roles": ["admin"],
+            "password_hash": "2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a25fe97bf527a25b",
+            "is_active": True,
+        }
+    ]
+    mock_repo_cls.return_value = user_repo
+    mock_permission_repo_cls.return_value.find_many.return_value = []
+
+    login(
+        username="demo",
+        password="secret",  # noqa: S106
+        request=_request_with_headers(),
+        response=Response(),
+    )
+
+    updates = user_repo.update_by_id.call_args.args[1]
+    assert updates["password_hash"].startswith("scrypt$")
+    assert verify_password("secret", updates["password_hash"])

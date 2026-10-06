@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 from datetime import UTC, datetime
 from typing import Any
 
@@ -17,6 +16,7 @@ from pydantic import BaseModel, Field
 from ..audit_hooks import emit as audit_emit
 from ..models.tenant import Tenant, TenantCreate, TenantUpdate
 from ..models.user import User, UserTier
+from ..services.password_hasher import hash_password
 
 router = APIRouter(
     prefix="/api/v1/admin",
@@ -176,7 +176,7 @@ def create_admin_user(tenant_id: str, body: AdminUserCreateRequest) -> dict[str,
 
     user_repo = _get_user_repo(tenant_id)
     doc_id = generate_name(_USER_PREFIX)
-    password_hash = hashlib.sha256(body.password.encode()).hexdigest() if body.password else ""
+    password_hash = hash_password(body.password) if body.password else ""
 
     user = User(
         _id=doc_id,

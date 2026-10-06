@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 from datetime import UTC, datetime
 from typing import TYPE_CHECKING, Any
 
@@ -11,6 +10,7 @@ from oneerp_core.config import get_core_settings
 from oneerp_core.errors import raise_forbidden, raise_unauthorized
 from oneerp_core.repository import Repository
 
+from .password_hasher import hash_password, needs_rehash, verify_password
 from .token_service import (
     clear_auth_cookies,
     create_access_token,
@@ -31,11 +31,6 @@ def _require_tenant_header(request: Request) -> str:
     return tenant_id
 
 
-def _hash_password(password: str) -> str:
-    """비밀번호를 SHA-256으로 해시한다."""
-    return hashlib.sha256(password.encode()).hexdigest()
-
-
 def login(*, username: str, password: str, request: Request, response: Response) -> dict[str, Any]:
     """로그인 유스케이스를 수행한다."""
     tenant_id = _require_tenant_header(request)
@@ -52,7 +47,7 @@ def login(*, username: str, password: str, request: Request, response: Response)
     stored_hash = user_doc.get("password_hash", "")
     if not stored_hash:
         raise_unauthorized("비밀번호가 아직 설정되지 않았습니다")
-    if stored_hash != _hash_password(password):
+    if not verify_password(password, stored_hash):
         raise_unauthorized("사용자명 또는 비밀번호가 올바르지 않습니다")
 
     if not user_doc.get("is_active", True):
@@ -67,8 +62,12 @@ def login(*, username: str, password: str, request: Request, response: Response)
         expires_in=expires_in,
     )
 
+    # 레거시 해시는 로그인 성공 시 scrypt 로 교체한다.
+    updates: dict[str, Any] = {"last_login": datetime.now(tz=UTC)}
+    if needs_rehash(stored_hash):
+        updates["password_hash"] = hash_password(password)
     if user_doc.get("_id"):
-        repo.update_by_id(str(user_doc["_id"]), {"last_login": datetime.now(tz=UTC)})
+        repo.update_by_id(str(user_doc["_id"]), updates)
 
     return {"access_token": access_token, "expires_in": expires_in}
 
